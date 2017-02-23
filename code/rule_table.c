@@ -11,6 +11,11 @@ void rule_table_init()
 	{
 		int l=atoi(s);
 		fscanf(fp,"%s",str);
-		sprintf()
+		sprintf(rule[l].lhs,str);
+		int a=atoi(fscanf(fp,"%s",str));
+		while(a--)
+		{
+			rule[l].rhs.push(rule[l].rhs,str);
+		}
 	}
 }
