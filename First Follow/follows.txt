@@ -1,0 +1,53 @@
+follow(<ioStmt>): 	USE, END, FOR, WHILE, PRINT, ID, SQBO, GET_VALUE, DECLARE, BREAK, SWITCH
+follow(<output_plist>): 	SQBC
+follow(<idList>): 	SQBC, SEMICOL, COLON
+follow(<statement>): 	USE, END, SQBO, FOR, GET_VALUE, SWITCH, DECLARE, BREAK, WHILE, PRINT, ID
+follow(<whichStmt>): 	USE, END, FOR, WHILE, PRINT, ID, SQBO, GET_VALUE, DECLARE, BREAK, SWITCH
+follow(<moduleReuseStmt>): 	USE, END, FOR, WHILE, PRINT, DECLARE, SQBO, GET_VALUE, ID, BREAK, SWITCH
+follow(<idList_ex>): 	SQBC, SEMICOL, COLON
+follow(<declareStmt>): 	USE, END, FOR, WHILE, PRINT, ID, SQBO, GET_VALUE, DECLARE, BREAK, SWITCH
+follow(<simpleStmt>): 	USE, END, FOR, WHILE, PRINT, ID, SQBO, GET_VALUE, DECLARE, BREAK, SWITCH
+follow(<expression>): 	SEMICOL
+follow(<term>): 	AND, GT, BC, SEMICOL, NE, LT, GE, LE, PLUS, EQ, MINUS, OR
+follow(<index>): 	SQBC
+follow(<module>): 	DRIVERDEF, DEF
+follow(<lvalueARRStmt>): 	USE, END, FOR, WHILE, PRINT, DECLARE, SQBO, GET_VALUE, ID, BREAK, SWITCH
+follow(<gen_ar>): 	GT, BC, GE, EQ, AND, LE, SEMICOL, NE, LT, OR
+follow(<dataType>): 	SQBC, SEMICOL, COMMA
+follow(<input_plist>): 	SQBC
+follow(<var>): 	GT, BC, GE, MUL, DIV, EQ, MINUS, AND, LE, SEMICOL, NE, LT, PLUS, OR
+follow(<ret>): 	START
+follow(<N4>): 	AND, GT, GE, BC, SEMICOL, NE, LT, LE, EQ, OR
+follow(<output_plist_ex>): 	SQBC
+follow(<driverModule>): 	$, DEF
+follow(<program>): 	$
+follow(<N8>): 	AND, SEMICOL, OR, BC
+follow(<statements>): 	BREAK, END
+follow(<caseStmts>): 	
+follow(<logicalOp>): 	NUM, ID, RNUM
+follow(<whichId>): 	GT, BC, GE, MUL, DIV, EQ, MINUS, AND, LE, SEMICOL, NE, LT, PLUS, OR
+follow(<condionalStmt>): 	USE, END, FOR, WHILE, PRINT, ID, SQBO, GET_VALUE, DECLARE, BREAK, SWITCH
+follow(<input_plist_ex>): 	SQBC
+follow(<op2>): 	NUM, ID, RNUM
+follow(<optional>): 	USE
+follow(<op1>): 	NUM, ID, RNUM
+follow(<range>): 	SQBC, BC
+follow(<relationalOp>): 	BO, ID, NUM, MINUS, RNUM
+follow(<otherModules>): 	DRIVERDEF
+follow(<default>): 	END
+follow(<arithmeticExpr>): 	GT, BC, GE, EQ, AND, LE, SEMICOL, NE, LT, OR
+follow(<type>): 	COMMA, SQBC, SEMICOL
+follow(<moduleDeclarations>): 	$, DEF
+follow(<moduleDeclaration>): 	DECLARE, DEF, $
+follow(<arithmeticOrBooleanExpr>): 	SEMICOL, BC
+follow(<value>): 	COLON
+follow(<ararar>): 	AND, GT, BC, SEMICOL, NE, LT, GE, LE, EQ, OR
+follow(<moduleDef>): 	DEF, DRIVERDEF, $
+follow(<N5>): 	AND, GT, BC, SEMICOL, NE, LT, GE, LE, PLUS, EQ, MINUS, OR
+follow(<assignmentStmt>): 	USE, END, FOR, WHILE, PRINT, DECLARE, SQBO, GET_VALUE, ID, BREAK, SWITCH
+follow(<N7>): 	SEMICOL, BC
+follow(<lvalueIDStmt>): 	USE, END, FOR, WHILE, PRINT, DECLARE, SQBO, GET_VALUE, ID, BREAK, SWITCH
+follow(<iterativeStmt>): 	USE, END, FOR, WHILE, PRINT, ID, SQBO, GET_VALUE, DECLARE, BREAK, SWITCH
+follow(<factor>): 	GT, BC, GE, MUL, DIV, EQ, MINUS, AND, LE, SEMICOL, NE, LT, PLUS, OR
+follow(<AnyTerm>): 	AND, BC, SEMICOL, OR
+follow(<N9>): 	
