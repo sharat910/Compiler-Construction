@@ -3,6 +3,7 @@
 #include "map.h"
 #include "index_nt.h"
 #include "index_t.h"
+#include "rule_table.h"
 int line;
 int column;
 void returnToken(char* a)
@@ -16,15 +17,23 @@ void resolve(char* a)
 extern entry lookup_table[40];
 extern entry_map_nt map_nt[57];
 extern entry_map_t map_t[57];
+extern rule rules[100];
 int main()
 {
 	init();
 	init_map_t();
 	init_map_nt();
-	for(int i=0;i<57;i++)
+	rule_table_init();
+	for(int i=1;i<98;i++)
 	{
-		printf("%s ,%d\n",map_nt[i].incoming,map_nt[i].index);
+		printf(rules[i].lhs);
+		printStack(rules[i].rhs);
 	}
+
+	// for(int i=0;i<57;i++)
+	// {
+	// 	printf("%s ,%d\n",map_nt[i].incoming,map_nt[i].index);
+	// }
 	char last,ch;
 	FILE * fp=fopen( "code.txt", "r" );
 	last=fgetc(fp);

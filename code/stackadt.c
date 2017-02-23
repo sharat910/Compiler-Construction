@@ -1,7 +1,7 @@
 // Rishabh Garg
 // 2014A7PS065P
 
-#include"stackdef.h"
+#include"stackadt.h"
 #include <stdlib.h>
 #include <stdio.h>
 // #include"element.h"
@@ -78,7 +78,7 @@ void printStack(stack st)
 	p = st.top;
 	while(p!=NULL)
 	{
-		printf(" %s -->", p->a);
+		printf(" %s -->", p->str);
 		p = p->link;
 	}
 	printf("\n");

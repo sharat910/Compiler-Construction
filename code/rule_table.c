@@ -1,21 +1,26 @@
 #include "rule_table.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 rule rules[100];
 
 void rule_table_init()
 {
-	char str[50];
-	FILE* fp=fopen("grammer.txt","r");
-	while(fscanf(fp,"%s",str) != EOF)
+	char s[50];
+	FILE* fp=fopen("line_sep_grammar.txt","r");
+	while(fscanf(fp,"%s",s) != EOF)
 	{
 		int l=atoi(s);
-		fscanf(fp,"%s",str);
-		sprintf(rule[l].lhs,str);
-		int a=atoi(fscanf(fp,"%s",str));
+		fscanf(fp,"%s",s);
+		// printf("%s\n",s );
+		sprintf(rules[l].lhs,s);
+		fscanf(fp,"%s",s);
+		int a=atoi(s);
 		while(a--)
 		{
-			rule[l].rhs.push(rule[l].rhs,str);
+			fscanf(fp,"%s",s);
+			// printf("%s\n",s );
+			rules[l].rhs=push(rules[l].rhs,s);
 		}
 	}
 }
