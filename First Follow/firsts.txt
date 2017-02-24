@@ -1,53 +1,53 @@
-first(<condionalStmt>): 	 SWITCH
+first(<AOBE>): 	 NUM, BO, ID, RNUM
 first(<output_plist>): 	 ID
 first(<idList>): 	 ID
-first(<statement>): 	 @, USE, SQBO, FOR, GET_VALUE, SWITCH, DECLARE, WHILE, PRINT, ID
+first(<statement>): 	 e, SQBO, FOR, GET_VALUE, WHILE, ID, SWITCH, PRINT, DECLARE
 first(<whichStmt>): 	 ASSIGNOP, SQBO
-first(<moduleReuseStmt>): 	 @, USE, SQBO
-first(<idList_ex>): 	 @, COMMA
+first(<WithLogOp>): 	 AND, e, OR
+first(<moduleReuseStmt>): 	 e, SQBO
+first(<idList_ex>): 	 e, COMMA
 first(<declareStmt>): 	 DECLARE
-first(<simpleStmt>): 	 @, USE, SQBO, ID
+first(<MultiCase>): 	 CASE, e
+first(<simpleStmt>): 	 e, ID, SQBO
 first(<expression>): 	 BO, ID, NUM, MINUS, RNUM
 first(<term>): 	 NUM, ID, RNUM
 first(<index>): 	 NUM, ID
 first(<module>): 	 DEF
 first(<lvalueARRStmt>): 	 SQBO
-first(<gen_ar>): 	 BO, MINUS, NUM, ID, RNUM
+first(<negOrPosAE>): 	 BO, MINUS, NUM, ID, RNUM
 first(<dataType>): 	 REAL, INTEGER, ARRAY, BOOLEAN
 first(<input_plist>): 	 ID
 first(<var>): 	 NUM, ID, RNUM
 first(<op2>): 	 MUL, DIV
-first(<N4>): 	 @, PLUS, MINUS
-first(<output_plist_ex>): 	 @, COMMA
+first(<N4>): 	 PLUS, e, MINUS
+first(<output_plist_ex>): 	 e, COMMA
 first(<driverModule>): 	 DRIVERDEF
-first(<program>): 	 @, DEF, DECLARE, DRIVERDEF
-first(<N8>): 	 @, LE, GE, NE, LT, GT, EQ
+first(<program>): 	 e, DECLARE
 first(<iterativeStmt>): 	 WHILE, FOR
 first(<caseStmts>): 	 CASE
 first(<logicalOp>): 	 AND, OR
-first(<whichId>): 	 @, SQBO
+first(<whichId>): 	 e, SQBO
 first(<ioStmt>): 	 PRINT, GET_VALUE
-first(<input_plist_ex>): 	 @, COMMA
-first(<ret>): 	 @, RETURNS
-first(<optional>): 	 @, SQBO
+first(<input_plist_ex>): 	 e, COMMA
+first(<ret>): 	 RETURNS, e
+first(<WithRelOp>): 	 LE, e, GE, NE, LT, GT, EQ
+first(<condionalStmt>): 	 SWITCH
+first(<optional>): 	 e, SQBO
 first(<op1>): 	 PLUS, MINUS
 first(<range>): 	 NUM
 first(<relationalOp>): 	 LE, GE, NE, LT, GT, EQ
-first(<arithmeticOrBooleanExpr>): 	 NUM, BO, ID, RNUM
-first(<default>): 	 DEFAULT, @
+first(<BorNBAE>): 	 NUM, BO, ID, RNUM
 first(<factor>): 	 NUM, ID, RNUM
 first(<value>): 	 FALSE, NUM, TRUE
-first(<moduleDeclarations>): 	 @, DECLARE
-first(<ararar>): 	 NUM, BO, ID, RNUM
-first(<otherModules>): 	 @, DEF
+first(<moduleDeclarations>): 	 e, DECLARE
+first(<otherModules>): 	 e, DEF
 first(<type>): 	 REAL, INTEGER, BOOLEAN
 first(<moduleDeclaration>): 	 DECLARE
 first(<moduleDef>): 	 START
-first(<N5>): 	 @, DIV, MUL
+first(<default>): 	 DEFAULT, e
+first(<N5>): 	 MUL, DIV, e
 first(<assignmentStmt>): 	 ID
-first(<N7>): 	 AND, @, OR
 first(<lvalueIDStmt>): 	 ASSIGNOP
-first(<statements>): 	 @, USE, SQBO, FOR, GET_VALUE, WHILE, ID, SWITCH, PRINT, DECLARE
+first(<statements>): 	 e, SQBO, FOR, GET_VALUE, WHILE, ID, SWITCH, PRINT, DECLARE
 first(<arithmeticExpr>): 	 NUM, ID, RNUM
 first(<AnyTerm>): 	 NUM, ID, RNUM
-first(<N9>): 	 CASE, @

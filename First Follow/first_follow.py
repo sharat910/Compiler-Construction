@@ -53,6 +53,14 @@ terminals = set(filter(lambda x: not is_non_term(x),bigarr))
 nonterminals = set(fwarr)
 # ++++++    Following code is used to find firsts   +++++++++
 
+with open("non-terminals.txt","w") as f:
+    for nt in nonterminals:
+        f.write(str(nt) + "\n")
+
+with open("terminals.txt","w") as f:
+    for nt in terminals:
+        f.write(str(nt) + "\n")
+
 firsts_dict = OrderedDict()
 non_term_appender(firsts_dict, nonterminals)
 

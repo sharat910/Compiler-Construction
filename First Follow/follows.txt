@@ -1,53 +1,53 @@
-follow(<ioStmt>): 	USE, END, FOR, WHILE, PRINT, ID, SQBO, GET_VALUE, DECLARE, BREAK, SWITCH
+follow(<AOBE>): 	SEMICOL, BC
 follow(<output_plist>): 	SQBC
 follow(<idList>): 	SQBC, SEMICOL, COLON
-follow(<statement>): 	USE, END, SQBO, FOR, GET_VALUE, SWITCH, DECLARE, BREAK, WHILE, PRINT, ID
-follow(<whichStmt>): 	USE, END, FOR, WHILE, PRINT, ID, SQBO, GET_VALUE, DECLARE, BREAK, SWITCH
-follow(<moduleReuseStmt>): 	USE, END, FOR, WHILE, PRINT, DECLARE, SQBO, GET_VALUE, ID, BREAK, SWITCH
+follow(<statement>): 	e, SQBO, FOR, GET_VALUE, SWITCH, DECLARE, WHILE, PRINT, ID
+follow(<whichStmt>): 	e, SQBO, FOR, GET_VALUE, WHILE, ID, SWITCH, PRINT, DECLARE
+follow(<WithLogOp>): 	SEMICOL, BC
+follow(<moduleReuseStmt>): 	e, SQBO, FOR, GET_VALUE, SWITCH, DECLARE, WHILE, PRINT, ID
 follow(<idList_ex>): 	SQBC, SEMICOL, COLON
-follow(<declareStmt>): 	USE, END, FOR, WHILE, PRINT, ID, SQBO, GET_VALUE, DECLARE, BREAK, SWITCH
-follow(<simpleStmt>): 	USE, END, FOR, WHILE, PRINT, ID, SQBO, GET_VALUE, DECLARE, BREAK, SWITCH
+follow(<declareStmt>): 	e, SQBO, FOR, GET_VALUE, WHILE, ID, SWITCH, PRINT, DECLARE
+follow(<MultiCase>): 	
+follow(<simpleStmt>): 	e, SQBO, FOR, GET_VALUE, WHILE, ID, SWITCH, PRINT, DECLARE
 follow(<expression>): 	SEMICOL
-follow(<term>): 	AND, GT, BC, SEMICOL, NE, LT, GE, LE, PLUS, EQ, MINUS, OR
+follow(<term>): 	e, PLUS, MINUS
 follow(<index>): 	SQBC
-follow(<module>): 	DRIVERDEF, DEF
-follow(<lvalueARRStmt>): 	USE, END, FOR, WHILE, PRINT, DECLARE, SQBO, GET_VALUE, ID, BREAK, SWITCH
-follow(<gen_ar>): 	GT, BC, GE, EQ, AND, LE, SEMICOL, NE, LT, OR
-follow(<dataType>): 	SQBC, SEMICOL, COMMA
+follow(<module>): 	e, DEF
+follow(<lvalueARRStmt>): 	e, SQBO, FOR, GET_VALUE, SWITCH, DECLARE, WHILE, PRINT, ID
+follow(<negOrPosAE>): 	LE, e, GE, NE, LT, GT, EQ
+follow(<dataType>): 	COMMA, SEMICOL, e
 follow(<input_plist>): 	SQBC
-follow(<var>): 	GT, BC, GE, MUL, DIV, EQ, MINUS, AND, LE, SEMICOL, NE, LT, PLUS, OR
+follow(<var>): 	e, BC, MUL, DIV
 follow(<ret>): 	START
-follow(<N4>): 	AND, GT, GE, BC, SEMICOL, NE, LT, LE, EQ, OR
+follow(<N4>): 	GT, e, BC, GE, SEMICOL, NE, LT, LE, EQ
 follow(<output_plist_ex>): 	SQBC
-follow(<driverModule>): 	$, DEF
+follow(<driverModule>): 	e, DEF
 follow(<program>): 	$
-follow(<N8>): 	AND, SEMICOL, OR, BC
 follow(<statements>): 	BREAK, END
 follow(<caseStmts>): 	
 follow(<logicalOp>): 	NUM, ID, RNUM
-follow(<whichId>): 	GT, BC, GE, MUL, DIV, EQ, MINUS, AND, LE, SEMICOL, NE, LT, PLUS, OR
-follow(<condionalStmt>): 	USE, END, FOR, WHILE, PRINT, ID, SQBO, GET_VALUE, DECLARE, BREAK, SWITCH
+follow(<whichId>): 	e, BC, MUL, DIV
+follow(<ioStmt>): 	e, SQBO, FOR, GET_VALUE, WHILE, ID, SWITCH, PRINT, DECLARE
 follow(<input_plist_ex>): 	SQBC
 follow(<op2>): 	NUM, ID, RNUM
-follow(<optional>): 	USE
+follow(<WithRelOp>): 	AND, e, OR
+follow(<condionalStmt>): 	e, SQBO, FOR, GET_VALUE, WHILE, ID, SWITCH, PRINT, DECLARE
 follow(<op1>): 	NUM, ID, RNUM
 follow(<range>): 	SQBC, BC
 follow(<relationalOp>): 	BO, ID, NUM, MINUS, RNUM
+follow(<BorNBAE>): 	LE, e, SEMICOL, NE, LT, GE, GT, EQ
+follow(<arithmeticExpr>): 	GT, BC, GE, EQ, LE, e, SEMICOL, NE, LT
+follow(<type>): 	e, COMMA, SEMICOL
+follow(<moduleDeclarations>): 	e, DEF
 follow(<otherModules>): 	DRIVERDEF
-follow(<default>): 	END
-follow(<arithmeticExpr>): 	GT, BC, GE, EQ, AND, LE, SEMICOL, NE, LT, OR
-follow(<type>): 	COMMA, SQBC, SEMICOL
-follow(<moduleDeclarations>): 	$, DEF
-follow(<moduleDeclaration>): 	DECLARE, DEF, $
-follow(<arithmeticOrBooleanExpr>): 	SEMICOL, BC
 follow(<value>): 	COLON
-follow(<ararar>): 	AND, GT, BC, SEMICOL, NE, LT, GE, LE, EQ, OR
-follow(<moduleDef>): 	DEF, DRIVERDEF, $
-follow(<N5>): 	AND, GT, BC, SEMICOL, NE, LT, GE, LE, PLUS, EQ, MINUS, OR
-follow(<assignmentStmt>): 	USE, END, FOR, WHILE, PRINT, DECLARE, SQBO, GET_VALUE, ID, BREAK, SWITCH
-follow(<N7>): 	SEMICOL, BC
-follow(<lvalueIDStmt>): 	USE, END, FOR, WHILE, PRINT, DECLARE, SQBO, GET_VALUE, ID, BREAK, SWITCH
-follow(<iterativeStmt>): 	USE, END, FOR, WHILE, PRINT, ID, SQBO, GET_VALUE, DECLARE, BREAK, SWITCH
-follow(<factor>): 	GT, BC, GE, MUL, DIV, EQ, MINUS, AND, LE, SEMICOL, NE, LT, PLUS, OR
-follow(<AnyTerm>): 	AND, BC, SEMICOL, OR
-follow(<N9>): 	
+follow(<moduleDeclaration>): 	e, DECLARE
+follow(<moduleDef>): 	e, DEF
+follow(<optional>): 	USE
+follow(<default>): 	END
+follow(<N5>): 	e, PLUS, MINUS
+follow(<assignmentStmt>): 	e, SQBO, FOR, GET_VALUE, SWITCH, DECLARE, WHILE, PRINT, ID
+follow(<lvalueIDStmt>): 	e, SQBO, FOR, GET_VALUE, SWITCH, DECLARE, WHILE, PRINT, ID
+follow(<iterativeStmt>): 	e, SQBO, FOR, GET_VALUE, WHILE, ID, SWITCH, PRINT, DECLARE
+follow(<factor>): 	e, MUL, DIV
+follow(<AnyTerm>): 	AND, e, OR
