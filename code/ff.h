@@ -4,7 +4,7 @@
 
 #include "rule_table.h"
 
-int isTerminal(stack s);
+int isTerminal(NODE top);
 void fill_lhs();
 void fill_firsts();
 

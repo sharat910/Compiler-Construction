@@ -4,9 +4,9 @@
 
 rule firsts[57];
 rule follows[57];
-int isTerminal(stack s)
+int isTerminal(NODE top)
 {
-	if(s.top->str[0]=='<')
+	if(top->str[0]=='<')
 		return 0;
 	else return 1;	
 }
@@ -78,10 +78,66 @@ void fill_firsts()
 		// 	curr=distinct_push(curr,((*(r+i*sizeof(rule))).rhs.top)->str);
 		// }
 		// printf("%s\n", rules[i].lhs);
-		if(isTerminal(rules_back[i].rhs))
+		if(isTerminal(rules_back[i].rhs.top))
 		{
 			stack* a=&(firsts[get_index_nt(rules_back[i].lhs)].rhs);
 			*a=distinct_push(*a,rules_back[i].rhs.top->str);
+		}
+	}
+	int flag=1;
+	int out=0;
+	while(flag==1)
+	{
+		flag=0;
+		for(int i=1;i<99;i++)
+		{
+			out=0;
+			stack right=rules_back[i].rhs;
+			// printf("%s\n", rules_back[i].lhs);
+			// printStack(right);
+
+			NODE top=right.top;
+			// printf("%d\n", right.stack_size);
+			for(int j=1;j<=right.stack_size;j++)
+			{
+				if(out)
+					break;
+				// printf("%s\n", top->str);
+				
+				if(isTerminal(top)==0)
+				{
+					// printf("%s\n",firsts[get_index_nt(top->str)].lhs );
+					stack* a= &firsts[get_index_nt(top->str)].rhs;
+					// printStack((*a));
+
+					stack* b=&(firsts[get_index_nt(rules_back[i].lhs)].rhs);
+					int initial=(*b).stack_size;
+						*b=merge(*b,*a);
+					int final=(*b).stack_size;
+					if(final>initial)
+						flag=1;
+					if(!find_stack(a,"e"))
+						break;
+						
+					// else {
+					
+					// stack* b=&(firsts[get_index_nt(rules_back[i].lhs)].rhs);
+					// *b=merge(*b,*a);
+				}
+				else {
+					stack* b=&(firsts[get_index_nt(rules_back[i].lhs)].rhs);
+					int initial=(*b).stack_size;
+					*b=distinct_push(*b,top->str);
+					int final=(*b).stack_size;
+					if(final>initial)
+						flag=1;
+					break;
+				}
+				top=top->link;
+			}	
+			printf("%s :::", (firsts[get_index_nt(rules_back[i].lhs)].lhs));
+			printStack((firsts[get_index_nt(rules_back[i].lhs)].rhs));
+			printf("\n");
 		}
 	}
 }

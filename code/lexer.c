@@ -34,11 +34,11 @@ int main()
 		printf("%s \n",map_nt[i].incoming );
 		printStack(firsts[i].rhs);
 	}
-	for(int i=1;i<99;i++)
-	{
-		printf("%s --> ",rules_back[i].lhs);
-		printStack(rules_back[i].rhs);
-	}
+	// for(int i=1;i<99;i++)
+	// {
+	// 	printf("%s --> ",rules_back[i].lhs);
+	// 	printStack(rules_back[i].rhs);
+	// }
 
 	// for(int i=0;i<53;i++)
 	// {

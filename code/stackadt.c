@@ -84,9 +84,20 @@ stack distinct_push(stack st,char * a)
 	st=push(st,a);
 	return st;
 }
+stack merge(stack one, stack two)
+{
+	NODE p;
+	p = one.top;
+	while(p!=NULL)
+	{
+		two=distinct_push(two,p->str);
+		p = p->link;
+	}
+	return two;
+}
 void printStack(stack st)
 {
-	printf("TOP :");
+	// printf("TOP :");
 	NODE p;
 	p = st.top;
 	while(p!=NULL)
@@ -95,4 +106,16 @@ void printStack(stack st)
 		p = p->link;
 	}
 	printf("\n");
+}
+int find_stack(stack* a, char * str)
+{
+	NODE p;
+	p = (*a).top;
+	while(p!=NULL)
+	{
+		if(strcmp(p->str,str)==0)
+			return 1;
+		p = p->link;
+	}
+	return 0;
 }

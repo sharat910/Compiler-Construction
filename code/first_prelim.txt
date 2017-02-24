@@ -1,106 +1,106 @@
 <AOBE> 
-TOP : BO -->
+ BO --> RNUM --> NUM --> ID -->
 <output_plist> 
-TOP : ID -->
+ ID -->
 <idList> 
-TOP : ID -->
+ ID -->
 <statement> 
-TOP :
+ SWITCH --> SQBO --> e --> USE --> ID --> PRINT --> GET_VALUE --> DECLARE --> WHILE --> FOR -->
 <whichStmt> 
-TOP :
+ ASSIGNOP --> SQBO -->
 <WithLogOp> 
-TOP : e -->
+ e --> OR --> AND -->
 <moduleReuseStmt> 
-TOP :
+ USE --> e --> SQBO -->
 <idList_ex> 
-TOP : e --> COMMA -->
+ e --> COMMA -->
 <declareStmt> 
-TOP : DECLARE -->
+ DECLARE -->
 <MultiCase> 
-TOP : e --> CASE -->
+ e --> CASE -->
 <simpleStmt> 
-TOP :
+ ID --> USE --> e --> SQBO -->
 <expression> 
-TOP : MINUS -->
+ MINUS --> BO --> RNUM --> NUM --> ID -->
 <term> 
-TOP :
+ RNUM --> NUM --> ID -->
 <index> 
-TOP : ID --> NUM -->
+ ID --> NUM -->
 <module> 
-TOP : DEF -->
+ DEF -->
 <lvalueARRStmt> 
-TOP : SQBO -->
+ SQBO -->
 <negOrPosAE> 
-TOP : MINUS -->
+ MINUS --> BO --> RNUM --> NUM --> ID -->
 <dataType> 
-TOP : ARRAY --> BOOLEAN --> REAL --> INTEGER -->
+ ARRAY --> BOOLEAN --> REAL --> INTEGER -->
 <input_plist> 
-TOP : ID -->
+ ID -->
 <var> 
-TOP : RNUM --> NUM --> ID -->
+ RNUM --> NUM --> ID -->
 <op2> 
-TOP : DIV --> MUL -->
+ DIV --> MUL -->
 <N4> 
-TOP : e -->
+ e --> MINUS --> PLUS -->
 <output_plist_ex> 
-TOP : e --> COMMA -->
+ e --> COMMA -->
 <driverModule> 
-TOP : DRIVERDEF -->
+ DRIVERDEF -->
 <program> 
-TOP :
+ DEF --> e --> DECLARE --> DRIVERDEF -->
 <iterativeStmt> 
-TOP : FOR -->
+ WHILE --> FOR -->
 <caseStmts> 
-TOP : CASE -->
+ CASE -->
 <logicalOp> 
-TOP : OR --> AND -->
+ OR --> AND -->
 <whichId> 
-TOP : e --> SQBO -->
+ e --> SQBO -->
 <ioStmt> 
-TOP : PRINT --> GET_VALUE -->
+ PRINT --> GET_VALUE -->
 <input_plist_ex> 
-TOP : e --> COMMA -->
+ e --> COMMA -->
 <ret> 
-TOP : e --> RETURNS -->
+ e --> RETURNS -->
 <WithRelOp> 
-TOP : e -->
+ e --> NE --> EQ --> GE --> GT --> LE --> LT -->
 <condionalStmt> 
-TOP : SWITCH -->
+ SWITCH -->
 <optional> 
-TOP : e --> SQBO -->
+ e --> SQBO -->
 <op1> 
-TOP : MINUS --> PLUS -->
+ MINUS --> PLUS -->
 <range> 
-TOP :
+ NUM -->
 <relationalOp> 
-TOP : NE --> EQ --> GE --> GT --> LE --> LT -->
+ NE --> EQ --> GE --> GT --> LE --> LT -->
 <BorNBAE> 
-TOP : BO -->
+ BO --> RNUM --> NUM --> ID -->
 <factor> 
-TOP :
+ RNUM --> NUM --> ID -->
 <value> 
-TOP : FALSE --> TRUE --> NUM -->
+ FALSE --> TRUE --> NUM -->
 <moduleDeclarations> 
-TOP : e -->
+ e --> DECLARE -->
 <otherModules> 
-TOP : e -->
+ e --> DEF -->
 <type> 
-TOP : BOOLEAN --> REAL --> INTEGER -->
+ BOOLEAN --> REAL --> INTEGER -->
 <moduleDeclaration> 
-TOP : DECLARE -->
+ DECLARE -->
 <moduleDef> 
-TOP : START -->
+ START -->
 <default> 
-TOP : e --> DEFAULT -->
+ e --> DEFAULT -->
 <N5> 
-TOP : e -->
+ e --> DIV --> MUL -->
 <assignmentStmt> 
-TOP : ID -->
+ ID -->
 <lvalueIDStmt> 
-TOP : ASSIGNOP -->
+ ASSIGNOP -->
 <statements> 
-TOP : e -->
+ SWITCH --> SQBO --> e --> USE --> ID --> PRINT --> GET_VALUE --> DECLARE --> WHILE --> FOR -->
 <arithmeticExpr> 
-TOP :
+ RNUM --> NUM --> ID -->
 <AnyTerm> 
-TOP :
+ RNUM --> NUM --> ID -->
