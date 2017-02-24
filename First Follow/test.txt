@@ -1,8 +1,0 @@
-S->TQ
-Q->+TQ
-Q->@
-T->FW
-W->*FW
-W->@
-F->(S)
-F->id
