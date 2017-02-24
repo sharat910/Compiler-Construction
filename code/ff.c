@@ -4,14 +4,13 @@
 
 rule firsts[57];
 rule follows[57];
-extern rule rules[100];
 int isTerminal(stack s)
 {
 	if(s.top->str[0]=='<')
 		return 0;
 	else return 1;	
 }
-
+extern rule rules_back[100];
 void fill_lhs()
 {
 	sprintf(firsts[0].lhs,"<AOBE>");
