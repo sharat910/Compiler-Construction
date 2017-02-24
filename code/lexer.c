@@ -29,11 +29,11 @@ int main()
 	init_map_nt();
 	rule_table_init();
 	fill_firsts();
-	// for(int i=0;i<53;i++)
-	// {
-	// 	printf("%s \n",map_nt[i].incoming );
-	// 	printStack(firsts[i].rhs);
-	// }
+	for(int i=0;i<53;i++)
+	{
+		printf("%s \n",map_nt[i].incoming );
+		printStack(firsts[i].rhs);
+	}
 	for(int i=1;i<99;i++)
 	{
 		printf("%s --> ",rules_back[i].lhs);

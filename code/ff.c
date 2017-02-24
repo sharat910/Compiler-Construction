@@ -70,7 +70,7 @@ void fill_lhs()
 void fill_firsts()
 {
 	fill_lhs();
-	for(int i=1;i<97;i++)
+	for(int i=1;i<99;i++)
 	{
 		// if(isTerminal((*(r+i*sizeof(rule))).rhs))
 		// {
