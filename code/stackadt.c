@@ -95,6 +95,23 @@ stack merge(stack one, stack two)
 	}
 	return two;
 }
+
+stack merge_without_e(stack one, stack two)
+{
+	NODE p;
+	p = two.top;
+	while(p!=NULL)
+	{
+		if (strcmp(p->str,"e")==0){
+			p=p->link;
+			continue;
+		}
+		one=distinct_push(one,p->str);
+		p = p->link;
+	}
+	return one;
+}
+
 void printStack(stack st)
 {
 	// printf("TOP :");

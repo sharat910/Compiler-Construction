@@ -1,0 +1,106 @@
+<AOBE> 
+ BC --> SEMICOL -->
+<output_plist> 
+ SQBC -->
+<idList> 
+ COLON --> SQBC --> SEMICOL -->
+<statement> 
+ FOR --> WHILE --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> SWITCH --> BREAK --> END -->
+<whichStmt> 
+ FOR --> WHILE --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> SWITCH --> BREAK --> END -->
+<WithLogOp> 
+ BC --> SEMICOL -->
+<moduleReuseStmt> 
+ FOR --> WHILE --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> SWITCH --> BREAK --> END -->
+<idList_ex> 
+ COLON --> SQBC --> SEMICOL -->
+<declareStmt> 
+ FOR --> WHILE --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> SWITCH --> BREAK --> END -->
+<MultiCase> 
+
+<simpleStmt> 
+ FOR --> WHILE --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> SWITCH --> BREAK --> END -->
+<expression> 
+ SEMICOL -->
+<term> 
+ PLUS --> MINUS --> LT --> LE --> GT --> GE --> EQ --> NE --> AND --> OR --> BC --> SEMICOL -->
+<index> 
+ SQBC -->
+<module> 
+ DEF --> DRIVERDEF --> $ -->
+<lvalueARRStmt> 
+ FOR --> WHILE --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> SWITCH --> BREAK --> END -->
+<negOrPosAE> 
+ LT --> LE --> GT --> GE --> EQ --> NE --> AND --> OR --> BC --> SEMICOL -->
+<dataType> 
+ SEMICOL --> COMMA --> SQBC -->
+<input_plist> 
+ SQBC -->
+<var> 
+ MUL --> DIV --> PLUS --> MINUS --> LT --> LE --> GT --> GE --> EQ --> NE --> AND --> OR --> BC --> SEMICOL -->
+<op2> 
+ RNUM --> NUM --> ID -->
+<N4> 
+ LT --> LE --> GT --> GE --> EQ --> NE --> AND --> OR --> BC --> SEMICOL -->
+<output_plist_ex> 
+ SQBC -->
+<driverModule> 
+ DEF --> $ -->
+<program> 
+ $ -->
+<iterativeStmt> 
+ FOR --> WHILE --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> SWITCH --> BREAK --> END -->
+<caseStmts> 
+
+<logicalOp> 
+ RNUM --> NUM --> ID -->
+<whichId> 
+ MUL --> DIV --> PLUS --> MINUS --> NE --> EQ --> GE --> GT --> LE --> LT --> AND --> OR --> BC --> SEMICOL -->
+<ioStmt> 
+ FOR --> WHILE --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> SWITCH --> BREAK --> END -->
+<input_plist_ex> 
+ SQBC -->
+<ret> 
+ START -->
+<WithRelOp> 
+ AND --> OR --> BC --> SEMICOL -->
+<condionalStmt> 
+ FOR --> WHILE --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> SWITCH --> BREAK --> END -->
+<optional> 
+ USE -->
+<op1> 
+ RNUM --> NUM --> ID -->
+<range> 
+ BC --> SQBC -->
+<relationalOp> 
+ MINUS --> BO --> RNUM --> NUM --> ID -->
+<BorNBAE> 
+ NE --> EQ --> GE --> GT --> LE --> LT --> AND --> OR --> BC --> SEMICOL -->
+<factor> 
+ MUL --> DIV --> PLUS --> MINUS --> LT --> LE --> GT --> GE --> EQ --> NE --> AND --> OR --> BC --> SEMICOL -->
+<value> 
+ COLON -->
+<moduleDeclarations> 
+ DEF --> DRIVERDEF -->
+<otherModules> 
+ DRIVERDEF --> $ -->
+<type> 
+ SEMICOL --> COMMA --> SQBC -->
+<moduleDeclaration> 
+ DECLARE --> DEF --> DRIVERDEF -->
+<moduleDef> 
+ DEF --> DRIVERDEF --> $ -->
+<default> 
+ END -->
+<N5> 
+ PLUS --> MINUS --> LT --> LE --> GT --> GE --> EQ --> NE --> AND --> OR --> BC --> SEMICOL -->
+<assignmentStmt> 
+ FOR --> WHILE --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> SWITCH --> BREAK --> END -->
+<lvalueIDStmt> 
+ FOR --> WHILE --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> SWITCH --> BREAK --> END -->
+<statements> 
+ BREAK --> END -->
+<arithmeticExpr> 
+ LT --> LE --> GT --> GE --> EQ --> NE --> AND --> OR --> BC --> SEMICOL -->
+<AnyTerm> 
+ AND --> OR --> BC --> SEMICOL -->

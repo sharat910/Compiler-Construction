@@ -170,63 +170,73 @@ void fill_firsts()
 	}
 }
 
-void fill_follows()
-{
-	int flag=1;
-	int out=0;
+stack get_follow_stack(char* non_terminal){
+	return follows[get_index_nt(non_terminal)].rhs;
+}
+
+stack get_first_stack(char* non_terminal){
+	return firsts[get_index_nt(non_terminal)].rhs;
+}
+
+void fill_follows(){
+	//Initial follow
+	int flag = 1;
 	stack* b=&(follows[get_index_nt("<program>")].rhs);
 	(*b)=push((*b),"$");
-	while(flag==1)
-	{
-		flag=0;
+	while(flag){
+		flag = 0;
 		for(int i=1;i<99;i++)
 		{
-			out=0;
+			char* lhs = rules_back[i].lhs;
 			stack right=rules_back[i].rhs;
-			stack* a=&follow[get_index_nt(rules_back[i].lhs)].rhs;
-			NODE top=right.top;
-			for(int i=1;i<57;i++)
-			{
-				char *nt= map_nt[i].incoming;
-				stack* b=&follow[get_index_nt(nt)].rhs;
-				if((NODE elem=get_elememt(&right,nt))!=NULL)
+			// printf("\n");
+			// printStack(right);
+			NODE item = right.top;
+			int j=1;
+			// printf("%d ",right.stack_size);
+			while(item != NULL)
+			{	
+				//printf("%d",j);
+				if(isTerminal(item)==0)
 				{
-					if(elem->link==NULL)
-						*b=merge(*b,*a);
-					else {
-						NODE next=elem->link;
-						stack* c=&(firsts[get_index_nt(next->str)].rhs);
-						if(find_stack(c,"e"))
-							*b=merge(*b,*a);
+					//printf("Non-terminal: %s\n",item->str);
+					stack item_follow_stack = get_follow_stack(item->str);
+					int prev_size = item_follow_stack.stack_size;
+					NODE next = item->link;
+					while(next != NULL)
+					{
+						if(isTerminal(next))
+						{
+							
+							item_follow_stack = distinct_push(item_follow_stack,next->str);
+							
+							// printf("Adding terminal: %s\n",next->str);
+							// printStack(item_follow_stack);
+							break;
+						}else{
+							stack next_ka_first_stack = get_first_stack(next->str);
+							if (find_stack(&next_ka_first_stack,"e")){
+								item_follow_stack = merge_without_e(item_follow_stack,next_ka_first_stack);
+								next = next->link;
+							}else{
+								item_follow_stack = merge(item_follow_stack,next_ka_first_stack);
+								break;
+							}
+						}
+
 					}
+					if (next == NULL)
+						item_follow_stack = merge(item_follow_stack,get_follow_stack(lhs));
+				
+					int after_size = item_follow_stack.stack_size;
+					if (after_size > prev_size)
+						flag=1;
+					follows[get_index_nt(item->str)].rhs = item_follow_stack;
+
 				}
+				item = item->link;
 			}
-			for(int j=1;j<=right.stack_size;j++)
-			{
-				if(out)
-					break;
-				stack* b=&(firsts[get_index_nt(rules_back[i].lhs)].rhs);
-				if(isTerminal(top)==0)
-				{
-					stack* a= &firsts[get_index_nt(top->str)].rhs;
-					int initial=(*b).stack_size;
-						*b=merge(*b,*a);
-					int final=(*b).stack_size;
-					if(final>initial)
-						flag=1;
-					if(!find_stack(a,"e"))
-						break;
-				}
-				else {
-					int initial=(*b).stack_size;
-					*b=distinct_push(*b,top->str);
-					int final=(*b).stack_size;
-					if(final>initial)
-						flag=1;
-					break;
-				}
-				top=top->link;
-			}	
 		}
 	}
+	
 }

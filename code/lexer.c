@@ -22,6 +22,7 @@ extern entry_map_t map_t[57];
 extern rule rules[100];
 extern rule rules_back[100];
 extern rule firsts[53];
+extern rule follows[53];
 int main()
 {
 	init();
@@ -30,10 +31,16 @@ int main()
 	rule_table_init();
 	fill_lhs();
 	fill_firsts();
+	fill_follows();
+	// for(int i=0;i<53;i++)
+	// {
+	// 	printf("%s \n",map_nt[i].incoming );
+	// 	printStack(firsts[i].rhs);
+	// }
 	for(int i=0;i<53;i++)
 	{
 		printf("%s \n",map_nt[i].incoming );
-		printStack(firsts[i].rhs);
+		printStack(follows[i].rhs);
 	}
 	// for(int i=1;i<99;i++)
 	// {

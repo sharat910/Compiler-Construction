@@ -18,36 +18,36 @@ first(<negOrPosAE>): 	 BO, MINUS, NUM, ID, RNUM
 first(<dataType>): 	 REAL, INTEGER, ARRAY, BOOLEAN
 first(<input_plist>): 	 ID
 first(<var>): 	 NUM, ID, RNUM
-first(<op2>): 	 MUL, DIV
+first(<ret>): 	 RETURNS, e
 first(<N4>): 	 PLUS, e, MINUS
 first(<output_plist_ex>): 	 e, COMMA
 first(<driverModule>): 	 DRIVERDEF
 first(<program>): 	 DEF, e, DECLARE, DRIVERDEF
-first(<iterativeStmt>): 	 WHILE, FOR
+first(<statements>): 	 USE, e, SQBO, FOR, GET_VALUE, WHILE, ID, SWITCH, PRINT, DECLARE
 first(<caseStmts>): 	 CASE
 first(<logicalOp>): 	 AND, OR
 first(<whichId>): 	 e, SQBO
 first(<ioStmt>): 	 PRINT, GET_VALUE
 first(<input_plist_ex>): 	 e, COMMA
-first(<ret>): 	 RETURNS, e
+first(<op2>): 	 MUL, DIV
 first(<WithRelOp>): 	 LE, e, GE, NE, LT, GT, EQ
 first(<condionalStmt>): 	 SWITCH
-first(<optional>): 	 e, SQBO
 first(<op1>): 	 PLUS, MINUS
 first(<range>): 	 NUM
 first(<relationalOp>): 	 LE, GE, NE, LT, GT, EQ
 first(<BorNBAE>): 	 NUM, BO, ID, RNUM
-first(<factor>): 	 NUM, ID, RNUM
-first(<value>): 	 FALSE, NUM, TRUE
+first(<arithmeticExpr>): 	 NUM, ID, RNUM
+first(<type>): 	 REAL, INTEGER, BOOLEAN
 first(<moduleDeclarations>): 	 e, DECLARE
 first(<otherModules>): 	 e, DEF
-first(<type>): 	 REAL, INTEGER, BOOLEAN
+first(<value>): 	 FALSE, NUM, TRUE
 first(<moduleDeclaration>): 	 DECLARE
 first(<moduleDef>): 	 START
+first(<optional>): 	 e, SQBO
 first(<default>): 	 DEFAULT, e
 first(<N5>): 	 MUL, DIV, e
 first(<assignmentStmt>): 	 ID
 first(<lvalueIDStmt>): 	 ASSIGNOP
-first(<statements>): 	 USE, e, SQBO, FOR, GET_VALUE, WHILE, ID, SWITCH, PRINT, DECLARE
-first(<arithmeticExpr>): 	 NUM, ID, RNUM
+first(<iterativeStmt>): 	 WHILE, FOR
+first(<factor>): 	 NUM, ID, RNUM
 first(<AnyTerm>): 	 NUM, ID, RNUM

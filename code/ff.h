@@ -7,6 +7,6 @@
 int isTerminal(NODE top);
 void fill_lhs();
 void fill_firsts();
-
+void fill_follows();
 
 #endif

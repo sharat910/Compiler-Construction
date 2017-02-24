@@ -1,6 +1,4 @@
-from collections import OrderedDict
 from copy import deepcopy
-import sys
 
 rules = []  # Raw grammar rules
 
@@ -61,7 +59,7 @@ with open("terminals.txt","w") as f:
 
 # ++++++    Following code is used to find firsts   +++++++++
 
-firsts_dict = OrderedDict()
+firsts_dict = {}
 non_term_appender(firsts_dict, nonterminals)
 
 for rule in rules: 
