@@ -20,8 +20,8 @@ int main()
 		while(scanf("%s",str)!=EOF)
 		{
 			// printf("%s\n", str);
-			fprintf(fp,"sprintf(map_t[%d].incoming,\"%s\");\n",i,str );
-			fprintf(fp,"map_t[%d].token=%d;\n",i,i);
+			fprintf(fp,"sprintf(firsts[%d].rhs,\"%s\");\n",i,str );
+			// fprintf(fp,"map_nt[%d].token=%d;\n",i,i);
 			i++;
 		}
 		fflush(fp);

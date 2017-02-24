@@ -71,6 +71,19 @@ int isEmptyStack(stack st)
 	else return 0;
 }
 
+stack distinct_push(stack st,char * a)
+{
+	NODE p;
+	p = st.top;
+	while(p!=NULL)
+	{
+		if(strcmp(p->str,a)==0)
+			return st;
+		p = p->link;
+	}
+	st=push(st,a);
+	return st;
+}
 void printStack(stack st)
 {
 	printf("TOP :");

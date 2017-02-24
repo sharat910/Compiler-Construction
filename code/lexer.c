@@ -4,29 +4,38 @@
 #include "index_nt.h"
 #include "index_t.h"
 #include "rule_table.h"
+#include "ff.h"
+// #include "stackadt.h"
 int line;
 int column;
 void returnToken(char* a)
 {
-	printf("%s %d ",a,get_index_nt(a));
+	printf("%s %d ",a,get_index_t(a));
 }
 void resolve(char* a)
 {
-	printf("%s %d ",find(a),get_index_nt(find(a)));
+	printf("%s %d ",find(a),get_index_t(find(a)));
 }
 extern entry lookup_table[40];
-extern entry_map_nt map_nt[57];
+extern entry_map_nt map_nt[53];
 extern entry_map_t map_t[57];
 extern rule rules[100];
+extern rule firsts[57];
 int main()
 {
 	init();
 	init_map_t();
 	init_map_nt();
 	rule_table_init();
+	fill_firsts(rules[100]);
+	for(int i=0;i<57;i++)
+	{
+		printf("%s\n",map_nt[i].incoming );
+		printStack(firsts[i].rhs);
+	}
 	for(int i=1;i<98;i++)
 	{
-		printf(rules[i].lhs);
+		printf("%s\n",rules[i].lhs);
 		printStack(rules[i].rhs);
 	}
 
