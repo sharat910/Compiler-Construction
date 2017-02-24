@@ -38,7 +38,7 @@ def compare_dicts(dic1,dic2):
 
 bigarr = []
 fwarr = []
-with open("ggrammar.txt", "r") as fp:
+with open("line_separated_grammar.txt", "r") as fp:
     lines = fp.read().splitlines()
     for line in lines:
         arr = map(lambda x: x.strip(),line.strip().split(' '))
@@ -80,7 +80,7 @@ while(not compare_dicts(oldfirsts_dict,firsts_dict)):
         print rule
         if is_non_term(rule[2]):
             i = 2            
-            while i<len(rule) and '@' in get_first(rule[i]) and (not isinstance(get_first(rule[i]),basestring)):
+            while i<len(rule) and 'e' in get_first(rule[i]) and (not isinstance(get_first(rule[i]),basestring)):
                 firsts_dict[rule[0]] = firsts_dict[rule[0]] | (get_first(rule[i]))
                 i += 1
             if i != len(rule):
@@ -115,12 +115,12 @@ while(not compare_dicts(oldfollowdict,followdict)):
                 if nt_index == (len(rhs) - 1):
                     followdict[nt] = followdict[lhs] | followdict[nt]
                 else:
-                    if '@' in get_first(rhs[nt_index+1]):
+                    if 'e' in get_first(rhs[nt_index+1]):
                         followdict[nt] = followdict[lhs] | followdict[nt]
                     if isinstance(get_first(rhs[nt_index+1]),basestring):
                         followdict[nt].add(get_first(rhs[nt_index+1]))
                     else:
-                        followdict[nt] = set(get_first(rhs[nt_index+1])) - set(['@']) | followdict[nt]
+                        followdict[nt] = set(get_first(rhs[nt_index+1])) - set(['e']) | followdict[nt]
 
 
 with open("follows.txt", "w+") as wp:
