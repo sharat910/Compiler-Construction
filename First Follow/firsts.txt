@@ -1,14 +1,14 @@
 first(<AOBE>): 	 NUM, BO, ID, RNUM
 first(<output_plist>): 	 ID
 first(<idList>): 	 ID
-first(<statement>): 	 e, SQBO, FOR, GET_VALUE, WHILE, ID, SWITCH, PRINT, DECLARE
+first(<statement>): 	 USE, e, SQBO, FOR, GET_VALUE, SWITCH, DECLARE, WHILE, PRINT, ID
 first(<whichStmt>): 	 ASSIGNOP, SQBO
 first(<WithLogOp>): 	 AND, e, OR
-first(<moduleReuseStmt>): 	 e, SQBO
+first(<moduleReuseStmt>): 	 USE, e, SQBO
 first(<idList_ex>): 	 e, COMMA
 first(<declareStmt>): 	 DECLARE
 first(<MultiCase>): 	 CASE, e
-first(<simpleStmt>): 	 e, ID, SQBO
+first(<simpleStmt>): 	 USE, e, SQBO, ID
 first(<expression>): 	 BO, ID, NUM, MINUS, RNUM
 first(<term>): 	 NUM, ID, RNUM
 first(<index>): 	 NUM, ID
@@ -22,7 +22,7 @@ first(<op2>): 	 MUL, DIV
 first(<N4>): 	 PLUS, e, MINUS
 first(<output_plist_ex>): 	 e, COMMA
 first(<driverModule>): 	 DRIVERDEF
-first(<program>): 	 e, DECLARE
+first(<program>): 	 DEF, e, DECLARE, DRIVERDEF
 first(<iterativeStmt>): 	 WHILE, FOR
 first(<caseStmts>): 	 CASE
 first(<logicalOp>): 	 AND, OR
@@ -48,6 +48,6 @@ first(<default>): 	 DEFAULT, e
 first(<N5>): 	 MUL, DIV, e
 first(<assignmentStmt>): 	 ID
 first(<lvalueIDStmt>): 	 ASSIGNOP
-first(<statements>): 	 e, SQBO, FOR, GET_VALUE, WHILE, ID, SWITCH, PRINT, DECLARE
+first(<statements>): 	 USE, e, SQBO, FOR, GET_VALUE, WHILE, ID, SWITCH, PRINT, DECLARE
 first(<arithmeticExpr>): 	 NUM, ID, RNUM
 first(<AnyTerm>): 	 NUM, ID, RNUM

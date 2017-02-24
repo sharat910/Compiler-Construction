@@ -38,7 +38,7 @@ def compare_dicts(dic1,dic2):
 
 bigarr = []
 fwarr = []
-with open("ggrammar.txt", "r") as fp:
+with open("line_separated_grammar.txt", "r") as fp:
     lines = fp.read().splitlines()
     for line in lines:
         arr = map(lambda x: x.strip(),line.strip().split(' '))
@@ -47,11 +47,9 @@ with open("ggrammar.txt", "r") as fp:
         fwarr.append(arr[0])
         rules.append(arr)
 
-nonterminals = set(filter(is_non_term,bigarr))
 terminals = set(filter(lambda x: not is_non_term(x),bigarr))
 
 nonterminals = set(fwarr)
-# ++++++    Following code is used to find firsts   +++++++++
 
 with open("non-terminals.txt","w") as f:
     for nt in nonterminals:
@@ -61,6 +59,8 @@ with open("terminals.txt","w") as f:
     for nt in terminals:
         f.write(str(nt) + "\n")
 
+# ++++++    Following code is used to find firsts   +++++++++
+
 firsts_dict = OrderedDict()
 non_term_appender(firsts_dict, nonterminals)
 
@@ -68,9 +68,9 @@ for rule in rules:
     if not is_non_term(rule[2]):
         firsts_dict[rule[0]].add(rule[2])
 
-with open("init_first.txt", "w") as f:
-    for key in nonterminals:
-        f.write("%s: %s\n" % (str(key),str(list(firsts_dict[key]))))
+# with open("firsts_prelim.txt", "w") as f:
+#     for key in nonterminals:
+#         f.write("%s: %s\n" % (str(key),str(list(firsts_dict[key]))))
 
 oldfirsts_dict = None
 while(not compare_dicts(oldfirsts_dict,firsts_dict)):
@@ -80,7 +80,7 @@ while(not compare_dicts(oldfirsts_dict,firsts_dict)):
         print rule
         if is_non_term(rule[2]):
             i = 2            
-            while i<len(rule) and '@' in get_first(rule[i]) and (not isinstance(get_first(rule[i]),basestring)):
+            while i<len(rule) and 'e' in get_first(rule[i]) and (not isinstance(get_first(rule[i]),basestring)):
                 firsts_dict[rule[0]] = firsts_dict[rule[0]] | (get_first(rule[i]))
                 i += 1
             if i != len(rule):
@@ -89,11 +89,11 @@ while(not compare_dicts(oldfirsts_dict,firsts_dict)):
                 else:
                     firsts_dict[rule[0]] = firsts_dict[rule[0]] | (get_first(rule[i]))
 
+
 with open("firsts.txt", "w+") as wp:
     for k in firsts_dict:
         wp.write("first(%s): \t " % k)
         wp.write("%s\n" % ", ".join(list(firsts_dict[k])))
-
 
 
 # ++++++    Following code is used to find the follows  ++++++
@@ -115,12 +115,12 @@ while(not compare_dicts(oldfollowdict,followdict)):
                 if nt_index == (len(rhs) - 1):
                     followdict[nt] = followdict[lhs] | followdict[nt]
                 else:
-                    if '@' in get_first(rhs[nt_index+1]):
+                    if 'e' in get_first(rhs[nt_index+1]):
                         followdict[nt] = followdict[lhs] | followdict[nt]
                     if isinstance(get_first(rhs[nt_index+1]),basestring):
                         followdict[nt].add(get_first(rhs[nt_index+1]))
                     else:
-                        followdict[nt] = set(get_first(rhs[nt_index+1])) - set(['@']) | followdict[nt]
+                        followdict[nt] = set(get_first(rhs[nt_index+1])) - set(['e']) | followdict[nt]
 
 
 with open("follows.txt", "w+") as wp:
