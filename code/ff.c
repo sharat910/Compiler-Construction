@@ -4,6 +4,7 @@
 
 rule firsts[57];
 rule follows[57];
+extern rule rules[100];
 int isTerminal(stack s)
 {
 	if(s.top->str[0]=='<')
@@ -67,20 +68,21 @@ void fill_lhs()
 	sprintf(firsts[51].lhs,"<arithmeticExpr>");
 	sprintf(firsts[52].lhs,"<AnyTerm>");
 }
-void fill_firsts(rule rules[100])
+void fill_firsts()
 {
 	fill_lhs();
-	for(int i=0;i<97;i++)
+	for(int i=1;i<97;i++)
 	{
 		// if(isTerminal((*(r+i*sizeof(rule))).rhs))
 		// {
 		// 	stack curr=firsts[get_index_nt((*(r+i*sizeof(rule))).lhs)].rhs;
 		// 	curr=distinct_push(curr,((*(r+i*sizeof(rule))).rhs.top)->str);
 		// }
-		if(isTerminal(rules[i].rhs))
+		// printf("%s\n", rules[i].lhs);
+		if(isTerminal(rules_back[i].rhs))
 		{
-			stack a=firsts[get_index_nt(rules[i].lhs)].rhs;
-			a=distinct_push(a,rules[i].rhs.top->str);
+			stack* a=&(firsts[get_index_nt(rules_back[i].lhs)].rhs);
+			*a=distinct_push(*a,rules_back[i].rhs.top->str);
 		}
 	}
 }

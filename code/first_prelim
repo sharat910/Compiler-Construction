@@ -1,0 +1,106 @@
+<AOBE> 
+TOP : BC -->
+<output_plist> 
+TOP :
+<idList> 
+TOP :
+<statement> 
+TOP :
+<whichStmt> 
+TOP :
+<WithLogOp> 
+TOP : e -->
+<moduleReuseStmt> 
+TOP : SEMICOL -->
+<idList_ex> 
+TOP : e -->
+<declareStmt> 
+TOP : SEMICOL -->
+<MultiCase> 
+TOP : e -->
+<simpleStmt> 
+TOP :
+<expression> 
+TOP :
+<term> 
+TOP :
+<index> 
+TOP : ID --> NUM -->
+<module> 
+TOP :
+<lvalueARRStmt> 
+TOP : SEMICOL -->
+<negOrPosAE> 
+TOP :
+<dataType> 
+TOP : BOOLEAN --> REAL --> INTEGER -->
+<input_plist> 
+TOP :
+<var> 
+TOP : RNUM --> NUM -->
+<op2> 
+TOP : DIV --> MUL -->
+<N4> 
+TOP : e -->
+<output_plist_ex> 
+TOP : e -->
+<driverModule> 
+TOP :
+<program> 
+TOP :
+<iterativeStmt> 
+TOP : END -->
+<caseStmts> 
+TOP :
+<logicalOp> 
+TOP : OR --> AND -->
+<whichId> 
+TOP : e --> SQBC -->
+<ioStmt> 
+TOP : SEMICOL -->
+<input_plist_ex> 
+TOP : e -->
+<ret> 
+TOP : e --> SEMICOL -->
+<WithRelOp> 
+TOP : e -->
+<condionalStmt> 
+TOP : END -->
+<optional> 
+TOP : e --> ASSIGNOP -->
+<op1> 
+TOP : MINUS --> PLUS -->
+<range> 
+TOP :
+<relationalOp> 
+TOP : NE --> EQ --> GE --> GT --> LE --> LT -->
+<BorNBAE> 
+TOP : BC -->
+<factor> 
+TOP :
+<value> 
+TOP : FALSE --> TRUE --> NUM -->
+<moduleDeclarations> 
+TOP : e -->
+<otherModules> 
+TOP : e -->
+<type> 
+TOP : BOOLEAN --> REAL --> INTEGER -->
+<moduleDeclaration> 
+TOP : SEMICOL -->
+<moduleDef> 
+TOP : END -->
+<default> 
+TOP : e --> SEMICOL -->
+<N5> 
+TOP : e -->
+<assignmentStmt> 
+TOP :
+<lvalueIDStmt> 
+TOP : SEMICOL -->
+<statements> 
+TOP : e -->
+<arithmeticExpr> 
+TOP :
+<AnyTerm> 
+TOP :

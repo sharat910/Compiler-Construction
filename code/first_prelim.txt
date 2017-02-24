@@ -1,0 +1,196 @@
+<program>
+TOP : <otherModules> --> <driverModule> --> <otherModules> --> <moduleDeclarations> -->
+<moduleDeclarations>
+TOP : <moduleDeclarations> --> <moduleDeclaration> -->
+<moduleDeclarations>
+TOP : e -->
+<moduleDeclaration>
+TOP : SEMICOL --> ID --> MODULE --> DECLARE -->
+<otherModules>
+TOP : <otherModules> --> <module> -->
+<otherModules>
+TOP : e -->
+<driverModule>
+TOP : <moduleDef> --> DRIVERENDDEF --> PROGRAM --> DRIVER --> DRIVERDEF -->
+<module>
+TOP : <moduleDef> --> <ret> --> SEMICOL --> SQBC --> <input_plist> --> SQBO --> INPUT --> TAKES --> ENDDEF --> ID --> MODULE --> DEF -->
+<ret>
+TOP : SEMICOL --> SQBC --> <output_plist> --> SQBO --> RETURNS -->
+<ret>
+TOP : e -->
+<input_plist>
+TOP : <input_plist_ex> --> <dataType> --> COLON --> ID -->
+<input_plist_ex>
+TOP : <input_plist_ex> --> <dataType> --> COLON --> ID --> COMMA -->
+<input_plist_ex>
+TOP : e -->
+<output_plist>
+TOP : <output_plist_ex> --> <type> --> COLON --> ID -->
+<output_plist_ex>
+TOP : <output_plist_ex> --> <type> --> COLON --> ID --> COMMA -->
+<output_plist_ex>
+TOP : e -->
+<dataType>
+TOP : INTEGER -->
+<dataType>
+TOP : REAL -->
+<dataType>
+TOP : BOOLEAN -->
+<dataType>
+TOP : <type> --> OF --> SQBC --> <range> --> SQBO --> ARRAY -->
+<type>
+TOP : INTEGER -->
+<type>
+TOP : REAL -->
+<type>
+TOP : BOOLEAN -->
+<moduleDef>
+TOP : END --> <statements> --> START -->
+<statements>
+TOP : <statements> --> <statement> -->
+<statements>
+TOP : e -->
+<statement>
+TOP : <ioStmt> -->
+<statement>
+TOP : <simpleStmt> -->
+<statement>
+TOP : <declareStmt> -->
+<statement>
+TOP : <condionalStmt> -->
+<statement>
+TOP : <iterativeStmt> -->
+<ioStmt>
+TOP : SEMICOL --> BC --> ID --> BO --> GET_VALUE -->
+<ioStmt>
+TOP : SEMICOL --> BC --> <var> --> BO --> PRINT -->
+<var>
+TOP : <whichId> --> ID -->
+<var>
+TOP : NUM -->
+<var>
+TOP : RNUM -->
+<whichId>
+TOP : SQBC --> ID --> SQBO -->
+<whichId>
+TOP : e -->
+<simpleStmt>
+TOP : <assignmentStmt> -->
+<simpleStmt>
+TOP : <moduleReuseStmt> -->
+<assignmentStmt>
+TOP : <whichStmt> --> ID -->
+<whichStmt>
+TOP : <lvalueIDStmt> -->
+<whichStmt>
+TOP : <lvalueARRStmt> -->
+<lvalueIDStmt>
+TOP : SEMICOL --> <expression> --> ASSIGNOP -->
+<lvalueARRStmt>
+TOP : SEMICOL --> <expression> --> ASSIGNOP --> SQBC --> <index> --> SQBO -->
+<index>
+TOP : NUM -->
+<index>
+TOP : ID -->
+<moduleReuseStmt>
+TOP : SEMICOL --> <idList> --> PARAMETERS --> WITH --> ID --> MODULE --> USE --> <optional> -->
+<optional>
+TOP : ASSIGNOP --> SQBC --> <idList> --> SQBO -->
+<optional>
+TOP : e -->
+<idList>
+TOP : <idList_ex> --> ID -->
+<idList_ex>
+TOP : <idList_ex> --> ID --> COMMA -->
+<idList_ex>
+TOP : e -->
+<expression>
+TOP : <AOBE> -->
+<expression>
+TOP : <BorNBAE> --> MINUS -->
+<negOrPosAE>
+TOP : <BorNBAE> --> MINUS -->
+<negOrPosAE>
+TOP : <BorNBAE> -->
+<BorNBAE>
+TOP : BC --> <arithmeticExpr> --> BO -->
+<BorNBAE>
+TOP : <arithmeticExpr> -->
+<AOBE>
+TOP : <WithLogOp> --> <AnyTerm> -->
+<WithLogOp>
+TOP : <WithLogOp> --> <AnyTerm> --> <logicalOp> -->
+<WithLogOp>
+TOP : e -->
+<AnyTerm>
+TOP : <WithRelOp> --> <arithmeticExpr> -->
+<WithRelOp>
+TOP : <WithRelOp> --> <negOrPosAE> --> <relationalOp> -->
+<WithRelOp>
+TOP : e -->
+<AOBE>
+TOP : BC --> <AOBE> --> BO -->
+<arithmeticExpr>
+TOP : <N4> --> <term> -->
+<N4>
+TOP : <N4> --> <term> --> <op1> -->
+<N4>
+TOP : e -->
+<term>
+TOP : <N5> --> <factor> -->
+<N5>
+TOP : <N5> --> <factor> --> <op2> -->
+<N5>
+TOP : e -->
+<factor>
+TOP : <var> -->
+<op1>
+TOP : PLUS -->
+<op1>
+TOP : MINUS -->
+<op2>
+TOP : MUL -->
+<op2>
+TOP : DIV -->
+<logicalOp>
+TOP : AND -->
+<logicalOp>
+TOP : OR -->
+<relationalOp>
+TOP : LT -->
+<relationalOp>
+TOP : LE -->
+<relationalOp>
+TOP : GT -->
+<relationalOp>
+TOP : GE -->
+<relationalOp>
+TOP : EQ -->
+<relationalOp>
+TOP : NE -->
+<declareStmt>
+TOP : SEMICOL --> <dataType> --> COLON --> <idList> --> DECLARE -->
+<condionalStmt>
+TOP : END --> <default> --> <caseStmt> --> START --> BC --> ID --> BO --> SWITCH -->
+<caseStmts>
+TOP : <MultiCase> --> SEMICOL --> BREAK --> <statements> --> COLON --> <value> --> CASE -->
+<MultiCase>
+TOP : <MultiCase> --> SEMICOL --> BREAK --> <statements> --> COLON --> <value> --> CASE -->
+<MultiCase>
+TOP : e -->
+<value>
+TOP : NUM -->
+<value>
+TOP : TRUE -->
+<value>
+TOP : FALSE -->
+<default>
+TOP : SEMICOL --> BREAK --> <statements> --> COLON --> DEFAULT -->
+<default>
+TOP : e -->
+<iterativeStmt>
+TOP : END --> <statements> --> START --> BC --> <range> --> IN --> ID --> BO --> FOR -->
+<iterativeStmt>
+TOP : END --> <statements> --> START --> BC --> <booleanExpr> --> BO --> WHILE -->
+<range>
+TOP : NUM --> RANGEOP --> NUM -->

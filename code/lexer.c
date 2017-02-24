@@ -10,36 +10,37 @@ int line;
 int column;
 void returnToken(char* a)
 {
-	printf("%s %d ",a,get_index_t(a));
+	// printf("%s %d ",a,get_index_t(a));
 }
 void resolve(char* a)
 {
-	printf("%s %d ",find(a),get_index_t(find(a)));
+	// printf("%s %d ",find(a),get_index_t(find(a)));
 }
 extern entry lookup_table[40];
 extern entry_map_nt map_nt[53];
 extern entry_map_t map_t[57];
 extern rule rules[100];
-extern rule firsts[57];
+extern rule rules_back[100];
+extern rule firsts[53];
 int main()
 {
 	init();
 	init_map_t();
 	init_map_nt();
 	rule_table_init();
-	fill_firsts(rules[100]);
-	for(int i=0;i<57;i++)
+	fill_firsts();
+	// for(int i=0;i<53;i++)
+	// {
+	// 	printf("%s \n",map_nt[i].incoming );
+	// 	printStack(firsts[i].rhs);
+	// }
+	for(int i=1;i<99;i++)
 	{
-		printf("%s\n",map_nt[i].incoming );
-		printStack(firsts[i].rhs);
-	}
-	for(int i=1;i<98;i++)
-	{
-		printf("%s\n",rules[i].lhs);
-		printStack(rules[i].rhs);
+		printf("%s --> ",rules_back[i].lhs);
+		printStack(rules_back[i].rhs);
 	}
 
-	// for(int i=0;i<57;i++)
+	// for(int i=0;i<53;i++)
 	// {
 	// 	printf("%s ,%d\n",map_nt[i].incoming,map_nt[i].index);
 	// }
