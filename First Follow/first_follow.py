@@ -68,9 +68,9 @@ for rule in rules:
     if not is_non_term(rule[2]):
         firsts_dict[rule[0]].add(rule[2])
 
-with open("init_first.txt", "w") as f:
-    for key in nonterminals:
-        f.write("%s: %s\n" % (str(key),str(list(firsts_dict[key]))))
+# with open("firsts_prelim.txt", "w") as f:
+#     for key in nonterminals:
+#         f.write("%s: %s\n" % (str(key),str(list(firsts_dict[key]))))
 
 oldfirsts_dict = None
 while(not compare_dicts(oldfirsts_dict,firsts_dict)):
