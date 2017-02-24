@@ -47,11 +47,9 @@ with open("line_separated_grammar.txt", "r") as fp:
         fwarr.append(arr[0])
         rules.append(arr)
 
-nonterminals = set(filter(is_non_term,bigarr))
 terminals = set(filter(lambda x: not is_non_term(x),bigarr))
 
 nonterminals = set(fwarr)
-# ++++++    Following code is used to find firsts   +++++++++
 
 with open("non-terminals.txt","w") as f:
     for nt in nonterminals:
@@ -60,6 +58,8 @@ with open("non-terminals.txt","w") as f:
 with open("terminals.txt","w") as f:
     for nt in terminals:
         f.write(str(nt) + "\n")
+
+# ++++++    Following code is used to find firsts   +++++++++
 
 firsts_dict = OrderedDict()
 non_term_appender(firsts_dict, nonterminals)
@@ -89,11 +89,11 @@ while(not compare_dicts(oldfirsts_dict,firsts_dict)):
                 else:
                     firsts_dict[rule[0]] = firsts_dict[rule[0]] | (get_first(rule[i]))
 
+
 with open("firsts.txt", "w+") as wp:
     for k in firsts_dict:
         wp.write("first(%s): \t " % k)
         wp.write("%s\n" % ", ".join(list(firsts_dict[k])))
-
 
 
 # ++++++    Following code is used to find the follows  ++++++
