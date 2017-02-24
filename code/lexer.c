@@ -28,6 +28,7 @@ int main()
 	init_map_t();
 	init_map_nt();
 	rule_table_init();
+	fill_lhs();
 	fill_firsts();
 	for(int i=0;i<53;i++)
 	{

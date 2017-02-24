@@ -119,3 +119,16 @@ int find_stack(stack* a, char * str)
 	}
 	return 0;
 }
+
+NODE get_element(stack*a ,char *str)
+{
+	NODE p;
+	p = (*a).top;
+	while(p!=NULL)
+	{
+		if(strcmp(p->str,str)==0)
+			return p;
+		p = p->link;
+	}
+	return NULL;
+}
