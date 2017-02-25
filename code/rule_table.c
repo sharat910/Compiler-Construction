@@ -13,7 +13,7 @@ void rule_table_init()
 		int l=atoi(s);
 		fscanf(fp,"%s",s);
 		// printf("%s\n",s );
-		sprintf(rules[l].lhs,s);
+		sprintf(rules[l].lhs,"%s",s);
 		fscanf(fp,"%s",s);
 		int a=atoi(s);
 		while(a--)
@@ -30,7 +30,7 @@ void rule_table_init()
 		int l=atoi(s);
 		fscanf(fp2,"%s",s);
 		// printf("%s\n",s );
-		sprintf(rules_back[l].lhs,s);
+		sprintf(rules_back[l].lhs,"%s",s);
 		fscanf(fp2,"%s",s);
 		int a=atoi(s);
 		while(a--)

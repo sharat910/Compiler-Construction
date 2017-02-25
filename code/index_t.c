@@ -1,10 +1,10 @@
 #include "index_t.h"
 #include <stdio.h>
 #include <string.h>
-entry_map_t map_t[57];
+entry_map_t map_t[59];
 int get_index_t(char * a)
 {
-	for(int i=0;i<57;i++)
+	for(int i=0;i<59;i++)
 	{
 		if(!strcmp(map_t[i].incoming,a)){
 
@@ -130,5 +130,9 @@ void init_map_t()
 	map_t[55].index=55;
 	sprintf(map_t[56].incoming,"DRIVERENDDEF");
 	map_t[56].index=56;
+	sprintf(map_t[57].incoming,"e");
+	map_t[57].index=57;
+	sprintf(map_t[58].incoming,"$");
+	map_t[58].index=58;
 
 }

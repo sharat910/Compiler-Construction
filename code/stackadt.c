@@ -1,9 +1,10 @@
 // Rishabh Garg
 // 2014A7PS065P
 
-#include"stackadt.h"
+#include "stackadt.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 // #include"element.h"
 // #include"boolean.h"
 
@@ -18,7 +19,7 @@ NODE createNode(char * a)
 	temp=(NODE) malloc(sizeof(struct node));
 	if(temp!=NULL)
 	{
-		sprintf(temp->str,a);
+		sprintf(temp->str,"%s",a);
 		temp->link=NULL;
 	}
 	else
