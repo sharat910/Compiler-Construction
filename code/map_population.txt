@@ -1,53 +1,575 @@
-sprintf(firsts[0].rhs,"<AOBE>");
-sprintf(firsts[1].rhs,"<output_plist>");
-sprintf(firsts[2].rhs,"<idList>");
-sprintf(firsts[3].rhs,"<statement>");
-sprintf(firsts[4].rhs,"<whichStmt>");
-sprintf(firsts[5].rhs,"<WithLogOp>");
-sprintf(firsts[6].rhs,"<moduleReuseStmt>");
-sprintf(firsts[7].rhs,"<idList_ex>");
-sprintf(firsts[8].rhs,"<declareStmt>");
-sprintf(firsts[9].rhs,"<MultiCase>");
-sprintf(firsts[10].rhs,"<simpleStmt>");
-sprintf(firsts[11].rhs,"<expression>");
-sprintf(firsts[12].rhs,"<term>");
-sprintf(firsts[13].rhs,"<index>");
-sprintf(firsts[14].rhs,"<module>");
-sprintf(firsts[15].rhs,"<lvalueARRStmt>");
-sprintf(firsts[16].rhs,"<negOrPosAE>");
-sprintf(firsts[17].rhs,"<dataType>");
-sprintf(firsts[18].rhs,"<input_plist>");
-sprintf(firsts[19].rhs,"<var>");
-sprintf(firsts[20].rhs,"<op2>");
-sprintf(firsts[21].rhs,"<N4>");
-sprintf(firsts[22].rhs,"<output_plist_ex>");
-sprintf(firsts[23].rhs,"<driverModule>");
-sprintf(firsts[24].rhs,"<program>");
-sprintf(firsts[25].rhs,"<iterativeStmt>");
-sprintf(firsts[26].rhs,"<caseStmts>");
-sprintf(firsts[27].rhs,"<logicalOp>");
-sprintf(firsts[28].rhs,"<whichId>");
-sprintf(firsts[29].rhs,"<ioStmt>");
-sprintf(firsts[30].rhs,"<input_plist_ex>");
-sprintf(firsts[31].rhs,"<ret>");
-sprintf(firsts[32].rhs,"<WithRelOp>");
-sprintf(firsts[33].rhs,"<condionalStmt>");
-sprintf(firsts[34].rhs,"<optional>");
-sprintf(firsts[35].rhs,"<op1>");
-sprintf(firsts[36].rhs,"<range>");
-sprintf(firsts[37].rhs,"<relationalOp>");
-sprintf(firsts[38].rhs,"<BorNBAE>");
-sprintf(firsts[39].rhs,"<factor>");
-sprintf(firsts[40].rhs,"<value>");
-sprintf(firsts[41].rhs,"<moduleDeclarations>");
-sprintf(firsts[42].rhs,"<otherModules>");
-sprintf(firsts[43].rhs,"<type>");
-sprintf(firsts[44].rhs,"<moduleDeclaration>");
-sprintf(firsts[45].rhs,"<moduleDef>");
-sprintf(firsts[46].rhs,"<default>");
-sprintf(firsts[47].rhs,"<N5>");
-sprintf(firsts[48].rhs,"<assignmentStmt>");
-sprintf(firsts[49].rhs,"<lvalueIDStmt>");
-sprintf(firsts[50].rhs,"<statements>");
-sprintf(firsts[51].rhs,"<arithmeticExpr>");
-sprintf(firsts[52].rhs,"<AnyTerm>");
+0 0 0 0 0 0 0 66 0 0 0 66 66 66 0 0 0 0 0 0 0 66 66 66 0 66 0 0 0 66 0 0 0 0 66 66 66 66 66 66 66 0 0 0 66 66 0 66 0 0 66 0 0 0 66 0 0 66 14 
+0 0 0 0 0 0 0 14 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 14 0 0 0 0 14 0 0 14 0 0 0 0 0 0 0 0 14 51 
+0 0 0 0 0 0 0 51 0 0 0 51 51 51 0 0 0 0 0 0 0 0 0 51 0 51 0 0 0 51 0 0 0 0 0 0 0 0 0 0 51 0 51 0 51 51 0 51 51 0 0 0 0 0 51 0 0 51 31 
+0 0 0 0 0 0 31 31 0 0 0 31 31 31 0 0 0 0 0 0 0 0 0 31 0 31 0 31 0 31 0 0 0 0 0 0 0 0 0 0 31 0 0 0 0 31 0 31 0 0 0 0 0 0 31 0 0 31 43 
+0 0 0 0 0 0 43 43 0 0 0 43 43 43 0 0 0 0 0 0 0 0 0 43 0 43 0 43 0 43 0 0 0 0 0 0 0 0 0 0 43 0 0 0 0 43 0 43 0 0 0 0 0 0 43 0 0 43 62 
+0 0 0 0 0 0 0 62 0 0 0 62 62 62 0 0 0 0 0 0 0 62 62 62 0 62 0 0 0 62 0 0 0 0 0 0 0 0 0 0 62 0 0 0 62 62 0 62 0 0 62 0 0 0 62 0 0 62 48 
+0 0 0 0 0 0 48 48 0 0 0 48 48 48 0 0 0 0 0 0 0 0 0 48 0 48 0 48 0 48 0 0 0 0 0 0 0 0 0 0 48 0 0 0 0 48 0 48 0 0 0 0 0 0 48 0 0 48 53 
+0 0 0 0 0 0 0 53 0 0 0 53 53 53 0 0 0 0 0 0 0 0 0 53 0 53 0 0 0 53 0 0 0 0 0 0 0 0 0 0 53 0 53 0 53 53 0 53 53 0 0 0 0 0 53 0 0 53 86 
+0 0 0 0 0 0 86 86 0 0 0 86 86 86 0 0 0 0 0 0 0 86 86 86 0 86 0 86 0 86 86 86 86 86 86 86 86 86 86 86 86 0 0 0 0 86 0 86 0 0 0 0 0 0 86 0 0 86 90 
+0 0 0 0 0 0 0 90 0 0 0 90 90 90 0 0 0 0 0 0 0 90 90 90 0 90 90 0 0 90 90 90 90 90 90 90 90 90 90 90 90 0 0 0 0 90 0 90 0 0 0 0 0 0 90 0 0 90 40 
+0 0 0 0 0 0 40 40 0 0 0 40 40 40 0 0 0 0 0 0 0 0 0 40 0 40 0 40 0 40 0 0 0 0 0 0 0 0 0 0 40 0 0 0 0 40 0 40 0 0 0 0 0 0 40 0 0 40 55 
+0 0 0 0 0 0 0 55 0 0 0 55 55 55 0 0 0 0 0 0 0 0 0 55 0 55 0 0 0 55 0 0 0 0 0 0 0 0 0 0 55 0 0 0 55 55 0 55 0 0 0 0 0 0 55 0 0 55 70 
+0 0 0 0 0 0 0 70 0 0 0 70 70 70 0 0 0 0 0 0 0 70 70 70 0 70 0 0 0 70 70 70 70 70 70 70 70 70 70 70 70 0 0 0 70 70 0 70 0 0 70 0 0 0 70 0 0 70 47 
+0 0 0 0 0 0 0 47 0 0 0 47 47 47 0 0 0 0 0 0 0 0 0 47 0 47 0 0 0 47 0 0 0 0 0 0 0 0 0 0 47 0 0 0 0 47 0 47 47 0 0 0 0 0 47 0 0 47 8 
+0 0 0 0 0 0 0 8 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 8 0 0 0 0 0 0 0 0 0 0 0 0 0 0 8 0 8 45 
+0 0 0 0 0 0 45 45 0 0 0 45 45 45 0 0 0 0 0 0 0 0 0 45 0 45 0 45 0 45 0 0 0 0 0 0 0 0 0 0 45 0 0 0 0 45 0 45 0 0 0 0 0 0 45 0 0 45 57 
+0 0 0 0 0 0 0 57 0 0 0 57 57 57 0 0 0 0 0 0 0 57 57 57 0 57 0 0 0 57 0 0 0 0 57 57 57 57 57 57 57 0 0 0 57 57 0 57 0 0 57 0 0 0 57 0 0 57 20 
+0 0 0 0 0 0 0 20 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 20 0 0 0 20 20 0 0 20 0 0 0 0 0 0 0 0 20 11 
+0 0 0 0 0 0 0 11 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 11 0 0 0 0 11 0 0 11 0 0 0 0 0 0 0 0 11 36 
+0 0 0 0 0 0 0 36 0 0 0 36 36 36 0 0 0 0 0 0 0 36 36 36 0 36 0 0 0 36 36 36 36 36 36 36 36 36 36 36 36 0 0 0 36 36 0 36 0 0 36 0 0 0 36 0 0 36 77 
+0 0 0 0 0 0 0 77 0 0 0 77 77 77 0 0 0 0 0 0 0 77 77 77 0 77 0 0 0 77 77 77 77 77 77 77 77 77 77 77 77 0 0 0 0 77 0 77 0 0 0 0 77 77 77 0 0 77 69 
+0 0 0 0 0 0 0 69 0 0 0 69 69 69 0 0 0 0 0 0 0 69 69 69 0 69 0 0 0 69 69 69 0 0 69 69 69 69 69 69 69 0 0 0 69 69 0 69 0 0 69 0 0 0 69 0 0 69 16 
+0 0 0 0 0 0 0 16 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 16 0 0 0 0 16 0 0 16 0 0 0 0 0 0 0 0 16 7 
+0 0 0 0 0 0 0 7 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 7 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 7 7 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 97 
+0 0 0 0 0 0 97 97 0 0 0 97 97 97 0 0 0 0 0 0 0 97 97 97 0 97 97 97 0 97 97 97 97 97 97 97 97 97 97 97 97 0 0 0 0 97 0 97 0 0 0 0 0 0 97 0 0 97 88 
+0 0 0 0 0 0 0 88 0 0 0 88 88 88 0 0 0 0 0 0 0 88 88 88 0 88 88 0 0 88 88 88 88 88 88 88 88 88 88 88 88 0 0 0 0 88 0 88 0 0 0 0 0 0 88 0 0 88 79 
+0 0 0 0 0 0 0 79 0 0 0 79 79 79 0 0 0 0 0 0 0 79 79 79 0 79 0 0 0 79 79 79 79 79 79 79 79 79 79 79 79 0 0 0 0 79 0 79 0 0 0 0 79 79 79 0 0 79 38 
+0 0 0 0 0 0 0 38 0 0 0 38 38 38 0 0 0 0 0 0 0 38 38 38 0 38 0 0 0 38 38 38 38 38 38 38 38 38 38 38 38 0 0 0 38 38 0 38 0 0 38 0 0 0 38 0 0 38 33 
+0 0 0 0 0 0 33 33 0 0 0 33 33 33 0 0 0 0 0 0 0 0 0 33 0 33 0 33 0 33 0 0 0 0 0 0 0 0 0 0 33 0 0 0 0 33 0 33 0 0 0 0 0 0 33 0 0 33 13 
+0 0 0 0 0 0 0 13 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 13 0 0 0 0 13 0 0 13 0 0 0 0 0 0 0 0 13 10 
+0 0 0 0 0 10 0 10 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 10 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 10 65 
+0 0 0 0 0 0 0 65 0 0 0 65 65 65 0 0 0 0 0 0 0 65 65 65 0 65 0 0 0 65 0 0 0 0 65 65 65 65 65 65 65 0 0 0 65 65 0 65 0 0 65 0 0 0 65 0 0 65 87 
+0 0 0 0 0 0 87 87 0 0 0 87 87 87 0 0 0 0 0 0 0 87 87 87 0 87 0 87 0 87 87 87 87 87 87 87 87 87 87 87 87 0 0 0 0 87 0 87 0 0 0 0 0 0 87 0 0 87 50 
+0 0 0 0 0 0 0 50 0 0 0 50 50 50 0 0 0 0 0 0 0 0 0 50 0 50 0 0 0 50 0 0 0 0 0 0 0 0 0 0 50 0 0 0 0 50 0 50 0 0 0 0 0 0 50 0 0 50 75 
+0 0 0 0 0 0 0 75 0 0 0 75 75 75 0 0 0 0 0 0 0 75 75 75 0 75 0 0 0 75 75 75 75 75 75 75 75 75 75 75 75 0 0 0 0 75 0 75 0 0 0 0 75 75 75 0 0 75 98 
+0 0 0 0 0 0 0 98 0 0 0 98 98 98 0 0 0 0 0 0 0 98 98 98 0 98 98 0 0 98 98 98 98 98 98 98 98 98 98 98 98 0 0 0 0 98 0 98 98 0 98 0 0 0 98 0 0 98 85 
+0 0 0 0 0 0 0 85 0 0 0 85 85 85 0 0 0 0 0 0 0 85 85 85 0 85 0 0 0 85 85 85 85 85 85 85 85 85 85 85 85 0 0 0 0 85 0 85 0 85 0 0 85 85 85 0 0 85 59 
+0 0 0 0 0 0 0 59 0 0 0 59 59 59 0 0 0 0 0 0 0 59 59 59 0 59 0 0 0 59 0 0 0 0 59 59 59 59 59 59 59 0 0 0 59 59 0 59 0 0 59 0 0 0 59 0 0 59 73 
+0 0 0 0 0 0 0 73 0 0 0 73 73 73 0 0 0 0 0 0 0 73 73 73 0 73 0 0 0 73 73 73 73 73 73 73 73 73 73 73 73 0 0 0 73 73 0 73 0 0 73 0 0 0 73 0 0 73 93 
+0 0 0 0 0 0 0 93 0 0 0 93 93 93 0 0 0 0 0 0 0 93 93 93 0 93 93 0 0 93 93 93 93 93 93 93 93 93 93 93 93 0 93 0 0 93 0 93 0 0 0 0 0 0 93 0 0 93 3 
+0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 0 3 6 
+0 0 0 0 0 0 0 6 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 6 0 0 0 0 0 0 0 0 0 0 0 0 0 0 6 0 6 23 
+0 0 0 0 0 0 0 23 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 23 0 0 0 23 23 0 0 23 0 0 0 0 0 0 0 0 23 4 
+0 0 0 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 0 4 24 
+0 0 0 0 0 0 0 24 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 24 0 0 0 0 24 0 0 0 0 0 0 0 0 0 24 0 24 95 
+0 0 0 0 0 0 95 95 0 0 0 95 95 95 0 0 0 0 0 0 0 95 95 95 0 95 95 0 0 95 95 95 95 95 95 95 95 95 95 95 95 0 0 0 0 95 0 95 0 0 0 0 0 0 95 0 0 95 72 
+0 0 0 0 0 0 0 72 0 0 0 72 72 72 0 0 0 0 0 0 0 72 72 72 0 72 0 0 0 72 72 72 72 72 72 72 72 72 72 72 72 0 0 0 72 72 0 72 0 0 72 0 0 0 72 0 0 72 41 
+0 0 0 0 0 0 41 41 0 0 0 41 41 41 0 0 0 0 0 0 0 0 0 41 0 41 0 41 0 41 0 0 0 0 0 0 0 0 0 0 41 0 0 0 0 41 0 41 0 0 0 0 0 0 41 0 0 41 44 
+0 0 0 0 0 0 44 44 0 0 0 44 44 44 0 0 0 0 0 0 0 0 0 44 0 44 0 44 0 44 0 0 0 0 0 0 0 0 0 0 44 0 0 0 0 44 0 44 0 0 0 0 0 0 44 0 0 44 26 
+0 0 0 0 0 0 26 26 0 0 0 26 26 26 0 0 0 0 0 0 0 0 0 26 0 26 0 26 0 26 0 0 0 0 0 0 0 0 0 0 26 0 0 0 0 26 0 26 0 0 0 0 0 0 26 0 0 26 67 
+0 0 0 0 0 0 0 67 0 0 0 67 67 67 0 0 0 0 0 0 0 67 67 67 0 67 0 0 0 67 67 67 0 0 67 67 67 67 67 67 67 0 0 0 67 67 0 67 0 0 67 0 0 0 67 0 0 67 63 
+0 0 0 0 0 0 0 63 0 0 0 63 63 63 0 0 0 0 0 0 0 63 63 63 0 63 0 0 0 63 0 0 0 0 63 63 63 63 63 63 63 0 0 0 63 63 0 63 0 0 63 0 0 0 63 0 0 63 0 
+<AOBE> 
+ BO --> RNUM --> NUM --> ID -->
+<output_plist> 
+ ID -->
+<idList> 
+ ID -->
+<statement> 
+ SWITCH --> SQBO --> e --> USE --> ID --> PRINT --> GET_VALUE --> DECLARE --> WHILE --> FOR -->
+<whichStmt> 
+ ASSIGNOP --> SQBO -->
+<WithLogOp> 
+ e --> OR --> AND -->
+<moduleReuseStmt> 
+ USE --> e --> SQBO -->
+<idList_ex> 
+ e --> COMMA -->
+<declareStmt> 
+ DECLARE -->
+<MultiCase> 
+ e --> CASE -->
+<simpleStmt> 
+ ID --> USE --> e --> SQBO -->
+<expression> 
+ MINUS --> BO --> RNUM --> NUM --> ID -->
+<term> 
+ RNUM --> NUM --> ID -->
+<index> 
+ ID --> NUM -->
+<module> 
+ DEF -->
+<lvalueARRStmt> 
+ SQBO -->
+<negOrPosAE> 
+ MINUS --> BO --> RNUM --> NUM --> ID -->
+<dataType> 
+ ARRAY --> BOOLEAN --> REAL --> INTEGER -->
+<input_plist> 
+ ID -->
+<var> 
+ RNUM --> NUM --> ID -->
+<op2> 
+ DIV --> MUL -->
+<N4> 
+ e --> MINUS --> PLUS -->
+<output_plist_ex> 
+ e --> COMMA -->
+<driverModule> 
+ DRIVERDEF -->
+<program> 
+ DEF --> e --> DECLARE --> DRIVERDEF -->
+<iterativeStmt> 
+ WHILE --> FOR -->
+<caseStmts> 
+ CASE -->
+<logicalOp> 
+ OR --> AND -->
+<whichId> 
+ e --> SQBO -->
+<ioStmt> 
+ PRINT --> GET_VALUE -->
+<input_plist_ex> 
+ e --> COMMA -->
+<ret> 
+ e --> RETURNS -->
+<WithRelOp> 
+ e --> NE --> EQ --> GE --> GT --> LE --> LT -->
+<condionalStmt> 
+ SWITCH -->
+<optional> 
+ e --> SQBO -->
+<op1> 
+ MINUS --> PLUS -->
+<range> 
+ NUM -->
+<relationalOp> 
+ NE --> EQ --> GE --> GT --> LE --> LT -->
+<BorNBAE> 
+ BO --> RNUM --> NUM --> ID -->
+<factor> 
+ RNUM --> NUM --> ID -->
+<value> 
+ FALSE --> TRUE --> NUM -->
+<moduleDeclarations> 
+ e --> DECLARE -->
+<otherModules> 
+ e --> DEF -->
+<type> 
+ BOOLEAN --> REAL --> INTEGER -->
+<moduleDeclaration> 
+ DECLARE -->
+<moduleDef> 
+ START -->
+<default> 
+ e --> DEFAULT -->
+<N5> 
+ e --> DIV --> MUL -->
+<assignmentStmt> 
+ ID -->
+<lvalueIDStmt> 
+ ASSIGNOP -->
+<statements> 
+ SWITCH --> SQBO --> e --> USE --> ID --> PRINT --> GET_VALUE --> DECLARE --> WHILE --> FOR -->
+<arithmeticExpr> 
+ RNUM --> NUM --> ID -->
+<AnyTerm> 
+ RNUM --> NUM --> ID -->
+<AOBE> 
+ BC --> SEMICOL -->
+<output_plist> 
+ SQBC -->
+<idList> 
+ COLON --> SQBC --> SEMICOL -->
+<statement> 
+ FOR --> WHILE --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> SWITCH --> BREAK --> END -->
+<whichStmt> 
+ FOR --> WHILE --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> SWITCH --> BREAK --> END -->
+<WithLogOp> 
+ BC --> SEMICOL -->
+<moduleReuseStmt> 
+ FOR --> WHILE --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> SWITCH --> BREAK --> END -->
+<idList_ex> 
+ COLON --> SQBC --> SEMICOL -->
+<declareStmt> 
+ FOR --> WHILE --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> SWITCH --> BREAK --> END -->
+<MultiCase> 
+
+<simpleStmt> 
+ FOR --> WHILE --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> SWITCH --> BREAK --> END -->
+<expression> 
+ SEMICOL -->
+<term> 
+ PLUS --> MINUS --> LT --> LE --> GT --> GE --> EQ --> NE --> AND --> OR --> BC --> SEMICOL -->
+<index> 
+ SQBC -->
+<module> 
+ DEF --> DRIVERDEF --> $ -->
+<lvalueARRStmt> 
+ FOR --> WHILE --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> SWITCH --> BREAK --> END -->
+<negOrPosAE> 
+ LT --> LE --> GT --> GE --> EQ --> NE --> AND --> OR --> BC --> SEMICOL -->
+<dataType> 
+ SEMICOL --> COMMA --> SQBC -->
+<input_plist> 
+ SQBC -->
+<var> 
+ MUL --> DIV --> PLUS --> MINUS --> LT --> LE --> GT --> GE --> EQ --> NE --> AND --> OR --> BC --> SEMICOL -->
+<op2> 
+ RNUM --> NUM --> ID -->
+<N4> 
+ LT --> LE --> GT --> GE --> EQ --> NE --> AND --> OR --> BC --> SEMICOL -->
+<output_plist_ex> 
+ SQBC -->
+<driverModule> 
+ DEF --> $ -->
+<program> 
+ $ -->
+<iterativeStmt> 
+ FOR --> WHILE --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> SWITCH --> BREAK --> END -->
+<caseStmts> 
+
+<logicalOp> 
+ RNUM --> NUM --> ID -->
+<whichId> 
+ MUL --> DIV --> PLUS --> MINUS --> NE --> EQ --> GE --> GT --> LE --> LT --> AND --> OR --> BC --> SEMICOL -->
+<ioStmt> 
+ FOR --> WHILE --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> SWITCH --> BREAK --> END -->
+<input_plist_ex> 
+ SQBC -->
+<ret> 
+ START -->
+<WithRelOp> 
+ AND --> OR --> BC --> SEMICOL -->
+<condionalStmt> 
+ FOR --> WHILE --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> SWITCH --> BREAK --> END -->
+<optional> 
+ USE -->
+<op1> 
+ RNUM --> NUM --> ID -->
+<range> 
+ BC --> SQBC -->
+<relationalOp> 
+ MINUS --> BO --> RNUM --> NUM --> ID -->
+<BorNBAE> 
+ NE --> EQ --> GE --> GT --> LE --> LT --> AND --> OR --> BC --> SEMICOL -->
+<factor> 
+ MUL --> DIV --> PLUS --> MINUS --> LT --> LE --> GT --> GE --> EQ --> NE --> AND --> OR --> BC --> SEMICOL -->
+<value> 
+ COLON -->
+<moduleDeclarations> 
+ DEF --> DRIVERDEF -->
+<otherModules> 
+ DRIVERDEF --> $ -->
+<type> 
+ SEMICOL --> COMMA --> SQBC -->
+<moduleDeclaration> 
+ DECLARE --> DEF --> DRIVERDEF -->
+<moduleDef> 
+ DEF --> DRIVERDEF --> $ -->
+<default> 
+ END -->
+<N5> 
+ PLUS --> MINUS --> LT --> LE --> GT --> GE --> EQ --> NE --> AND --> OR --> BC --> SEMICOL -->
+<assignmentStmt> 
+ FOR --> WHILE --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> SWITCH --> BREAK --> END -->
+<lvalueIDStmt> 
+ FOR --> WHILE --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> SWITCH --> BREAK --> END -->
+<statements> 
+ BREAK --> END -->
+<arithmeticExpr> 
+ LT --> LE --> GT --> GE --> EQ --> NE --> AND --> OR --> BC --> SEMICOL -->
+<AnyTerm> 
+ AND --> OR --> BC --> SEMICOL -->
+<program> -->  <moduleDeclarations> --> <otherModules> --> <driverModule> --> <otherModules> -->
+<moduleDeclarations> -->  <moduleDeclaration> --> <moduleDeclarations> -->
+<moduleDeclarations> -->  e -->
+<moduleDeclaration> -->  DECLARE --> MODULE --> ID --> SEMICOL -->
+<otherModules> -->  <module> --> <otherModules> -->
+<otherModules> -->  e -->
+<driverModule> -->  DRIVERDEF --> DRIVER --> PROGRAM --> DRIVERENDDEF --> <moduleDef> -->
+<module> -->  DEF --> MODULE --> ID --> ENDDEF --> TAKES --> INPUT --> SQBO --> <input_plist> --> SQBC --> SEMICOL --> <ret> --> <moduleDef> -->
+<ret> -->  RETURNS --> SQBO --> <output_plist> --> SQBC --> SEMICOL -->
+<ret> -->  e -->
+<input_plist> -->  ID --> COLON --> <dataType> --> <input_plist_ex> -->
+<input_plist_ex> -->  COMMA --> ID --> COLON --> <dataType> --> <input_plist_ex> -->
+<input_plist_ex> -->  e -->
+<output_plist> -->  ID --> COLON --> <type> --> <output_plist_ex> -->
+<output_plist_ex> -->  COMMA --> ID --> COLON --> <type> --> <output_plist_ex> -->
+<output_plist_ex> -->  e -->
+<dataType> -->  INTEGER -->
+<dataType> -->  REAL -->
+<dataType> -->  BOOLEAN -->
+<dataType> -->  ARRAY --> SQBO --> <range> --> SQBC --> OF --> <type> -->
+<type> -->  INTEGER -->
+<type> -->  REAL -->
+<type> -->  BOOLEAN -->
+<moduleDef> -->  START --> <statements> --> END -->
+<statements> -->  <statement> --> <statements> -->
+<statements> -->  e -->
+<statement> -->  <ioStmt> -->
+<statement> -->  <simpleStmt> -->
+<statement> -->  <declareStmt> -->
+<statement> -->  <condionalStmt> -->
+<statement> -->  <iterativeStmt> -->
+<ioStmt> -->  GET_VALUE --> BO --> ID --> BC --> SEMICOL -->
+<ioStmt> -->  PRINT --> BO --> <var> --> BC --> SEMICOL -->
+<var> -->  ID --> <whichId> -->
+<var> -->  NUM -->
+<var> -->  RNUM -->
+<whichId> -->  SQBO --> ID --> SQBC -->
+<whichId> -->  e -->
+<simpleStmt> -->  <assignmentStmt> -->
+<simpleStmt> -->  <moduleReuseStmt> -->
+<assignmentStmt> -->  ID --> <whichStmt> -->
+<whichStmt> -->  <lvalueIDStmt> -->
+<whichStmt> -->  <lvalueARRStmt> -->
+<lvalueIDStmt> -->  ASSIGNOP --> <expression> --> SEMICOL -->
+<lvalueARRStmt> -->  SQBO --> <index> --> SQBC --> ASSIGNOP --> <expression> --> SEMICOL -->
+<index> -->  NUM -->
+<index> -->  ID -->
+<moduleReuseStmt> -->  <optional> --> USE --> MODULE --> ID --> WITH --> PARAMETERS --> <idList> --> SEMICOL -->
+<optional> -->  SQBO --> <idList> --> SQBC --> ASSIGNOP -->
+<optional> -->  e -->
+<idList> -->  ID --> <idList_ex> -->
+<idList_ex> -->  COMMA --> ID --> <idList_ex> -->
+<idList_ex> -->  e -->
+<expression> -->  <AOBE> -->
+<expression> -->  MINUS --> <BorNBAE> -->
+<negOrPosAE> -->  MINUS --> <BorNBAE> -->
+<negOrPosAE> -->  <BorNBAE> -->
+<BorNBAE> -->  BO --> <arithmeticExpr> --> BC -->
+<BorNBAE> -->  <arithmeticExpr> -->
+<AOBE> -->  <AnyTerm> --> <WithLogOp> -->
+<WithLogOp> -->  <logicalOp> --> <AnyTerm> --> <WithLogOp> -->
+<WithLogOp> -->  e -->
+<AnyTerm> -->  <arithmeticExpr> --> <WithRelOp> -->
+<WithRelOp> -->  <relationalOp> --> <negOrPosAE> --> <WithRelOp> -->
+<WithRelOp> -->  e -->
+<AOBE> -->  BO --> <AOBE> --> BC -->
+<arithmeticExpr> -->  <term> --> <N4> -->
+<N4> -->  <op1> --> <term> --> <N4> -->
+<N4> -->  e -->
+<term> -->  <factor> --> <N5> -->
+<N5> -->  <op2> --> <factor> --> <N5> -->
+<N5> -->  e -->
+<factor> -->  <var> -->
+<op1> -->  PLUS -->
+<op1> -->  MINUS -->
+<op2> -->  MUL -->
+<op2> -->  DIV -->
+<logicalOp> -->  AND -->
+<logicalOp> -->  OR -->
+<relationalOp> -->  LT -->
+<relationalOp> -->  LE -->
+<relationalOp> -->  GT -->
+<relationalOp> -->  GE -->
+<relationalOp> -->  EQ -->
+<relationalOp> -->  NE -->
+<declareStmt> -->  DECLARE --> <idList> --> COLON --> <dataType> --> SEMICOL -->
+<condionalStmt> -->  SWITCH --> BO --> ID --> BC --> START --> <caseStmt> --> <default> --> END -->
+<caseStmts> -->  CASE --> <value> --> COLON --> <statements> --> BREAK --> SEMICOL --> <MultiCase> -->
+<MultiCase> -->  CASE --> <value> --> COLON --> <statements> --> BREAK --> SEMICOL --> <MultiCase> -->
+<MultiCase> -->  e -->
+<value> -->  NUM -->
+<value> -->  TRUE -->
+<value> -->  FALSE -->
+<default> -->  DEFAULT --> COLON --> <statements> --> BREAK --> SEMICOL -->
+<default> -->  e -->
+<iterativeStmt> -->  FOR --> BO --> ID --> IN --> <range> --> BC --> START --> <statements> --> END -->
+<iterativeStmt> -->  WHILE --> BO --> <booleanExpr> --> BC --> START --> <statements> --> END -->
+<range> -->  NUM --> RANGEOP --> NUM -->
+<AOBE> ,0
+<output_plist> ,1
+<idList> ,2
+<statement> ,3
+<whichStmt> ,4
+<WithLogOp> ,5
+<moduleReuseStmt> ,6
+<idList_ex> ,7
+<declareStmt> ,8
+<MultiCase> ,9
+<simpleStmt> ,10
+<expression> ,11
+<term> ,12
+<index> ,13
+<module> ,14
+<lvalueARRStmt> ,15
+<negOrPosAE> ,16
+<dataType> ,17
+<input_plist> ,18
+<var> ,19
+<op2> ,20
+<N4> ,21
+<output_plist_ex> ,22
+<driverModule> ,23
+<program> ,24
+<iterativeStmt> ,25
+<caseStmts> ,26
+<logicalOp> ,27
+<whichId> ,28
+<ioStmt> ,29
+<input_plist_ex> ,30
+<ret> ,31
+<WithRelOp> ,32
+<condionalStmt> ,33
+<optional> ,34
+<op1> ,35
+<range> ,36
+<relationalOp> ,37
+<BorNBAE> ,38
+<factor> ,39
+<value> ,40
+<moduleDeclarations> ,41
+<otherModules> ,42
+<type> ,43
+<moduleDeclaration> ,44
+<moduleDef> ,45
+<default> ,46
+<N5> ,47
+<assignmentStmt> ,48
+<lvalueIDStmt> ,49
+<statements> ,50
+<arithmeticExpr> ,51
+<AnyTerm> ,52
+DEF 1 3
+MODULE 1 9
+ID 1 18
+ENDDEF 1 20
+TAKES 2 22
+INPUT 2 28
+SQBO 2 28
+ID 2 33
+COLON 2 34
+ARRAY 2 39
+SQBO 2 39
+NUM 2 43
+SQBC 2 43
+OF 2 47
+REAL 2 52
+SQBC 2 52
+SEMICOL 2 53
+RETURNS 3 24
+SQBO 3 25
+ID 3 29
+COLON 3 30
+REAL 3 34
+SQBC 3 34
+SEMICOL 3 35
+START 4 6
+MUL 4 6
+MUL 4 7
+MUL 4 8
+MUL 4 9
+MUL 4 10
+RANGEOP 4 12
+MUL 4 12
+MUL 4 13
+MUL 4 14
+MUL 4 15
+RNUM 4 21
+NUM 4 23
+RNUM 4 28
+DEF 4 31
+ENDDEF 4 33
+DEF 4 35
+DRIVERENDDEF 4 37
+GT 4 39
+DECLARE 5 8
+ID 5 10
+COLON 5 11
+REAL 5 16
+SEMICOL 5 16
+ID 6 2
+ASSIGNOP 6 4
+RNUM 6 9
+SEMICOL 6 9
+DECLARE 7 8
+ID 7 14
+COLON 7 16
+INTEGER 7 24
+SEMICOL 7 24
+FOR 8 4
+BO 8 5
+ID 8 11
+IN 8 14
+NUM 8 18
+BC 8 18
+START 9 6
+ID 10 2
+ASSIGNOP 10 4
+ID 10 7
+PLUS 10 8
+ID 10 14
+SQBO 10 14
+ID 10 20
+SQBC 10 20
+SEMICOL 10 21
+END 11 4
+ID 12 4
+ASSIGNOP 12 6
+ID 12 9
+SEMICOL 12 9
+END 13 4
+DEF 14 3
+DRIVER 14 9
+PROGRAM 14 17
+ENDDEF 14 19
+START 15 6
+DECLARE 16 8
+ID 16 12
+COMMA 16 12
+ID 16 15
+COLON 16 16
+INTEGER 16 23
+SEMICOL 16 23
+DECLARE 17 8
+ID 17 10
+COLON 17 11
+ARRAY 17 16
+SQBO 17 17
+NUM 17 21
+SQBC 17 21
+OF 17 25
+INTEGER 17 33
+SEMICOL 17 33
+FOR 18 4
+BO 18 4
+ID 18 7
+IN 18 10
+RNUM 18 15
+NUM 18 17
+NUM 18 19
+RNUM 18 23
+RANGEOP 18 24
+RNUM 18 27
+NUM 18 30
+BC 18 30
+START 19 6
+ID 20 2
+SQBO 20 2
+ID 20 4
+SQBC 20 4
+ASSIGNOP 20 6
+BO 20 7
+ID 20 11
+MINUS 20 12
+DRIVERDEF 20 18
+DRIVERENDDEF 20 21
+ID 20 26
+BC 20 26
+MUL 20 27
+BO 20 29
+ID 20 33
+MINUS 20 33
+ID 20 35
+BC 20 35
+SEMICOL 20 36
+PRINT 21 6
+BO 21 6
+ID 21 8
+SQBO 21 8
+ID 21 10
+SQBC 21 10
+BC 21 11
+SEMICOL 21 12
+END 22 4
+SQBO 23 1
+ID 23 5
+SQBC 23 5
+ASSIGNOP 23 7
+USE 23 11
+MODULE 23 18
+ID 23 27
+WITH 23 32
+PARAMETERS 23 43
+ID 23 45
+SEMICOL 23 45
+PRINT 24 6
+BO 24 6
+ID 24 10
+BC 24 10
+SEMICOL 24 11
+END 25 4
