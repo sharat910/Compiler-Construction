@@ -30,11 +30,8 @@ int main()
 	init();
 	init_map_t();
 	init_map_nt();
-	rule_table_init();
-	fill_lhs();
-	fill_firsts();
-	fill_follows();
-	fill_parseTable();
+	grammar g = rule_table_init();
+	FirstAndFollow f = getFirstAndFollow(g);
 	for(int i=0;i<53;i++){
 		for(int j=0;j<59;j++)
 		{

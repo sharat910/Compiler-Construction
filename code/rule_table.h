@@ -9,6 +9,12 @@ typedef struct{
 	stack rhs;
 }rule;
 
-extern void rule_table_init();
+typedef struct 
+{
+	rule rules[100];
+	rule rules_back[100];	
+} grammar;
+
+extern grammar rule_table_init();
 
 #endif

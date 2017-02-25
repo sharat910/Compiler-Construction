@@ -2,10 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 rule rules[100];
 rule rules_back[100];
-void rule_table_init()
+
+grammar rule_table_init()
 {
+	grammar g;
 	char s[50];
 	FILE* fp=fopen("line_numbered_grammar_normal.txt","r");
 	while(fscanf(fp,"%s",s) != EOF)
@@ -40,4 +43,9 @@ void rule_table_init()
 			rules_back[l].rhs=push(rules_back[l].rhs,s);
 		}
 	}
+
+	*(g.rules) = *rules;
+	*(g.rules_back) = *rules_back;
+
+	return g;
 }

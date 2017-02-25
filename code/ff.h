@@ -4,9 +4,13 @@
 
 #include "rule_table.h"
 
+typedef struct 
+{
+	rule firsts[57];
+	rule follows[57]; 
+} FirstAndFollow;
+
 int isTerminal(NODE top);
-void fill_lhs();
-void fill_firsts();
-void fill_follows();
+FirstAndFollow getFirstAndFollow(grammar G);
 
 #endif
