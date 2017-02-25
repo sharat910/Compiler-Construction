@@ -1,2 +1,2 @@
 #Object files
-*.o
+code/*.o
