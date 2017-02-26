@@ -4,7 +4,7 @@
 #include "index_t.h"
 #include "rule_table.h"
 #include "stackadt.h"
-#include "ff.h"
+#include "parser.h"
 #include <string.h>
 #include <stdlib.h>
 

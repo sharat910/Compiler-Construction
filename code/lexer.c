@@ -361,4 +361,4 @@ tokenInfo getNextToken()
 			}
 		}
 	}
-}	
+}

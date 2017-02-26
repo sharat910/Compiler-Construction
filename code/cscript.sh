@@ -5,3 +5,5 @@ rm driver.o
 rm create_map.o
 gcc *.o driver.c -o driver
 ./driver
+rm driver
+rm *.o

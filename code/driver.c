@@ -4,9 +4,10 @@
 #include "index_nt.h"
 #include "index_t.h"
 #include "rule_table.h"
-#include "ff.h"
 #include "parseTable.h"
+#include "parser.h"
 #include "lexer.h"
+#include "parseTree.h"
 // #include "stackadt.h"
 int line;
 int column;
@@ -16,6 +17,7 @@ extern entry lookup_table[40];
 extern entry_map_nt map_nt[53];
 extern entry_map_t map_t[59];
 int parseTable[53][59];
+table T;
 int main()
 {
 	// printf("ele");
@@ -34,7 +36,7 @@ int main()
 	// }
 
 	// printf("hello\n");
-	FirstAndFollow f = getFirstAndFollow(g);
+	FirstAndFollow f = ComputeFirstAndFollowSets(g);
 	// printf("it's me");
 	// for(int i=0;i<53;i++)
 	// {
@@ -49,14 +51,14 @@ int main()
 
 	
 
-	// fill_parseTable(g,f,parseTable);
-	// for(int i=0;i<53;i++){
-	// 	for(int j=0;j<59;j++)
-	// 	{
-	// 		printf("%d ",parseTable[i][j] );
-	// 	}
-	// 	printf("\n");
-	// }
+	fill_parseTable(g,f,T.parseTable);
+	for(int i=0;i<53;i++){
+		for(int j=0;j<59;j++)
+		{
+			printf("%d ",T.parseTable[i][j] );
+		}
+		printf("\n");
+	}
 	
 	// for(int i=1;i<99;i++)
 	// {
