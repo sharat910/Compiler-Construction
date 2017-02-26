@@ -1,6 +1,7 @@
 #!/bin/bash
 
 gcc -c *.c
-rm lexer.o
+rm driver.o
 rm create_map.o
-gcc *.o lexer.c -o lexer
+gcc *.o driver.c -o driver
+./driver

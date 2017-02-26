@@ -15,6 +15,5 @@ typedef struct
 	rule rules_back[100];	
 } grammar;
 
-extern grammar rule_table_init();
-
+extern grammar get_grammar();
 #endif

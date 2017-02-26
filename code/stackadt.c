@@ -114,17 +114,17 @@ stack merge_without_e(stack one, stack two)
 }
 
 void printStack(stack st)
-{
+ {
 	// printf("TOP :");
-	NODE p;
-	p = st.top;
-	while(p!=NULL)
-	{
+ 	NODE p;
+ 	p = st.top;
+ 	while(p!=NULL)
+ 	{
 		printf(" %s -->", p->str);
-		p = p->link;
-	}
+ 		p = p->link;
+ 	}
 	printf("\n");
-}
+ }
 int find_stack(stack* a, char * str)
 {
 	NODE p;

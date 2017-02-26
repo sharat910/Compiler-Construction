@@ -2,13 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 rule rules[100];
 rule rules_back[100];
-
-grammar rule_table_init()
+void rule_table_init()
 {
-	grammar g;
 	char s[50];
 	FILE* fp=fopen("line_numbered_grammar_normal.txt","r");
 	while(fscanf(fp,"%s",s) != EOF)
@@ -24,6 +21,7 @@ grammar rule_table_init()
 			fscanf(fp,"%s",s);
 			// printf("%s\n",s );
 			rules[l].rhs=push(rules[l].rhs,s);
+			// printStack(rules[l].rhs);
 		}
 	}
 
@@ -43,9 +41,19 @@ grammar rule_table_init()
 			rules_back[l].rhs=push(rules_back[l].rhs,s);
 		}
 	}
+}
 
-	*(g.rules) = *rules;
-	*(g.rules_back) = *rules_back;
+grammar get_grammar()
+{
+	rule_table_init();
+	grammar g;
+	for (int i = 1; i < 99; ++i)
+	{
 
+		sprintf(g.rules[i].lhs,"%s",rules[i].lhs);
+		g.rules[i].rhs = rules[i].rhs;
+		sprintf(g.rules_back[i].lhs,"%s",rules_back[i].lhs);
+		g.rules_back[i].rhs = rules_back[i].rhs;
+	}
 	return g;
 }

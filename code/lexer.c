@@ -1,84 +1,40 @@
-#include <stdio.h>
-#include <ctype.h>
-#include "map.h"
-#include "index_nt.h"
+#include "lexer.h"
+#include <stdio.h>	
 #include "index_t.h"
-#include "rule_table.h"
-#include "ff.h"
-#include "parseTable.h"
-// #include "stackadt.h"
-int line;
-int column;
-void returnToken(char* a)
+#include "map.h"
+#include <ctype.h>
+// void returnToken(char* a)
+// {
+// 	printf("%s %d ",a,get_index_t(a));
+// }
+extern int line;
+extern int column;
+extern char last;
+extern FILE* fp;
+char* resolve(char* a)
 {
-	printf("%s %d ",a,get_index_t(a));
+	return find(a);
 }
-void resolve(char* a)
-{
-	printf("%s %d ",find(a),get_index_t(find(a)));
-}
-extern entry lookup_table[40];
-extern entry_map_nt map_nt[53];
-extern entry_map_t map_t[59];
-extern rule rules[100];
-extern rule rules_back[100];
-extern rule firsts[53];
-extern rule follows[53];
-extern int parseTable[53][59];
-int main()
-{
-	init();
-	init_map_t();
-	init_map_nt();
-	grammar g = rule_table_init();
-	FirstAndFollow f = getFirstAndFollow(g);
-	for(int i=0;i<53;i++){
-		for(int j=0;j<59;j++)
-		{
-			printf("%d ",parseTable[i][j] );
-		}
-		printf("\n");
-	}
-	for(int i=0;i<53;i++)
-	{
-		printf("%s \n",map_nt[i].incoming );
-		printStack(firsts[i].rhs);
-	}
-	for(int i=0;i<53;i++)
-	{
-		printf("%s \n",map_nt[i].incoming );
-		printStack(follows[i].rhs);
-	}
-	for(int i=1;i<99;i++)
-	{
-		printf("%s --> ",rules_back[i].lhs);
-		printStack(rules_back[i].rhs);
-	}
 
-	// for(int i=0;i<53;i++)
-	// {
-	// 	printf("%s ,%d\n",map_nt[i].incoming,map_nt[i].index);
-	// }
-	char last,ch;
-	FILE * fp=fopen( "code.txt", "r" );
-	last=fgetc(fp);
-	// while(!feof(fp))
-	// {
-	// 	last=fgetc(fp);
-	// 	printf("%c", last);
-	// }
-	line=1;
-	column=1;
+
+tokenInfo getNextToken()
+{
+	// printf("hello%c ", last);
+	char ch;
+	tokenInfo curr;
 	while(!feof(fp))
 	{
-		column++;
-		// printf("%c ", last);
+		
 		char str[20];
 		if(last==' ' || last=='\n' || last=='\t' || last=='\r'){
 			if(last=='\n'){
 				line++;
-				column=0;
+				column=1;
 			}
+			if(last==' ')
+				column++;
+			if(last=='\t')
+				column+=4;
 			last=fgetc(fp);
 			continue;
 		}
@@ -87,219 +43,306 @@ int main()
 		{
 			// printf("hey\n");
 			ch=fgetc(fp);
+			column++;
 			if(ch=='='){
-				returnToken("LE");
+				sprintf(curr.token,"%s","LE");
+				curr.line=line;
+				curr.column=column;
 				last=fgetc(fp);
-				continue;
+				column++;
+				return curr;
 			}
 			else if(ch=='<')
 			{
 				// printf("yo%c\n",ch );
 				last=fgetc(fp);
+				column++;
 				if(last=='<')
 				{
-					returnToken("DRIVERDEF");
+					sprintf(curr.token,"%s","DRIVERDEF");
+					curr.line=line;
+					curr.column=column;
 					last=fgetc(fp);
-					continue;
+					column++;
+					return curr;
 				}
 				else {
-					returnToken("DEF");
-					continue;
+					sprintf(curr.token,"%s","DEF");
+					curr.line=line;
+					curr.column=column;
+					return curr;
 				}
 			}
 			else {
-				returnToken("LT");
+				sprintf(curr.token,"%s","LT");
+				curr.line=line;
+				curr.column=column;
+
 				last=ch;
-				continue;
+				return curr;
 			}
 		}
 		else if(last=='>')
 		{
 			ch=fgetc(fp);
+			column++;
 			if(ch=='='){
-				returnToken("GE");
+				sprintf(curr.token,"%s","GE");
+				curr.line=line;
+				curr.column=column;
 				last=fgetc(fp);
-				continue;
+				column++;
+				return curr;
 			}
 			else if(ch=='>')
 			{
 				last=fgetc(fp);
+				column++;
 				if(last=='>')
 				{
-					returnToken("DRIVERENDDEF");
+					sprintf(curr.token,"%s","DRIVERENDDEF");
+					curr.line=line;
+					curr.column=column;
 					last=fgetc(fp);
-					continue;
+					column++;
+					return curr;
 				}
 				else 
-					returnToken("ENDDEF");
-				continue;
+					sprintf(curr.token,"%s","ENDDEF");
+					curr.line=line;
+					curr.column=column;
+				return curr;
 			}
 			else {
-				returnToken("GT");
+				sprintf(curr.token,"%s","GT");
+				curr.line=line;
+				curr.column=column;
 				last=ch;
-				continue;	
+				return curr;	
 			}
 		}
 		else if(last=='=')
 		{
 			ch=fgetc(fp);
+			column++;
 			if(ch=='=')
 			{
-				returnToken("EQ");
-				last=fgetc(fp);	
-				continue;
+				sprintf(curr.token,"%s","EQ");
+				curr.line=line;
+				curr.column=column;
+				last=fgetc(fp);
+				column++;	
+				return curr;
 			}
 			// else errorfunc;
 		}
 		else if(last=='!')
 		{
 			ch=fgetc(fp);
+			column++;
 			if(ch=='=')
 			{
-				returnToken("NE");
+				sprintf(curr.token,"%s","NE");
+				curr.line=line;
+				curr.column=column;
 				last=fgetc(fp);
-				continue;
+				column++;
+				return curr;
 			}
 			// else errorfunc;
 		}
 		else if(last==':')
 		{
 			ch=fgetc(fp);
+			column++;
 			if(ch=='=')
 			{
-				returnToken("ASSIGNOP");
+				sprintf(curr.token,"%s","ASSIGNOP");
+				curr.line=line;
+				curr.column=column;
 				last=fgetc(fp);
-				continue;
+				column++;
+				return curr;
 				
 			}
 			else {
-				returnToken("COLON");
+				sprintf(curr.token,"%s","COLON");
+				curr.line=line;
+				curr.column=column;
 				last=ch;
-				continue;
+				return curr;
 			}
 		}
 		else if(last==',')
 		{
-				returnToken("COMMA");
+			sprintf(curr.token,"%s","COMMA");
+				curr.line=line;
+				curr.column=column;
 				last=fgetc(fp);
-				continue;
+				column++;
+				return curr;
 		}
 		else if(last=='[')
 		{
-				returnToken("SQBO");
+			sprintf(curr.token,"%s","SQBO");
+				curr.line=line;
+				curr.column=column;
 				last=fgetc(fp);
-				continue;
+				column++;
+				return curr;
 		}
 		else if(last==']')
 		{
-				returnToken("SQBC");
+				sprintf(curr.token,"%s","SQBC");
+				curr.line=line;
+				curr.column=column;
 				last=fgetc(fp);
-				continue;
+				column++;
+				return curr;
 		}
 		else if(last=='(')
 		{
-				returnToken("BO");
+			sprintf(curr.token,"%s","BO");
+				curr.line=line;
+				curr.column=column;
 				last=fgetc(fp);
-				continue;
+				column++;
+				return curr;
 		}
 		else if(last==')')
 		{
-				returnToken("BC");
+				sprintf(curr.token,"%s","BC");
+				curr.line=line;
+				curr.column=column;
 				last=fgetc(fp);
-				continue;
+				column++;
+				return curr;
 		}
 		else if(last==';')
 		{
-				returnToken("SEMICOL");
+				sprintf(curr.token,"%s","SEMICOL");
+				curr.line=line;
+				curr.column=column;
 				last=fgetc(fp);
-				continue;
+				column++;
+				return curr;
 		}
 		else if(last=='+')
 		{
-				returnToken("PLUS");
+				sprintf(curr.token,"%s","PLUS");
+				curr.line=line;
+				curr.column=column;
 				last=fgetc(fp);
-				continue;
+				column++;
+				return curr;
 		}
 		else if(last=='-')
 		{
-				returnToken("MINUS");
+			sprintf(curr.token,"%s","MINUS");
+				curr.line=line;
+				curr.column=column;
 				last=fgetc(fp);
-				continue;
+				column++;
+				return curr;
 		}
 		else if(last=='*')
 		{
-				returnToken("MUL");
+				sprintf(curr.token,"%s","MUL");
+				curr.line=line;
+				curr.column=column;
 				last=fgetc(fp);
-				continue;
+				column++;
+				return curr;
 		}
 		else if(last=='/')
 		{
-				returnToken("DIV");
+			sprintf(curr.token,"%s","DIV");
+				curr.line=line;
+				curr.column=column;
 				last=fgetc(fp);
-				continue;
+				column++;
+				return curr;
 		}
 		else if(isalpha(last) && last>='a' && last<='z' || last>='A' && last<='Z' )
 		{
 			str[i++]=last;
 			ch=fgetc(fp);
+			column++;
 			while((ch>='a' && ch<='z' || ch>='A' && ch<='Z' || ch<='9' && ch>='0' || ch=='_') && isalpha(last))
 			{
 				// printf("%c",ch );
 				str[i++]=ch;
 				ch=fgetc(fp);
+				column++;
 			}
 			str[i]='\0';
-			resolve(str);
+			sprintf(curr.token,"%s",resolve(str));
+				curr.line=line;
+				curr.column=column;
 			// indentifyToken();
 			last=ch;
-			continue;
+			return curr;
 		}
 		else if(last=='.')
 		{
 			ch=fgetc(fp);
+			column++;
 			if(ch=='.')
-			{
-				returnToken("RANGEOP");
+			{	
+				sprintf(curr.token,"%s","RANGEOP");
+				curr.line=line;
+				curr.column=column;
 				last=fgetc(fp);
-				continue;
+				return curr;
 			}
 		}
 		else if((last>='0' || last<='9') && isdigit(last))
 		{
 			str[i++]=last;
 			ch=fgetc(fp);
+			column++;
 			while(ch<='9' && ch>='0')
 			{
 				str[i++]=ch;
 				ch=fgetc(fp);
+				column++;
 			}
 			if(ch=='.')
 			{
 				str[i++]=ch;
 				ch=fgetc(fp);
+				column++;
 				if(ch=='.')
 				{
-					returnToken("NUM");
-					returnToken("RANGEOP");
-					continue;
+					// printf("hi1\n");
+					sprintf(curr.token,"%s","NUM");
+					curr.line=line;
+					curr.column=column;
+					last=ch;
+					fseek(fp,-1,SEEK_CUR);
+					return curr;
 				}
 				else 
 					if(ch<='9' && ch>='0')
 					{
 						ch=fgetc(fp);
+						column++;
 						while(ch<='9' && ch>='0')
 						{
 							str[i++]=ch;
 							ch=fgetc(fp);
+							column++;
 						}
 						str[i]='\0';
-						returnToken("RNUM");
+						sprintf(curr.token,"%s","RNUM");
+						curr.line=line;
+						curr.column=column;
 						last=ch;
-						continue;
+						return curr;
 					}
 				else {
 					// errorfunc();
-					continue;
+					return curr;
 				}
 			}
 			else {
@@ -307,12 +350,15 @@ int main()
 				{
 					str[i++]=ch;
 					ch=fgetc(fp);
+					column++;
 				}
-				returnToken("NUM");
+				// printf("hi\n");
+				sprintf(curr.token,"%s","NUM");
+				curr.line=line;
+				curr.column=column;
 				last=ch;
-						continue;
+				return curr;
 			}
 		}
 	}
-	fclose(fp);
-}
+}	

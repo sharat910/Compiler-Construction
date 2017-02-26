@@ -8,6 +8,8 @@ int isTerminal(NODE top)
 		return 0;
 	else return 1;	
 }
+rule follows[57];
+rule firsts[57];
 
 void fill_lhs(rule array[57])
 {
@@ -65,14 +67,14 @@ void fill_lhs(rule array[57])
 	sprintf(array[51].lhs,"<arithmeticExpr>");
 	sprintf(array[52].lhs,"<AnyTerm>");
 }
-void fill_firsts(rule rules_back[100],FirstAndFollow f)
+void fill_firsts(rule rules_back[100])
 {
-	fill_lhs(f.firsts);
+	fill_lhs(firsts);
 	for(int i=1;i<99;i++)
 	{
 		if(isTerminal(rules_back[i].rhs.top))
 		{
-			stack* a=&(f.firsts[get_index_nt(rules_back[i].lhs)].rhs);
+			stack* a=&(firsts[get_index_nt(rules_back[i].lhs)].rhs);
 			*a=distinct_push(*a,rules_back[i].rhs.top->str);
 		}
 	}
@@ -90,10 +92,10 @@ void fill_firsts(rule rules_back[100],FirstAndFollow f)
 			{
 				if(out)
 					break;
-				stack* b=&(f.firsts[get_index_nt(rules_back[i].lhs)].rhs);
+				stack* b=&(firsts[get_index_nt(rules_back[i].lhs)].rhs);
 				if(isTerminal(top)==0)
 				{
-					stack* a= &f.firsts[get_index_nt(top->str)].rhs;
+					stack* a= &firsts[get_index_nt(top->str)].rhs;
 					int initial=(*b).stack_size;
 						*b=merge(*b,*a);
 					int final=(*b).stack_size;
@@ -116,20 +118,20 @@ void fill_firsts(rule rules_back[100],FirstAndFollow f)
 	}
 }
 
-stack get_follow_stack(char* non_terminal,FirstAndFollow f){
-	return f.follows[get_index_nt(non_terminal)].rhs;
+
+
+stack get_follow_stack(char* non_terminal){
+	return follows[get_index_nt(non_terminal)].rhs;
 }
 
-stack get_first_stack(char* non_terminal,FirstAndFollow f){
-	return f.firsts[get_index_nt(non_terminal)].rhs;
+stack get_first_stack(char* non_terminal){
+	return firsts[get_index_nt(non_terminal)].rhs;
 }
 
-void fill_follows(rule rules_back[100],FirstAndFollow f)
-{
-	//Initial follow
-	fill_lhs(f.follows);
+void fill_follows(rule rules_back[100]){
+	fill_lhs(follows);
 	int flag = 1;
-	stack* b=&(f.follows[get_index_nt("<program>")].rhs);
+	stack* b=&(follows[get_index_nt("<program>")].rhs);
 	(*b)=push((*b),"$");
 	while(flag){
 		flag = 0;
@@ -137,18 +139,13 @@ void fill_follows(rule rules_back[100],FirstAndFollow f)
 		{
 			char* lhs = rules_back[i].lhs;
 			stack right=rules_back[i].rhs;
-			// printf("\n");
-			// printStack(right);
 			NODE item = right.top;
 			int j=1;
-			// printf("%d ",right.stack_size);
 			while(item != NULL)
 			{	
-				//printf("%d",j);
 				if(isTerminal(item)==0)
 				{
-					//printf("Non-terminal: %s\n",item->str);
-					stack item_follow_stack = get_follow_stack(item->str,f);
+					stack item_follow_stack = get_follow_stack(item->str);
 					int prev_size = item_follow_stack.stack_size;
 					NODE next = item->link;
 					while(next != NULL)
@@ -158,11 +155,9 @@ void fill_follows(rule rules_back[100],FirstAndFollow f)
 							
 							item_follow_stack = distinct_push(item_follow_stack,next->str);
 							
-							// printf("Adding terminal: %s\n",next->str);
-							// printStack(item_follow_stack);
 							break;
 						}else{
-							stack next_ka_first_stack = get_first_stack(next->str,f);
+							stack next_ka_first_stack = get_first_stack(next->str);
 							if (find_stack(&next_ka_first_stack,"e")){
 								item_follow_stack = merge_without_e(item_follow_stack,next_ka_first_stack);
 								next = next->link;
@@ -174,26 +169,37 @@ void fill_follows(rule rules_back[100],FirstAndFollow f)
 
 					}
 					if (next == NULL)
-						item_follow_stack = merge(item_follow_stack,get_follow_stack(lhs,f));
+						item_follow_stack = merge(item_follow_stack,get_follow_stack(lhs));
 				
 					int after_size = item_follow_stack.stack_size;
 					if (after_size > prev_size)
 						flag=1;
-					f.follows[get_index_nt(item->str)].rhs = item_follow_stack;
+					follows[get_index_nt(item->str)].rhs = item_follow_stack;
 
 				}
 				item = item->link;
 			}
 		}
-	}	
+	}
+	
 }
 
 
 FirstAndFollow getFirstAndFollow(grammar G)
 {
-	FirstAndFollow f;
-	fill_firsts(G.rules_back,f);
-	fill_follows(G.rules_back,f);
+	FirstAndFollow f;	
+	fill_firsts(G.rules_back);
+	for (int i = 0; i < 53; ++i)
+	{
+		sprintf(f.firsts[i].lhs,"%s",firsts[i].lhs);
+		f.firsts[i].rhs = firsts[i].rhs;
+	}		
+	fill_follows(G.rules_back);
+	for (int i = 0; i < 53; ++i)
+	{
+		sprintf(f.follows[i].lhs,"%s",follows[i].lhs);
+		f.follows[i].rhs = follows[i].rhs;		
+	}	
 	return f;
 }
 
