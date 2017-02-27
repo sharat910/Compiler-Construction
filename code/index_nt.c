@@ -4,6 +4,7 @@
 entry_map_nt map_nt[53];
 int get_index_nt(char * a)
 {
+	// printf("in map%s\n",a );
 	for(int i=0;i<53;i++)
 	{
 		if(!strcmp(map_nt[i].incoming,a)){

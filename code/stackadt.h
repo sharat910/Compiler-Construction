@@ -18,7 +18,7 @@ typedef struct
 } stack;
 extern stack initializeStack(void);
 extern stack push(stack st, char * a);
-extern stack pop(stack st);
+extern void pop(stack* st);
 extern int isEmptyStack(stack st);
 extern void printStack(stack st);
 extern stack distinct_push(stack st,char * a);

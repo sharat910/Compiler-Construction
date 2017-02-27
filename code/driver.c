@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "map.h"
 #include "index_nt.h"
@@ -70,18 +71,14 @@ int main()
 	// {
 	// 	printf("%s ,%d\n",map_nt[i].incoming,map_nt[i].index);
 	// }
+	parseTree programNode=*((parseTree* )malloc(sizeof(parseTree)));
 	
-	removeComments("code.txt","clean_code.txt");
 	
 	fp=fopen( "clean_code.txt", "r" );
 	line=0;
 	column=1;    
-	tokenInfo curr;
-	while(1){
-		curr=getNextToken();
-		if (strcmp(curr.token,"#")==0)
-			break;
-		//printf("%s ", curr.token);	
-	}
-	printf("Program End\n");
+	programNode=parseInputSourceCode("code.txt",T,g);
+	printf("%s\n",programNode.begin.parentNodeSymbol );
+	
+	// printf("Program End\n");
 }

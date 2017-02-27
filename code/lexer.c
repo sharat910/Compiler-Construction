@@ -408,7 +408,7 @@ tokenInfo getNextToken()
 					curr.line=line;
 					curr.column=column;
 					last=ch;
-					fseek(fp,-1,SEEK_CUR);
+					buffer_pointer-=1;
 					return curr;
 				}
 				else 
@@ -422,22 +422,22 @@ tokenInfo getNextToken()
 							ch=custom_fgetc();
 							column++;
 						}
-						if (ch == 'e' || ch == 'E')
-						{
-							ch=custom_fgetc();
-							column++;
-							if (ch=='+' || ch=='-')
-							{
-								ch=custom_fgetc();
-								column++;
-								while(ch<='9' && ch>='0')
-								{
-									str[i++]=ch;
-									ch=custom_fgetc();
-									column++;
-								}
-							}
-						}
+						// if (ch == 'e' || ch == 'E')
+						// {
+						// 	ch=custom_fgetc();
+						// 	column++;
+						// 	if (ch=='+' || ch=='-')
+						// 	{
+						// 		ch=custom_fgetc();
+						// 		column++;
+						// 		while(ch<='9' && ch>='0')
+						// 		{
+						// 			str[i++]=ch;
+						// 			ch=custom_fgetc();
+						// 			column++;
+						// 		}
+						// 	}
+						// }
 						str[i]='\0';
 						sprintf(curr.token,"%s","RNUM");
 						curr.line=line;
@@ -450,35 +450,35 @@ tokenInfo getNextToken()
 					return curr;
 				}
 			}
-			else if (ch == 'e' || ch == 'E')
-			{
-				ch=custom_fgetc();
-				column++;
-				if (ch=='+' || ch=='-')
-				{
-					ch=custom_fgetc();
-					column++;
-					while(ch<='9' && ch>='0')
-					{
-						str[i++]=ch;
-						ch=custom_fgetc();
-						column++;
-					}
-					str[i]='\0';
-						sprintf(curr.token,"%s","RNUM");
-						curr.line=line;
-						curr.column=column;
-						last=ch;
-						return curr;
-				}
-			}
+			// else if (ch == 'e' || ch == 'E')
+			// {
+			// 	ch=custom_fgetc();
+			// 	column++;
+			// 	if (ch=='+' || ch=='-')
+			// 	{
+			// 		ch=custom_fgetc();
+			// 		column++;
+			// 		while(ch<='9' && ch>='0')
+			// 		{
+			// 			str[i++]=ch;
+			// 			ch=custom_fgetc();
+			// 			column++;
+			// 		}
+			// 		str[i]='\0';
+			// 			sprintf(curr.token,"%s","RNUM");
+			// 			curr.line=line;
+			// 			curr.column=column;
+			// 			last=ch;
+			// 			return curr;
+			// 	}
+			// }
 			else {
-				while(ch<='9' && ch>='0')
-				{
-					str[i++]=ch;
-					ch=custom_fgetc();
-					column++;
-				}
+				// while(ch<='9' && ch>='0')
+				// {
+				// 	str[i++]=ch;
+				// 	ch=custom_fgetc();
+				// 	column++;
+				// }
 				// printf("hi\n");
 				sprintf(curr.token,"%s","NUM");
 				curr.line=line;
