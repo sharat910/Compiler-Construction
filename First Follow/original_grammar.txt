@@ -58,11 +58,11 @@
 
 <relationalOp> ->  LT | LE | GT | GE | EQ | NE
 <declareStmt> ->  DECLARE <idList> COLON <dataType> SEMICOL
-<condionalStmt> -> SWITCH BO ID BC START <caseStmt> <default> END
+<condionalStmt> -> SWITCH BO ID BC START <caseStmts> <default> END
 
 <caseStmts> -> CASE <value> COLON <statements> BREAK SEMICOL <MultiCase>
 <MultiCase> -> CASE <value> COLON <statements> BREAK SEMICOL <MultiCase> | e
 <value> -> NUM | TRUE | FALSE
 <default> -> DEFAULT COLON <statements> BREAK SEMICOL | e
-<iterativeStmt> -> FOR BO ID IN <range> BC START <statements> END | WHILE BO <booleanExpr> BC START <statements> END
+<iterativeStmt> -> FOR BO ID IN <range> BC START <statements> END | WHILE BO <AOBE> BC START <statements> END
 <range> -> NUM RANGEOP NUM

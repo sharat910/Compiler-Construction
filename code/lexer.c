@@ -80,9 +80,9 @@ void removeComments(char *testcaseFile, char *cleanFile)
 				fputc(ch,fp2);
 		}
 	}
-	fputc('$',fp2);
+	// fputc('$',fp2);
 	fflush(fp2);
-	printf("hello\n");
+	// printf("hello\n");
 }
 
 
@@ -93,16 +93,16 @@ tokenInfo getNextToken()
 
 	if (buffer_pointer == buffer_size || last=='\n')
 	{
-		if(last=='$')
-		{			
-			sprintf(curr.token,"%s","$");
-			return curr;
-		}
+		// if(last=='$')
+		// {			
+		// 	sprintf(curr.token,"%s","$");
+		// 	return curr;
+		// }
 		fp = getStream(fp);
 		// printf("\n%s\n",buffer);		
 		if (fp == NULL)
 		{			
-			sprintf(curr.token,"%s","#");
+			sprintf(curr.token,"%s","$");
 			return curr;
 		}
 		line++;
@@ -126,7 +126,7 @@ tokenInfo getNextToken()
 				// printf("\n%s\n",buffer);
 				if (fp == NULL)
 				{			
-					sprintf(curr.token,"%s","#");
+					sprintf(curr.token,"%s","$");
 					return curr;
 				}
 				line++;

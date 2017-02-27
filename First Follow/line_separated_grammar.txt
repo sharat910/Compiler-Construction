@@ -84,7 +84,7 @@
 <relationalOp> -> EQ 
 <relationalOp> -> NE
 <declareStmt> ->  DECLARE <idList> COLON <dataType> SEMICOL
-<condionalStmt> -> SWITCH BO ID BC START <caseStmt> <default> END
+<condionalStmt> -> SWITCH BO ID BC START <caseStmts> <default> END
 <caseStmts> -> CASE <value> COLON <statements> BREAK SEMICOL <MultiCase>
 <MultiCase> -> CASE <value> COLON <statements> BREAK SEMICOL <MultiCase> 
 <MultiCase> -> e

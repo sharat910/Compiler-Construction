@@ -453,7 +453,7 @@ BO
 ID
 BC
 START
-<caseStmt>
+<caseStmts>
 <default>
 END
 88

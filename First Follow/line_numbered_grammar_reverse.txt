@@ -450,7 +450,7 @@ DECLARE
 8
 END
 <default>
-<caseStmt>
+<caseStmts>
 START
 BC
 ID

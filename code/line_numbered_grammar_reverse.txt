@@ -450,7 +450,7 @@ DECLARE
 8
 END
 <default>
-<caseStmt>
+<caseStmts>
 START
 BC
 ID
@@ -523,7 +523,7 @@ END
 <statements>
 START
 BC
-<booleanExpr>
+<AOBE>
 BO
 WHILE
 98

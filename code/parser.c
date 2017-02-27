@@ -210,6 +210,7 @@ FirstAndFollow ComputeFirstAndFollowSets(grammar G)
 parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G)
 {
 	parseTree programNode=*((parseTree* )malloc(sizeof(parseTree)));
+	char str_top[25];
 	removeComments(testcaseFile,"clean_code.txt");
 	stack s=push(s,"$");
 	s=push(s,"<program>");
@@ -239,7 +240,7 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G)
 			printf("%d %d\n",curr.line,curr.column );
 		}
 		NODE top=s.top;
-		char str_top[25];
+		
 		sprintf(str_top,"%s",top->str);
 		printf("%s\n",str_top );
 		printf("%s\n",curr.token);
@@ -250,8 +251,12 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G)
 			printf("matching %s %s\n",str_top,curr.token);
 			printf("\n");
 			if(strcmp(curr.token,str_top)==0){
+				// printf("Here\n");
 				// fillnode();
 				pop(&s);
+				// printf("pop done\n");
+				if(terminated)
+					break;
 				read=1;
 				continue;
 			}
@@ -286,6 +291,7 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G)
 		printf("%s ", curr.token);	
 
 	}
+	
 	if(s.top!=NULL)
 		printf("wrong\n");
 	if(s.top==NULL)

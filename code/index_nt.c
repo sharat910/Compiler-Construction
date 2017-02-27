@@ -1,7 +1,7 @@
 #include "index_nt.h"
 #include <stdio.h>
 #include <string.h>
-entry_map_nt map_nt[53];
+entry_map_nt map_nt[54];
 int get_index_nt(char * a)
 {
 	// printf("in map%s\n",a );
@@ -123,6 +123,5 @@ void init_map_nt()
 	sprintf(map_nt[52].incoming,"<AnyTerm>");
 	map_nt[52].index=52;
 	sprintf(map_nt[53].incoming,"$");
-	map_nt[53].index=53;
-	
+	map_nt[53].index=53;	
 }
