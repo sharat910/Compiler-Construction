@@ -145,6 +145,7 @@ tokenInfo getNextToken()
 				sprintf(curr.token,"%s","LE");
 				curr.line=line;
 				curr.column=column;
+				sprintf(curr.lexeme,"%s","<=");
 				last=custom_fgetc();
 				column++;
 				return curr;
@@ -159,6 +160,7 @@ tokenInfo getNextToken()
 					sprintf(curr.token,"%s","DRIVERDEF");
 					curr.line=line;
 					curr.column=column;
+					sprintf(curr.lexeme,"%s","<<<");
 					last=custom_fgetc();
 					column++;
 					return curr;
@@ -167,6 +169,7 @@ tokenInfo getNextToken()
 					sprintf(curr.token,"%s","DEF");
 					curr.line=line;
 					curr.column=column;
+					sprintf(curr.lexeme,"%s","<<");
 					return curr;
 				}
 			}
@@ -174,7 +177,7 @@ tokenInfo getNextToken()
 				sprintf(curr.token,"%s","LT");
 				curr.line=line;
 				curr.column=column;
-
+				sprintf(curr.lexeme,"%s","<");
 				last=ch;
 				return curr;
 			}
@@ -187,6 +190,7 @@ tokenInfo getNextToken()
 				sprintf(curr.token,"%s","GE");
 				curr.line=line;
 				curr.column=column;
+				sprintf(curr.lexeme,"%s",">=");
 				last=custom_fgetc();
 				column++;
 				return curr;
@@ -200,6 +204,7 @@ tokenInfo getNextToken()
 					sprintf(curr.token,"%s","DRIVERENDDEF");
 					curr.line=line;
 					curr.column=column;
+					sprintf(curr.lexeme,"%s",">>>");
 					last=custom_fgetc();
 					column++;
 					return curr;
@@ -208,12 +213,14 @@ tokenInfo getNextToken()
 					sprintf(curr.token,"%s","ENDDEF");
 					curr.line=line;
 					curr.column=column;
-				return curr;
+					sprintf(curr.lexeme,"%s",">>");
+					return curr;
 			}
 			else {
 				sprintf(curr.token,"%s","GT");
 				curr.line=line;
 				curr.column=column;
+				sprintf(curr.lexeme,"%s",">");
 				last=ch;
 				return curr;	
 			}
@@ -227,6 +234,7 @@ tokenInfo getNextToken()
 				sprintf(curr.token,"%s","EQ");
 				curr.line=line;
 				curr.column=column;
+				sprintf(curr.lexeme,"%s","==");
 				last=custom_fgetc();
 				column++;	
 				return curr;
@@ -242,6 +250,7 @@ tokenInfo getNextToken()
 				sprintf(curr.token,"%s","NE");
 				curr.line=line;
 				curr.column=column;
+				sprintf(curr.lexeme,"%s","!=");
 				last=custom_fgetc();
 				column++;
 				return curr;
@@ -257,6 +266,7 @@ tokenInfo getNextToken()
 				sprintf(curr.token,"%s","ASSIGNOP");
 				curr.line=line;
 				curr.column=column;
+				sprintf(curr.lexeme,"%s",":=");
 				last=custom_fgetc();
 				column++;
 				return curr;
@@ -266,6 +276,7 @@ tokenInfo getNextToken()
 				sprintf(curr.token,"%s","COLON");
 				curr.line=line;
 				curr.column=column;
+				sprintf(curr.lexeme,"%s",":");
 				last=ch;
 				return curr;
 			}
@@ -275,6 +286,7 @@ tokenInfo getNextToken()
 			sprintf(curr.token,"%s","COMMA");
 				curr.line=line;
 				curr.column=column;
+				sprintf(curr.lexeme,"%s",",");
 				last=custom_fgetc();
 				column++;
 				return curr;
@@ -284,6 +296,7 @@ tokenInfo getNextToken()
 			sprintf(curr.token,"%s","SQBO");
 				curr.line=line;
 				curr.column=column;
+				sprintf(curr.lexeme,"%s","[");
 				last=custom_fgetc();
 				column++;
 				return curr;
@@ -293,6 +306,7 @@ tokenInfo getNextToken()
 				sprintf(curr.token,"%s","SQBC");
 				curr.line=line;
 				curr.column=column;
+				sprintf(curr.lexeme,"%s","]");
 				last=custom_fgetc();
 				column++;
 				return curr;
@@ -302,6 +316,7 @@ tokenInfo getNextToken()
 			sprintf(curr.token,"%s","BO");
 				curr.line=line;
 				curr.column=column;
+				sprintf(curr.lexeme,"%s","(");
 				last=custom_fgetc();
 				column++;
 				return curr;
@@ -311,6 +326,7 @@ tokenInfo getNextToken()
 				sprintf(curr.token,"%s","BC");
 				curr.line=line;
 				curr.column=column;
+				sprintf(curr.lexeme,"%s",")");
 				last=custom_fgetc();
 				column++;
 				return curr;
@@ -320,6 +336,7 @@ tokenInfo getNextToken()
 				sprintf(curr.token,"%s","SEMICOL");
 				curr.line=line;
 				curr.column=column;
+				sprintf(curr.lexeme,"%s",";");
 				last=custom_fgetc();
 				column++;
 				return curr;
@@ -329,6 +346,7 @@ tokenInfo getNextToken()
 				sprintf(curr.token,"%s","PLUS");
 				curr.line=line;
 				curr.column=column;
+				sprintf(curr.lexeme,"%s","+");
 				last=custom_fgetc();
 				column++;
 				return curr;
@@ -338,6 +356,7 @@ tokenInfo getNextToken()
 			sprintf(curr.token,"%s","MINUS");
 				curr.line=line;
 				curr.column=column;
+				sprintf(curr.lexeme,"%s","-");
 				last=custom_fgetc();
 				column++;
 				return curr;
@@ -347,6 +366,7 @@ tokenInfo getNextToken()
 				sprintf(curr.token,"%s","MUL");
 				curr.line=line;
 				curr.column=column;
+				sprintf(curr.lexeme,"%s","*");
 				last=custom_fgetc();
 				column++;
 				return curr;
@@ -356,6 +376,7 @@ tokenInfo getNextToken()
 			sprintf(curr.token,"%s","DIV");
 				curr.line=line;
 				curr.column=column;
+				sprintf(curr.lexeme,"%s","/");
 				last=custom_fgetc();
 				column++;
 				return curr;
@@ -373,9 +394,10 @@ tokenInfo getNextToken()
 				column++;
 			}
 			str[i]='\0';
+			sprintf(curr.lexeme,"%s",str);
 			sprintf(curr.token,"%s",resolve(str));
-				curr.line=line;
-				curr.column=column;
+			curr.line=line;
+			curr.column=column;
 			// indentifyToken();
 			last=ch;
 			return curr;
@@ -389,6 +411,7 @@ tokenInfo getNextToken()
 				sprintf(curr.token,"%s","RANGEOP");
 				curr.line=line;
 				curr.column=column;
+				sprintf(curr.lexeme,"%s","..");
 				last=custom_fgetc();
 				return curr;
 			}
@@ -415,6 +438,8 @@ tokenInfo getNextToken()
 					sprintf(curr.token,"%s","NUM");
 					curr.line=line;
 					curr.column=column;
+					str[i-1]='\0';
+					sprintf(curr.lexeme,"%s",str);
 					last=ch;
 					buffer_pointer--;
 					return curr;
@@ -450,6 +475,7 @@ tokenInfo getNextToken()
 						sprintf(curr.token,"%s","RNUM");
 						curr.line=line;
 						curr.column=column;
+						sprintf(curr.lexeme,"%s",str);
 						last=ch;
 						return curr;
 					}
@@ -473,11 +499,12 @@ tokenInfo getNextToken()
 						column++;
 					}
 					str[i]='\0';
-						sprintf(curr.token,"%s","RNUM");
-						curr.line=line;
-						curr.column=column;
-						last=ch;
-						return curr;
+					sprintf(curr.token,"%s","RNUM");
+					curr.line=line;
+					curr.column=column;
+					sprintf(curr.lexeme,"%s","-");
+					last=ch;
+					return curr;
 				}
 			}
 			else {
@@ -488,9 +515,11 @@ tokenInfo getNextToken()
 				// 	column++;
 				// }
 				// printf("hi\n");
+				str[i]='\0';
 				sprintf(curr.token,"%s","NUM");
 				curr.line=line;
 				curr.column=column;
+				sprintf(curr.lexeme,"%s",str);
 				last=ch;
 				return curr;
 			}
