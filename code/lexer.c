@@ -473,12 +473,12 @@ tokenInfo getNextToken()
 				}
 			}
 			else {
-				while(ch<='9' && ch>='0')
-				{
-					str[i++]=ch;
-					ch=custom_fgetc();
-					column++;
-				}
+				// while(ch<='9' && ch>='0')
+				// {
+				// 	str[i++]=ch;
+				// 	ch=custom_fgetc();
+				// 	column++;
+				// }
 				// printf("hi\n");
 				sprintf(curr.token,"%s","NUM");
 				curr.line=line;

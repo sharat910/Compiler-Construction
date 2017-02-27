@@ -1,6 +1,9 @@
 #include "parser.h"
 #include <stdio.h>
 #include "index_nt.h"
+#include "index_t.h"
+#include <string.h>
+#include <stdlib.h>
 
 int isTerminal(NODE top)
 {
@@ -97,12 +100,16 @@ void fill_firsts(rule rules_back[100])
 				{
 					stack* a= &firsts[get_index_nt(top->str)].rhs;
 					int initial=(*b).stack_size;
-						*b=merge(*b,*a);
+						*b=merge_without_e(*b,*a);
 					int final=(*b).stack_size;
 					if(final>initial)
 						flag=1;
 					if(!find_stack(a,"e"))
 						break;
+					else{
+						if(j==right.stack_size)
+							*b=distinct_push(*b,"e");
+					}
 				}
 				else {
 					int initial=(*b).stack_size;
@@ -200,10 +207,82 @@ FirstAndFollow ComputeFirstAndFollowSets(grammar G)
 	return f;
 }
 
-parseTree  parseInputSourceCode(char *testcaseFile, table T)
+parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G)
 {
-	
+	parseTree programNode=*((parseTree* )malloc(sizeof(parseTree)));
+	removeComments(testcaseFile,"clean_code.txt");
+	stack s=push(s,"<program>");
+	sprintf(programNode.begin.lexemeCurrentNode,"%s","----");
+	programNode.begin.lineno=1;
+	sprintf(programNode.begin.parentNodeSymbol,"%s","ROOT");
+	programNode.begin.isLeafNode=0;
+	sprintf(programNode.begin.NodeSymbol,"%s","<program>");
+	tokenInfo curr;
+	int read=1;
+	while(1)
+	{		
+		if(read)
+		{
+			curr=getNextToken();
+			if (strcmp(curr.token,"#")==0){
+				pop(&s);
+				break;
+			}
+			printf("NEW TOKEN: %s\n", curr.token);
+			printf("%d %d\n",curr.line,curr.column );
+		}
+		NODE top=s.top;
+		char str_top[25];
+		sprintf(str_top,"%s",top->str);
+		printf("%s\n",str_top );
+		printf("%s\n",curr.token);
+		// printf("cool1");
+		// printf("cool2");
+		if(isTerminal(top))
+		{
+			printf("matching %s %s\n",str_top,curr.token);
+			printf("\n");
+			if(strcmp(curr.token,str_top)==0){
+				// fillnode();
+				pop(&s);
+				read=1;
+				continue;
+			}
 
-	
+			else if(strcmp(str_top,"e")==0){
+				read=0;
+				pop(&s);
+				//fillnode()
+			}
+			else printf("error in matching\n");
+			
+		}
+		else
+		{
+			pop(&s);
+			printf("inside%s\n",str_top );
+			printf("%d %d\n",get_index_nt(str_top), get_index_t(curr.token));
+			int rule_num=T.parseTable[get_index_nt(str_top)][get_index_t(curr.token)];
+			NODE populate=G.rules[rule_num].rhs.top;
+			printf("%d\n",rule_num );
+			printf("%d\n",G.rules[rule_num].rhs.stack_size );
+			while(populate!=NULL)
+			{
+				s=push(s,populate->str);
+				// fillnode();
+				populate=populate->link;
+			}
+			printf("stack:\n");
+			printStack(s);
+			read=0;
+		}
+		printf("%s ", curr.token);	
+
+	}
+	if(s.top!=NULL)
+		printf("wrong\n");
+	if(s.top==NULL)
+		printf("good\n");
+	return programNode;
 }
 

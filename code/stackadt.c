@@ -54,13 +54,21 @@ stack push(stack st, char * a)
 }
 
 
-stack pop(stack st)
+void pop(stack* st)
 {
-	NODE p=st.top;
-	st.top=p->link;
-	st.stack_size--;
-	free(p);
-	return st;
+	if(!isEmptyStack(*st))
+	{
+		// printStack(*st);
+		NODE p=st->top;
+		if(st->stack_size==1)
+			st->top=NULL;
+		else	
+		st->top=p->link;
+		st->stack_size--;
+		free(p);
+		// printf("here\n");
+		// printStack(*st);
+	}
 }
 
 
