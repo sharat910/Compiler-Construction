@@ -5,7 +5,7 @@ entry_map_nt map_nt[53];
 int get_index_nt(char * a)
 {
 	// printf("in map%s\n",a );
-	for(int i=0;i<53;i++)
+	for(int i=0;i<54;i++)
 	{
 		if(!strcmp(map_nt[i].incoming,a)){
 
@@ -122,5 +122,7 @@ void init_map_nt()
 	map_nt[51].index=51;
 	sprintf(map_nt[52].incoming,"<AnyTerm>");
 	map_nt[52].index=52;
+	sprintf(map_nt[53].incoming,"$");
+	map_nt[53].index=53;
 	
 }

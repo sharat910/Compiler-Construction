@@ -211,7 +211,8 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G)
 {
 	parseTree programNode=*((parseTree* )malloc(sizeof(parseTree)));
 	removeComments(testcaseFile,"clean_code.txt");
-	stack s=push(s,"<program>");
+	stack s=push(s,"$");
+	s=push(s,"<program>");
 	sprintf(programNode.begin.lexemeCurrentNode,"%s","----");
 	programNode.begin.lineno=1;
 	sprintf(programNode.begin.parentNodeSymbol,"%s","ROOT");
@@ -219,15 +220,21 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G)
 	sprintf(programNode.begin.NodeSymbol,"%s","<program>");
 	tokenInfo curr;
 	int read=1;
+	int terminated=0;
 	while(1)
 	{		
+		// if(terminated)
 		if(read)
 		{
 			curr=getNextToken();
-			if (strcmp(curr.token,"#")==0){
-				pop(&s);
-				break;
+			if (strcmp(curr.token,"$")==0){
+				// pop(&s);
+				// break;
+				read=0;
+				terminated=1;
 			}
+			if(isEmptyStack(s))
+				break;
 			printf("NEW TOKEN: %s\n", curr.token);
 			printf("%d %d\n",curr.line,curr.column );
 		}

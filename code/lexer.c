@@ -50,7 +50,8 @@ void removeComments(char *testcaseFile, char *cleanFile)
 {
 	FILE* fp1 = fopen(testcaseFile,"r");
 	FILE* fp2 = fopen(cleanFile,"w");
-	while(!feof(fp1)){
+	while(!feof(fp1))
+	{
 		char ch = fgetc(fp1);
 		if (ch == '*')
 		{
@@ -79,7 +80,9 @@ void removeComments(char *testcaseFile, char *cleanFile)
 				fputc(ch,fp2);
 		}
 	}
-
+	fputc('$',fp2);
+	fflush(fp2);
+	printf("hello\n");
 }
 
 
@@ -87,8 +90,14 @@ tokenInfo getNextToken()
 {
 	char ch;
 	tokenInfo curr;
+
 	if (buffer_pointer == buffer_size || last=='\n')
 	{
+		if(last=='$')
+		{			
+			sprintf(curr.token,"%s","$");
+			return curr;
+		}
 		fp = getStream(fp);
 		// printf("\n%s\n",buffer);		
 		if (fp == NULL)
@@ -103,7 +112,6 @@ tokenInfo getNextToken()
 
 	while(buffer_pointer < buffer_size)
 	{
-		
 		char str[20];
 		if(last==' ' || last=='\n' || last=='\t' || last=='\r'){
 			

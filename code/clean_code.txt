@@ -22,4 +22,4 @@ print(A[k]);
 end
 [num]:=use module arraysum with parameters A;
 print(num); 
-end
+end$
