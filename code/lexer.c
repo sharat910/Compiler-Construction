@@ -420,4 +420,4 @@ tokenInfo getNextToken()
 			}
 		}
 	}
-}	
+}
