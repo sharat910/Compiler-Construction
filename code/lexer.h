@@ -1,5 +1,6 @@
 #ifndef _lexer
 #define _lexer
+#include<stdio.h>
 typedef struct 
 {
 	char token[25];
@@ -8,9 +9,8 @@ typedef struct
 
 }tokenInfo;
 
-
-
-extern tokenInfo getNextToken();
-// extern void removeComments(char *testcaseFile, char *cleanFile);
+FILE* getStream(FILE* fp);
+tokenInfo getNextToken();
+void removeComments(char *testcaseFile, char *cleanFile);
 
 #endif

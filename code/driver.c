@@ -68,20 +68,22 @@ int main()
 	// {
 	// 	printf("%s ,%d\n",map_nt[i].incoming,map_nt[i].index);
 	// }
-	
-	fp=fopen( "code.txt", "r" );
-	last=fgetc(fp);
-	line=1;
-	column=1;
-	while(!feof(fp))
-	{
-		// printf("hello\n");
-		tokenInfo curr;
-		curr=getNextToken();
+	printf("Hello\n");
+	removeComments("code.txt","clean_code.txt");
+	printf("Hi\n");
+	// fp=fopen( "code.txt", "r" );
+	// last=fgetc(fp);
+	// line=1;
+	// column=1;
+	// while(!feof(fp))
+	// {
+	// 	// printf("hello\n");
+	// 	tokenInfo curr;
+	// 	curr=getNextToken();
 		
-		//printf("%s %d %d\n", curr.token,curr.line,curr.column);
-	}
+	// 	//printf("%s %d %d\n", curr.token,curr.line,curr.column);
+	// }
 	
 	
-	fclose(fp);
+	// fclose(fp);
 }

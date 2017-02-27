@@ -1,7 +1,7 @@
 <<module arraysum>>
 				takes input[list:array[120] of real];
 				returns [sum:real];
-start*****..****1.234 1 1.34 <<>><<>>>>
+start*..1.234 1 1.34 <<>><<>>>>
 declare s: real;
 s := 0.0;
 declare index : integer;
@@ -22,4 +22,4 @@ print(A[k]);
 end
 [num]:=use module arraysum with parameters A;
 print(num);
-end   
+end   ÿ
