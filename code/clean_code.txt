@@ -4,7 +4,7 @@
 start*..1.234 1 1.34 <<>><<>>>>
 declare s: real;
 s := 0.0;
-declare index : integer;
+declare index : integer; 
 for (index in 120)
 start
 s := s + list[index];
@@ -12,7 +12,8 @@ end
 sum := s;
 end
 <<driver program>>
-start
+start 
+
 declare num, k:integer;
 declare A:array [110] of integer;
 for( k in 1.08 1 1 8.9..1.9 10)
@@ -21,5 +22,5 @@ A[k]:=(num -   <<<>>>   k)* (num-k);
 print(A[k]);
 end
 [num]:=use module arraysum with parameters A;
-print(num);
-end   ÿ
+print(num); 
+end   

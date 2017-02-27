@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <ctype.h>
+#include <string.h>
 #include "map.h"
 #include "index_nt.h"
 #include "index_t.h"
@@ -52,13 +52,13 @@ int main()
 	
 
 	fill_parseTable(g,f,T.parseTable);
-	for(int i=0;i<53;i++){
-		for(int j=0;j<59;j++)
-		{
-			printf("%d ",T.parseTable[i][j] );
-		}
-		printf("\n");
-	}
+	// for(int i=0;i<53;i++){
+	// 	for(int j=0;j<59;j++)
+	// 	{
+	// 		printf("%d ",T.parseTable[i][j] );
+	// 	}
+	// 	printf("\n");
+	// }
 	
 	// for(int i=1;i<99;i++)
 	// {
@@ -70,22 +70,18 @@ int main()
 	// {
 	// 	printf("%s ,%d\n",map_nt[i].incoming,map_nt[i].index);
 	// }
-	printf("Hello\n");
+	
 	removeComments("code.txt","clean_code.txt");
-	printf("Hi\n");
-	// fp=fopen( "code.txt", "r" );
-	// last=fgetc(fp);
-	// line=1;
-	// column=1;
-	// while(!feof(fp))
-	// {
-	// 	// printf("hello\n");
-	// 	tokenInfo curr;
-	// 	curr=getNextToken();
-		
-	// 	//printf("%s %d %d\n", curr.token,curr.line,curr.column);
-	// }
 	
-	
-	// fclose(fp);
+	fp=fopen( "clean_code.txt", "r" );
+	line=0;
+	column=1;    
+	tokenInfo curr;
+	while(1){
+		curr=getNextToken();
+		if (strcmp(curr.token,"#")==0)
+			break;
+		//printf("%s ", curr.token);	
+	}
+	printf("Program End\n");
 }

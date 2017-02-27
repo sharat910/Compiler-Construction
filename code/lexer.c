@@ -13,8 +13,8 @@ extern int column;
 extern char last;
 extern FILE* fp;
 char buffer[200];
-int buffer_pointer;
-int buffer_size;
+int buffer_pointer=0;
+int buffer_size=0;
 char* resolve(char* a)
 {
 	return find(a);
@@ -43,7 +43,6 @@ void removeComments(char *testcaseFile, char *cleanFile)
 	FILE* fp2 = fopen(cleanFile,"w");
 	while(!feof(fp1)){
 		char ch = fgetc(fp1);
-		printf("%c\n",ch);
 		if (ch == '*')
 		{
 			char lookahead = fgetc(fp1);
@@ -67,9 +66,8 @@ void removeComments(char *testcaseFile, char *cleanFile)
 		}
 		else{
 			fflush(fp2);
-			if(!feof(fp2))
+			if(!feof(fp1))
 				fputc(ch,fp2);
-
 		}
 	}
 
@@ -78,23 +76,46 @@ void removeComments(char *testcaseFile, char *cleanFile)
 
 tokenInfo getNextToken()
 {
-	// printf("hello%c ", last);
 	char ch;
 	tokenInfo curr;
+	if (buffer_pointer == buffer_size || last=='\n')
+	{
+		fp = getStream(fp);
+		// printf("\n%s\n",buffer);		
+		if (fp == NULL)
+		{			
+			sprintf(curr.token,"%s","#");
+			return curr;
+		}
+		line++;
+		column=1;
+		last = custom_fgetc();
+	}
+
 	while(buffer_pointer < buffer_size)
 	{
 		
 		char str[20];
 		if(last==' ' || last=='\n' || last=='\t' || last=='\r'){
-			if(last=='\n'){
-				line++;
-				column=1;
-			}
+			
 			if(last==' ')
 				column++;
 			if(last=='\t')
-				column+=4;
+				column+=1;
 			last=custom_fgetc();
+			if (buffer_pointer == buffer_size)
+			{
+				fp = getStream(fp);
+				// printf("\n%s\n",buffer);
+				if (fp == NULL)
+				{			
+					sprintf(curr.token,"%s","#");
+					return curr;
+				}
+				line++;
+				column=1;
+				last = custom_fgetc();
+			}
 			continue;
 		}
 		int i=0;
