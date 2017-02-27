@@ -408,7 +408,7 @@ tokenInfo getNextToken()
 					curr.line=line;
 					curr.column=column;
 					last=ch;
-					fseek(fp,-1,SEEK_CUR);
+					buffer_pointer--;
 					return curr;
 				}
 				else 
