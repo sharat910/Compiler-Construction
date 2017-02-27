@@ -21,7 +21,16 @@ char* resolve(char* a)
 }
 
 char custom_fgetc(){
-	return buffer[buffer_pointer++];
+	if (buffer_pointer<buffer_size)
+	{
+		return buffer[buffer_pointer++];
+	}
+	else
+	{
+		//printf("Reached EOF in custom_fgetc\n");
+		return '\0';
+	}
+	
 }
 
 
@@ -413,6 +422,22 @@ tokenInfo getNextToken()
 							ch=custom_fgetc();
 							column++;
 						}
+						if (ch == 'e' || ch == 'E')
+						{
+							ch=custom_fgetc();
+							column++;
+							if (ch=='+' || ch=='-')
+							{
+								ch=custom_fgetc();
+								column++;
+								while(ch<='9' && ch>='0')
+								{
+									str[i++]=ch;
+									ch=custom_fgetc();
+									column++;
+								}
+							}
+						}
 						str[i]='\0';
 						sprintf(curr.token,"%s","RNUM");
 						curr.line=line;
@@ -423,6 +448,28 @@ tokenInfo getNextToken()
 				else {
 					// errorfunc();
 					return curr;
+				}
+			}
+			else if (ch == 'e' || ch == 'E')
+			{
+				ch=custom_fgetc();
+				column++;
+				if (ch=='+' || ch=='-')
+				{
+					ch=custom_fgetc();
+					column++;
+					while(ch<='9' && ch>='0')
+					{
+						str[i++]=ch;
+						ch=custom_fgetc();
+						column++;
+					}
+					str[i]='\0';
+						sprintf(curr.token,"%s","RNUM");
+						curr.line=line;
+						curr.column=column;
+						last=ch;
+						return curr;
 				}
 			}
 			else {
