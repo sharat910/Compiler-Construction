@@ -6,7 +6,7 @@ typedef struct tree_node
 	char lexemeCurrentNode[25];
 	int lineno;
 	char token[25];
-	char valueLfNumber[20];
+	float valueLfNumber;
 	char parentNodeSymbol[25];
 	int isLeafNode;
 	char NodeSymbol[25];

@@ -1,4 +1,6 @@
 #include "parser.h"
+#include "parseTree.h"
+#include "stack_ptr.h"
 #include <stdio.h>
 #include "index_nt.h"
 #include "index_t.h"
@@ -207,6 +209,40 @@ FirstAndFollow ComputeFirstAndFollowSets(grammar G)
 	return f;
 }
 
+TREE_NODE_PTR fillnode(ptr ts,tokenInfo curr,char* a)
+{
+	// printf("yo baby\n" );
+	TREE_NODE_PTR temp;
+	temp=(TREE_NODE_PTR) malloc(sizeof(TREE_NODE));
+	temp->parent=ts.node_info;
+	// printf("parent: %s\n", ts.node_info->NodeSymbol);
+	temp->child=NULL;
+	if(a[0]!='<')
+	{
+		// printf("Terminal:\n");
+		sprintf(temp->lexemeCurrentNode,"%s",curr.lexeme);
+		temp->lineno=curr.line;
+		sprintf(temp->token,"%s",curr.token);
+		sprintf(temp->NodeSymbol,"%s",a);
+		temp->isLeafNode=1;
+		sprintf(temp->parentNodeSymbol,"%s",ts.node_info->NodeSymbol);
+		if(strcmp(curr.token,"NUM")==0)
+			temp->valueLfNumber=(int)atoi(curr.lexeme);
+		else if(strcmp(curr.token,"RNUM")==0)
+			temp->valueLfNumber=atof(curr.lexeme);
+	}
+	else{
+		// printf("Non terminal:\n");
+		sprintf(temp->lexemeCurrentNode,"%s","----");
+		temp->lineno=curr.line;
+		sprintf(temp->token,"%s","----");
+		sprintf(temp->NodeSymbol,"%s",a);
+		temp->isLeafNode=0;
+		sprintf(temp->parentNodeSymbol,"%s",ts.node_info->NodeSymbol);
+	}
+	return temp;
+}
+
 parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G)
 {
 	parseTree programNode=*((parseTree* )malloc(sizeof(parseTree)));
@@ -215,10 +251,13 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G)
 	stack s=push(s,"$");
 	s=push(s,"<program>");
 	sprintf(programNode.begin.lexemeCurrentNode,"%s","----");
+	sprintf(programNode.begin.token,"%s","----");
 	programNode.begin.lineno=1;
 	sprintf(programNode.begin.parentNodeSymbol,"%s","ROOT");
 	programNode.begin.isLeafNode=0;
 	sprintf(programNode.begin.NodeSymbol,"%s","<program>");
+	ptr_stack ts=push_ptr_stack(ts,&(programNode.begin));
+	// print_ptr_stack(ts);
 	tokenInfo curr;
 	int read=1;
 	int terminated=0;
@@ -236,24 +275,29 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G)
 			}
 			if(isEmptyStack(s))
 				break;
-			printf("NEW TOKEN: %s\n", curr.token);
-			printf("%d %d\n",curr.line,curr.column );
+			// printf("NEW TOKEN: %s\n", curr.token);
+			// printf("%d %d\n",curr.line,curr.column );
 		}
 		NODE top=s.top;
 		
 		sprintf(str_top,"%s",top->str);
-		printf("%s\n",str_top );
-		printf("%s\n",curr.token);
+		// printf("%s\n",str_top );
+		// printf("%s\n",curr.token);
 		// printf("cool1");
 		// printf("cool2");
 		if(isTerminal(top))
 		{
-			printf("matching %s %s\n",str_top,curr.token);
-			printf("\n");
+			printf("Matching %s %s\n",str_top,curr.token);
+			// printf("\n");
+			print_ptr_stack(ts);
 			if(strcmp(curr.token,str_top)==0){
+				
 				// printf("Here\n");
 				// fillnode();
 				pop(&s);
+				pop_ptr_stack(&ts);
+				printf("After matching normal: ");
+				print_ptr_stack(ts);
 				// printf("pop done\n");
 				if(terminated)
 					break;
@@ -263,7 +307,11 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G)
 
 			else if(strcmp(str_top,"e")==0){
 				read=0;
+				
 				pop(&s);
+				pop_ptr_stack(&ts);
+				printf("After matching e case: ");
+				print_ptr_stack(ts);
 				//fillnode()
 			}
 			else printf("error in matching\n");
@@ -271,24 +319,56 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G)
 		}
 		else
 		{
+			// printf("Non-teminal on top\n");
+			// printf("STack output\n");
+			// print_ptr_stack(ts);
+			// printf("This is goin' on\n" );
+			printf("Before popping: ");
+			print_ptr_stack(ts);
 			pop(&s);
-			printf("inside%s\n",str_top );
-			printf("%d %d\n",get_index_nt(str_top), get_index_t(curr.token));
+			ptr curr_st=*(ts.top);
+			pop_ptr_stack(&ts);
+			printf("After popping: ");
+			print_ptr_stack(ts);
+			// printf("inside%s\n",str_top );
+			// printf("%d %d\n",get_index_nt(str_top), get_index_t(curr.token));
 			int rule_num=T.parseTable[get_index_nt(str_top)][get_index_t(curr.token)];
 			NODE populate=G.rules[rule_num].rhs.top;
-			printf("%d\n",rule_num );
-			printf("%d\n",G.rules[rule_num].rhs.stack_size );
+			// printf("%d %d\n",rule_num,G.rules[rule_num].rhs.stack_size );
+			int first=1;
 			while(populate!=NULL)
-			{
+			{	
+				ptr_map* prev;
+				// print_ptr_stack(ts);
 				s=push(s,populate->str);
-				// fillnode();
+				// printf("before");
+				fflush(stdout);
+				// printf("%d\n",isEmpty_ptr_stack(ts) );
+				if(!isEmpty_ptr_stack(ts)){
+					prev=&(ts.top);
+					// printf("%s\n",(*prev)->node_info->NodeSymbol );
+					
+				}
+				// printf("after");
+				fflush(stdout);
+				printf("Current NT %s\n",populate->str );
+				printf("Before pushing: ");
+				print_ptr_stack(ts);
+				ts=push_ptr_stack(ts,fillnode(curr_st,curr,populate->str));
+				if(!first)
+					(*prev)->node_info->sibling=(ts.top)->node_info;
+				else curr_st.node_info->child=(ts.top)->node_info;
+				printf("After pushing: ");
+				print_ptr_stack(ts);
 				populate=populate->link;
+				first=0;
 			}
-			printf("stack:\n");
-			printStack(s);
+			// ts=populate_tree(s);
+			// printf("stack:\n");
+			// printStack(s);
 			read=0;
 		}
-		printf("%s ", curr.token);	
+		// printf("%s ", curr.token);	
 
 	}
 	
