@@ -19,6 +19,9 @@ ptr_map createNodeTree(TREE_NODE_PTR current)
 	{
 		temp->node_info=current;
 		temp->link=NULL;
+		temp->node_info->child=NULL;
+		temp->node_info->sibling=NULL;
+		temp->node_info->parent=NULL;
 	}
 	else
 	{

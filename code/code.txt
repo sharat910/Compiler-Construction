@@ -7,7 +7,7 @@ returns  [sum:real];
 start
 	declare index:integer;
 	declare t:boolean;
-	sum:=0.0;
+	sum:=0.0E+13;
 	for(index in  1..15)
 	start
 		t:= index<=n;
@@ -98,6 +98,39 @@ start
 	end
 	print(random);
 end      
+<<module readArr>>
+takes input [arr1:array[1..15] of real,k:integer];
+start
+	declare tempvar:real;
+	declare i:integer;
+	i:=1;
+	while(i<=k)
+	start
+		get_value(tempvar);
+		arr1[i]:=tempvar;
+		i:=i+1;
+		** the semantics of while needs an increment and will be taken care of at the second phase**
+	end
+	print(random);
+end      
+
+<<module readArr>>
+takes input [arr1:array[1..15] of real,k:integer];
+start
+	declare tempvar:real;
+	i=9.8E-987;
+	declare i:integer;
+	i:=1;
+	while(i<=k)
+	start
+		get_value(tempvar);
+		arr1[i]:=tempvar;
+		i:=i+1;
+		** the semantics of while needs an increment and will be taken care of at the second phase**
+	end
+	print(random);
+end      
+
 
 
 

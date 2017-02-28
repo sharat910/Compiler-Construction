@@ -314,7 +314,10 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G)
 				print_ptr_stack(ts);
 				//fillnode()
 			}
-			else printf("error in matching\n");
+			else {
+				printf("error in matching\n");
+				break;
+			}
 			
 		}
 		else
