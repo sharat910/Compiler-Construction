@@ -287,7 +287,7 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G)
 		// printf("cool2");
 		if(isTerminal(top))
 		{
-			printf("Matching %s %s\n",str_top,curr.token);
+			printf("Matching %s %s\n",curr.token,str_top);
 			// printf("\n");
 			print_ptr_stack(ts);
 			if(strcmp(curr.token,str_top)==0){
@@ -380,5 +380,18 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G)
 	if(s.top==NULL)
 		printf("good\n");
 	return programNode;
+}
+void LexerOutput(char *testcaseFile)
+{
+	removeComments(testcaseFile,"clean_code.txt");
+	while(1)
+	{		
+		// if(terminated)
+		tokenInfo curr;
+		curr=getNextToken();
+		if (strcmp(curr.token,"$")==0)
+			break;
+		printf("%s %s\n",curr.lexeme,curr.token );
+	}
 }
 

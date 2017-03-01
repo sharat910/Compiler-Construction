@@ -110,8 +110,9 @@ tokenInfo getNextToken()
 		last = custom_fgetc();
 	}
 
-	while(buffer_pointer < buffer_size)
+	while(buffer_pointer <= buffer_size)
 	{
+		// printf("Input: %c\n",last);
 		char str[20];
 		if(last==' ' || last=='\n' || last=='\t' || last=='\r'){
 			
@@ -239,7 +240,12 @@ tokenInfo getNextToken()
 				column++;	
 				return curr;
 			}
-			// else errorfunc;
+			else
+			{
+				printf("Unknown pattern %c%c in line no. %d\n",last,ch,line );
+				last=custom_fgetc();
+				continue;
+			}
 		}
 		else if(last=='!')
 		{
@@ -254,6 +260,12 @@ tokenInfo getNextToken()
 				last=custom_fgetc();
 				column++;
 				return curr;
+			}
+			else
+			{
+				printf("Unknown pattern %c%c in line no. %d\n",last,ch,line );
+				last=custom_fgetc();
+				continue;
 			}
 			// else errorfunc;
 		}
@@ -394,6 +406,12 @@ tokenInfo getNextToken()
 				column++;
 			}
 			str[i]='\0';
+			if(strlen(str)>8)
+			{
+				printf("%s: This Identifier is too long\n",str );
+				last=ch;
+				continue;
+			}
 			sprintf(curr.lexeme,"%s",str);
 			sprintf(curr.token,"%s",resolve(str));
 			curr.line=line;
@@ -414,6 +432,12 @@ tokenInfo getNextToken()
 				sprintf(curr.lexeme,"%s","..");
 				last=custom_fgetc();
 				return curr;
+			}
+			else
+			{
+				printf("Inappropriate symbol %c in line no. %d\n",ch,line );
+				last=custom_fgetc();
+				continue;
 			}
 		}
 		else if((last>='0' || last<='9') && isdigit(last))
@@ -457,10 +481,12 @@ tokenInfo getNextToken()
 						}
 						if (ch == 'e' || ch == 'E')
 						{
+							str[i++]=ch;
 							ch=custom_fgetc();
 							column++;
-							if (ch=='+' || ch=='-')
-							{
+							if (ch=='+' || ch=='-' || (ch<='9' && ch>='0'))
+							{	
+								str[i++]=ch;
 								ch=custom_fgetc();
 								column++;
 								while(ch<='9' && ch>='0')
@@ -469,6 +495,11 @@ tokenInfo getNextToken()
 									ch=custom_fgetc();
 									column++;
 								}
+							}
+							else {
+								printf("1Unidentified Symbol %c in line no. %d\n",ch,line );
+								last=custom_fgetc();
+								continue;
 							}
 						}
 						str[i]='\0';
@@ -480,16 +511,20 @@ tokenInfo getNextToken()
 						return curr;
 					}
 				else {
-					// errorfunc();
-					return curr;
+					printf("2Unidentified Symbol %c in line no. %d\n",ch,line );
+					last=custom_fgetc();
+					printf("%c\n", last);
+					continue;
 				}
 			}
 			else if (ch == 'e' || ch == 'E')
 			{
+				str[i++]=ch;
 				ch=custom_fgetc();
 				column++;
-				if (ch=='+' || ch=='-')
-				{
+				if (ch=='+' || ch=='-' || (ch<='9' && ch>='0'))
+				{	
+					str[i++]=ch;
 					ch=custom_fgetc();
 					column++;
 					while(ch<='9' && ch>='0')
@@ -498,14 +533,19 @@ tokenInfo getNextToken()
 						ch=custom_fgetc();
 						column++;
 					}
-					str[i]='\0';
-					sprintf(curr.token,"%s","RNUM");
-					curr.line=line;
-					curr.column=column;
-					sprintf(curr.lexeme,"%s","-");
-					last=ch;
-					return curr;
 				}
+				else {
+					printf("1Unidentified Symbol %c in line no. %d\n",ch,line );
+					last=custom_fgetc();
+					continue;
+				}
+				str[i]='\0';
+				sprintf(curr.token,"%s","RNUM");
+				curr.line=line;
+				curr.column=column;
+				sprintf(curr.lexeme,"%s","-");
+				last=ch;
+				return curr;
 			}
 			else {
 				// while(ch<='9' && ch>='0')
@@ -523,6 +563,11 @@ tokenInfo getNextToken()
 				last=ch;
 				return curr;
 			}
+		}
+		else
+		{
+			printf("Foreign symbol %c in line no. %d\n",last,line );
+			last=custom_fgetc();
 		}
 	}
 }

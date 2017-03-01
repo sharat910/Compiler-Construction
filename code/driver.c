@@ -76,9 +76,10 @@ int main()
 	
 	fp=fopen( "clean_code.txt", "r" );
 	line=0;
-	column=1;    
+	column=1;
+	// LexerOutput("code.txt");    
 	programNode=parseInputSourceCode("code.txt",T,g);
-	printf("%s\n",programNode.begin.parentNodeSymbol );
+	// printf("%s\n",programNode.begin.parentNodeSymbol );
 	
 	// printf("Program End\n");
 }
