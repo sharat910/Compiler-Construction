@@ -39,7 +39,7 @@ FILE* getStream(FILE* fp)
 	if (fgets(buffer, 200,fp) != NULL)
 	{
 		buffer_pointer = 0;
-		buffer_size = strlen(buffer);
+		buffer_size = strlen(buffer)+1;
 		return fp;
 	}
 	else
@@ -91,7 +91,7 @@ tokenInfo getNextToken()
 	char ch;
 	tokenInfo curr;
 
-	if (buffer_pointer == buffer_size || last=='\n')
+	if (buffer_pointer == buffer_size || last=='\n' || last=='\r')
 	{
 		// if(last=='$')
 		// {			
@@ -103,6 +103,8 @@ tokenInfo getNextToken()
 		if (fp == NULL)
 		{			
 			sprintf(curr.token,"%s","$");
+			curr.line=line;
+			sprintf(curr.lexeme,"%s","----");
 			return curr;
 		}
 		line++;
@@ -110,9 +112,9 @@ tokenInfo getNextToken()
 		last = custom_fgetc();
 	}
 
-	while(buffer_pointer <= buffer_size)
+	while(buffer_pointer < buffer_size)
 	{
-		// printf("Input: %c\n",last);
+		// printf("Input:_%c_%d %d\n",last,buffer_pointer,buffer_size);
 		char str[20];
 		if(last==' ' || last=='\n' || last=='\t' || last=='\r'){
 			
@@ -128,6 +130,8 @@ tokenInfo getNextToken()
 				if (fp == NULL)
 				{			
 					sprintf(curr.token,"%s","$");
+					curr.line=line;
+					sprintf(curr.lexeme,"%s","----");
 					return curr;
 				}
 				line++;
@@ -406,18 +410,19 @@ tokenInfo getNextToken()
 				column++;
 			}
 			str[i]='\0';
-			if(strlen(str)>8)
+			sprintf(curr.lexeme,"%s",str);
+			sprintf(curr.token,"%s",resolve(str));
+			if(strlen(str)>8 && strcmp(curr.token,"ID")==0)
 			{
 				printf("%s: This Identifier is too long\n",str );
 				last=ch;
 				continue;
 			}
-			sprintf(curr.lexeme,"%s",str);
-			sprintf(curr.token,"%s",resolve(str));
 			curr.line=line;
 			curr.column=column;
 			// indentifyToken();
 			last=ch;
+			// printf("Input: %c %d %d\n",last,buffer_pointer,buffer_size);
 			return curr;
 		}
 		else if(last=='.')
@@ -471,6 +476,7 @@ tokenInfo getNextToken()
 				else 
 					if(ch<='9' && ch>='0')
 					{
+						str[i++]=ch;
 						ch=custom_fgetc();
 						column++;
 						while(ch<='9' && ch>='0')

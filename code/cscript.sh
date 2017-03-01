@@ -3,7 +3,7 @@
 gcc -c *.c
 rm driver.o
 rm create_map.o
-gcc *.o driver.c -o driver
+gcc -g *.o driver.c -o driver
 ./driver
 rm driver
 rm *.o

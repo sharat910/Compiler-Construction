@@ -20,7 +20,7 @@
 <statements> -> <statement> <statements> | e
 <statement> -> <ioStmt> | <simpleStmt> | <declareStmt> | <condionalStmt> | <iterativeStmt>
 <ioStmt> -> GET_VALUE BO ID BC SEMICOL | PRINT BO <var> BC SEMICOL
-<var> -> ID <whichId> | NUM | RNUM
+<var> -> ID <whichId> | NUM | RNUM | TRUE | FALSE
 <whichId> ->  SQBO ID SQBC | e
 <simpleStmt> ->  <assignmentStmt> | <moduleReuseStmt>
 <assignmentStmt> ->  ID <whichStmt>
@@ -42,7 +42,7 @@
 <WithLogOp> -> <logicalOp> <AnyTerm> <WithLogOp> | e
 <AnyTerm> -> <arithmeticExpr> <WithRelOp> 
 <WithRelOp> -> <relationalOp> <negOrPosAE> <WithRelOp> | e
-<AOBE> -> BO <AOBE> BC 
+<AOBE> -> BO <AOBE> BC <AnyTerm> <WithLogOp>
 
 <arithmeticExpr> -> <term> <N4> 
 <N4> -> <op1> <term> <N4> | e

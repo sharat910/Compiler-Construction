@@ -351,10 +351,12 @@ e
 e
 66
 <AOBE>
-3
+5
 BO
 <AOBE>
 BC
+<AnyTerm>
+<WithLogOp>
 67
 <arithmeticExpr>
 2
@@ -532,3 +534,11 @@ END
 NUM
 RANGEOP
 NUM
+99
+<var>
+1
+TRUE
+100
+<var>
+1
+FALSE

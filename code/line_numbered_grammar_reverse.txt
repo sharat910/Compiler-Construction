@@ -351,7 +351,9 @@ e
 e
 66
 <AOBE>
-3
+5
+<WithLogOp>
+<AnyTerm>
 BC
 <AOBE>
 BO
@@ -532,3 +534,11 @@ WHILE
 NUM
 RANGEOP
 NUM
+99
+<var>
+1
+TRUE
+100
+<var>
+1
+FALSE

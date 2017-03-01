@@ -29,43 +29,44 @@ int main()
 	// fflush(stdout);
 	grammar g = get_grammar();
 
-	// for(int i=1;i<99;i++)
-	// {
-	// 	printf("%s --> ",g.rules_back[i].lhs);
-	// 	printStack(g.rules_back[i].rhs);
-	// 	fflush(stdout);
-	// }
+	for(int i=1;i<99;i++)
+	{
+		printf("%s --> ",g.rules_back[i].lhs);
+		printStack(g.rules_back[i].rhs);
+		fflush(stdout);
+	}
 
 	// printf("hello\n");
 	FirstAndFollow f = ComputeFirstAndFollowSets(g);
-	// printf("it's me");
-	// for(int i=0;i<53;i++)
-	// {
-	// 	printf("%s \n",map_nt[i].incoming );
-	// 	printStack(f.firsts[i].rhs);
-	// }
-	// for(int i=0;i<53;i++)
-	// {
-	// 	printf("%s \n",map_nt[i].incoming );
-	// 	printStack(f.follows[i].rhs);
-	// }
+	printf("it's me");
+	for(int i=0;i<53;i++)
+	{
+		printf("%s \n",map_nt[i].incoming );
+		printStack(f.firsts[i].rhs);
+	}
+	for(int i=0;i<53;i++)
+	{
+		printf("%s \n",map_nt[i].incoming );
+		printStack(f.follows[i].rhs);
+	}
 
 	
 
 	fill_parseTable(g,f,T.parseTable);
-	// for(int i=0;i<53;i++){
-	// 	for(int j=0;j<59;j++)
-	// 	{
-	// 		printf("%d ",T.parseTable[i][j] );
-	// 	}
-	// 	printf("\n");
-	// }
-	
-	// for(int i=1;i<99;i++)
-	// {
-	// 	printf("%s --> ",g.rules_back[i].lhs);
-	// 	printStack(g.rules_back[i].rhs);
-	// }
+	for(int i=0;i<53;i++){
+		for(int j=0;j<59;j++)
+		{
+
+			printf("%d ",T.parseTable[i][j] );
+		}
+		printf("\n");
+	}
+	printf("over\n");
+	for(int i=1;i<101;i++)
+	{
+		printf("%s --> ",g.rules_back[i].lhs);
+		printStack(g.rules_back[i].rhs);
+	}
 
 	// for(int i=0;i<53;i++)
 	// {
@@ -80,6 +81,6 @@ int main()
 	// LexerOutput("code.txt");    
 	programNode=parseInputSourceCode("code.txt",T,g);
 	// printf("%s\n",programNode.begin.parentNodeSymbol );
-	
+	parseTreePrint(&programNode.begin);
 	// printf("Program End\n");
 }
