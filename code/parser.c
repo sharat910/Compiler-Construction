@@ -324,7 +324,11 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G)
 
 			else if(strcmp(str_top,"e")==0){
 				read=0;
-				
+				sprintf(ts.top->node_info->lexemeCurrentNode,"%s","----");
+				// ts.top->node_info->lineno=curr.line;
+				sprintf(ts.top->node_info->token,"%s","----");
+				// sprintf(ts.top->node_info->NodeSymbol,"%s",a);
+				ts.top->node_info->isLeafNode=1;
 				pop(&s);
 				pop_ptr_stack(&ts);
 				printf("After matching e case: ");
@@ -391,6 +395,7 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G)
 				if(populate->link==NULL){
 					printf("Sibling(child) of %s is %s\n",curr_st.node_info->NodeSymbol,(ts.top)->node_info->NodeSymbol);
 					curr_st.node_info->child=(ts.top)->node_info;
+					(ts.top)->node_info->parent=curr_st.node_info->child;
 					if(!isEmpty_ptr_stack(ts)){
 					prev=ts.top->node_info;
 					// printf("%s\n",(*prev)->node_info->NodeSymbol );	
@@ -413,6 +418,7 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G)
 		printf("wrong\n");
 	if(s.top==NULL)
 		printf("good\n");
+	fflush(stdout);
 	return programNode;
 }
 void LexerOutput(char *testcaseFile)
@@ -437,20 +443,32 @@ void parseTreePrint(TREE_NODE_PTR root)
 		// printf("Left: %s\n", root->child->NodeSymbol);
 		parseTreePrint(root->child);
 	}		
-	// else
-	// 	printf("Root's child is null\n");
+	else
+		printf("Root%s child is null above\n",root->NodeSymbol);
 	
+	printf("Root: %s\n",root->NodeSymbol );
 	if(strcmp(root->token,"NUM")!=0 && strcmp(root->token,"RNUM")!=0)
 		printf("Current %s\t%d\t%s\t%s\t%s\t%d\t%s\n",root->lexemeCurrentNode,root->lineno,root->token," N/A ",root->parentNodeSymbol,root->isLeafNode,root->NodeSymbol);
 	else
 	printf("Current %s\t%d\t%s\t%lf\t%s\t%d\t%s\n",root->lexemeCurrentNode,root->lineno,root->token,root->valueLfNumber,root->parentNodeSymbol,root->isLeafNode,root->NodeSymbol);
-	if(root->sibling !=NULL){
-		// printf("Sibling: %s\n", root->sibling->NodeSymbol);
-		parseTreePrint(root->sibling);
+	
+
+	if(root->child !=NULL){
+		if((root->child)->sibling !=NULL){
+			TREE_NODE_PTR temp=(root->child)->sibling;
+			while(temp!=NULL){
+				// printf("Sibling: %s\n", root->sibling->NodeSymbol);
+				parseTreePrint(temp);
+				temp=temp->sibling;
+			}
+		}
+		else
+			printf("Root%s ka child's sibling is null\n",root->NodeSymbol);
+		
 	}		
 		
-	// else
-	// 	printf("Root's sibling is null\n");
+	else
+		printf("Root%s ka child is null below\n",root->NodeSymbol);
 	
 }
 
