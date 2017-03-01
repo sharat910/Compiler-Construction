@@ -79,7 +79,7 @@ int main()
 	line=0;
 	column=1;
 	// LexerOutput("code.txt");    
-	programNode=parseInputSourceCode("code.txt",T,g);
+	programNode=parseInputSourceCode("code.txt",T,g,f);
 	// printf("%s\n",programNode.begin.parentNodeSymbol );
 	parseTreePrint(&programNode.begin);
 	// printf("Program End\n");

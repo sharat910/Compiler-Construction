@@ -243,7 +243,7 @@ TREE_NODE_PTR fillnode(ptr ts,tokenInfo curr,char* a)
 	return temp;
 }
 
-parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G)
+parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G,FirstAndFollow F)
 {
 	parseTree programNode=*((parseTree* )malloc(sizeof(parseTree)));
 	char str_top[25];
@@ -336,8 +336,9 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G)
 				//fillnode()
 			}
 			else {
-				printf("error in matching\n");
-				break;
+				printf("error 404 in matching terminal: %s and terminal: %s\n",str_top,curr.token);
+				read=1;
+				continue;
 			}
 			
 		}
@@ -347,16 +348,41 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G)
 			// printf("STack output\n");
 			// print_ptr_stack(ts);
 			// printf("This is goin' on\n" );
-			printf("Before popping: ");
-			print_ptr_stack(ts);
-			pop(&s);
 			ptr curr_st=*(ts.top);
-			pop_ptr_stack(&ts);
-			printf("After popping: ");
-			print_ptr_stack(ts);
-			printf("inside%s\n",str_top );
-			printf("%d %d\n",get_index_nt(str_top), get_index_t(curr.token));
 			int rule_num=T.parseTable[get_index_nt(str_top)][get_index_t(curr.token)];
+			if(rule_num !=0)
+			{
+				printf("Before popping: ");
+				print_ptr_stack(ts);
+				pop(&s);				
+				pop_ptr_stack(&ts);
+				printf("After popping: ");
+				print_ptr_stack(ts);
+				printf("inside%s\n",str_top );
+				printf("%d %d\n",get_index_nt(str_top), get_index_t(curr.token));
+			}
+			else
+			{
+				stack follows = F.follows[get_index_nt(str_top)].rhs;
+				if(find_stack(&follows,curr.token)){
+					sprintf(ts.top->node_info->lexemeCurrentNode,"%s","----");
+					// ts.top->node_info->lineno=curr.line;
+					sprintf(ts.top->node_info->token,"%s","----");
+					sprintf(ts.top->node_info->NodeSymbol,"%s",str_top);
+					ts.top->node_info->isLeafNode=1;
+					pop(&s);
+					pop_ptr_stack(&ts);
+					read=1;
+					continue;
+				}
+				else{
+					printf("error: rule not found 404 NT: %s and T: %s\n",str_top,curr.token);
+
+					read=1;
+					continue;
+				}					
+
+			}
 			NODE populate=G.rules[rule_num].rhs.top;
 			printf("%d %d\n",rule_num,G.rules[rule_num].rhs.stack_size );
 			TREE_NODE_PTR prev=(TREE_NODE_PTR)malloc(sizeof(TREE_NODE));

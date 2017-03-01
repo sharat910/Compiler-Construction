@@ -10,7 +10,7 @@ start
 	sum:=0.0;
 	for(index in  1..15)
 	start
-		t:= index<=n;
+		t:= index<=n
 		switch(t)
 		start
 			case true: print(list[index]);
