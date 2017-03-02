@@ -65,7 +65,7 @@ void pop_ptr_stack(ptr_stack* st)
 		else	
 		st->top=p->link;
 		st->stack_size--;
-		free(p);
+		// free(p);
 		// printf("here\n");
 		// printStack(*st);
 	}

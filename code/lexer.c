@@ -52,7 +52,9 @@ void removeComments(char *testcaseFile, char *cleanFile)
 	FILE* fp2 = fopen(cleanFile,"w");
 	while(!feof(fp1))
 	{
+
 		char ch = fgetc(fp1);
+		// printf("%c",ch );
 		if (ch == '*')
 		{
 			char lookahead = fgetc(fp1);

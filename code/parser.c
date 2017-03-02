@@ -211,7 +211,8 @@ FirstAndFollow ComputeFirstAndFollowSets(grammar G)
 
 TREE_NODE_PTR fillnode(ptr ts,tokenInfo curr,char* a)
 {
-	// printf("%syo baby\n",curr.lexeme );
+	printf("%syo baby\n",ts.node_info->NodeSymbol);
+	
 	TREE_NODE_PTR temp;
 	temp=(TREE_NODE_PTR) malloc(sizeof(TREE_NODE));
 	temp->parent=ts.node_info;
@@ -240,6 +241,8 @@ TREE_NODE_PTR fillnode(ptr ts,tokenInfo curr,char* a)
 		temp->isLeafNode=0;
 		sprintf(temp->parentNodeSymbol,"%s",ts.node_info->NodeSymbol);
 	}
+	printf("here\n");
+	fflush(stdout);
 	return temp;
 }
 
@@ -338,6 +341,8 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G,FirstAndFo
 			else {
 				printf("error 404 in matching terminal: %s and terminal: %s\n",str_top,curr.token);
 				read=1;
+				if(strcmp(curr.token,"$")==0)
+						break;
 				continue;
 			}
 			
@@ -379,6 +384,8 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G,FirstAndFo
 					printf("error: rule not found 404 NT: %s and T: %s\n",str_top,curr.token);
 
 					read=1;
+					if(strcmp(curr.token,"$")==0)
+						break;
 					continue;
 				}					
 
@@ -390,7 +397,7 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G,FirstAndFo
 			while(populate!=NULL)
 			{	
 				
-				// print_ptr_stack(ts);
+				printStack(G.rules[rule_num].rhs);
 
 				s=push(s,populate->str);
 				// printf("before");
