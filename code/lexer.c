@@ -82,9 +82,7 @@ void removeComments(char *testcaseFile, char *cleanFile)
 				fputc(ch,fp2);
 		}
 	}
-	// fputc('$',fp2);
 	fflush(fp2);
-	// printf("hello\n");
 }
 
 
@@ -442,7 +440,7 @@ tokenInfo getNextToken()
 			}
 			else
 			{
-				printf("Inappropriate symbol %c in line no. %d\n",ch,line );
+				printf("Unidentified pattern %c%c in line no. %d\n",last,ch,line );
 				last=custom_fgetc();
 				continue;
 			}

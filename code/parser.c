@@ -211,7 +211,7 @@ FirstAndFollow ComputeFirstAndFollowSets(grammar G)
 
 TREE_NODE_PTR fillnode(ptr ts,tokenInfo curr,char* a)
 {
-	printf("%syo baby\n",ts.node_info->NodeSymbol);
+	// printf("%syo baby\n",ts.node_info->NodeSymbol);
 	
 	TREE_NODE_PTR temp;
 	temp=(TREE_NODE_PTR) malloc(sizeof(TREE_NODE));
@@ -241,8 +241,8 @@ TREE_NODE_PTR fillnode(ptr ts,tokenInfo curr,char* a)
 		temp->isLeafNode=0;
 		sprintf(temp->parentNodeSymbol,"%s",ts.node_info->NodeSymbol);
 	}
-	printf("here\n");
-	fflush(stdout);
+	// printf("here\n");
+	// fflush(stdout);
 	return temp;
 }
 
@@ -266,7 +266,7 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G,FirstAndFo
 	int terminated=0;
 	while(1)
 	{	
-		printf("In while\n");	
+		// printf("In while\n");	
 		// if(terminated)
 		if(read)
 		{
@@ -279,7 +279,7 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G,FirstAndFo
 			}
 			if(isEmptyStack(s))
 				break;
-			printf("NEW TOKEN: %s\n", curr.token);
+			// printf("NEW TOKEN: %s\n", curr.token);
 			// printf("%d %d\n",curr.line,curr.column );
 		}
 		NODE top=s.top;
@@ -291,30 +291,28 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G,FirstAndFo
 		// printf("cool2");
 		if(isTerminal(top))
 		{
-			printf("Matching %s line:%d %s\n",curr.token,curr.line,str_top);
+			// printf("Matching %s line:%d %s\n",curr.token,curr.line,str_top);
 			// printf("\n");
-			print_ptr_stack(ts);
+			// print_ptr_stack(ts);
 			if(strcmp(curr.token,str_top)==0 && strcmp("$",curr.token)){
 				
 				// printf("Here\n");
 				// fillnode();
 				pop(&s);
 				
-				printf("After matching normal: ");
+				// printf("After matching normal: ");
 				sprintf(ts.top->node_info->lexemeCurrentNode,"%s",curr.lexeme);
 				ts.top->node_info->lineno=curr.line;
 				sprintf(ts.top->node_info->token,"%s",curr.token);
-				// sprintf(ts.top->node_info->NodeSymbol,"%s",a);
 				ts.top->node_info->isLeafNode=1;
-				// sprintf(temp->parentNodeSymbol,"%s",ts.node_info->NodeSymbol);
 				if(strcmp(curr.token,"NUM")==0)
 					ts.top->node_info->valueLfNumber=(int)atoi(curr.lexeme);
 				else if(strcmp(curr.token,"RNUM")==0)
 					ts.top->node_info->valueLfNumber=atof(curr.lexeme);
 				pop_ptr_stack(&ts);
-				print_ptr_stack(ts);
+				// print_ptr_stack(ts);
 
-				printf("pop done\n");
+				// printf("pop done\n");
 				if(terminated)
 					break;
 				read=1;
@@ -328,14 +326,12 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G,FirstAndFo
 			else if(strcmp(str_top,"e")==0){
 				read=0;
 				sprintf(ts.top->node_info->lexemeCurrentNode,"%s","----");
-				// ts.top->node_info->lineno=curr.line;
 				sprintf(ts.top->node_info->token,"%s","----");
-				// sprintf(ts.top->node_info->NodeSymbol,"%s",a);
 				ts.top->node_info->isLeafNode=1;
 				pop(&s);
 				pop_ptr_stack(&ts);
-				printf("After matching e case: ");
-				print_ptr_stack(ts);
+				// printf("After matching e case: ");
+				// print_ptr_stack(ts);
 				//fillnode()
 			}
 			else {
@@ -357,21 +353,20 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G,FirstAndFo
 			int rule_num=T.parseTable[get_index_nt(str_top)][get_index_t(curr.token)];
 			if(rule_num !=0)
 			{
-				printf("Before popping: ");
-				print_ptr_stack(ts);
+				// printf("Before popping: ");
+				// print_ptr_stack(ts);
 				pop(&s);				
 				pop_ptr_stack(&ts);
-				printf("After popping: ");
-				print_ptr_stack(ts);
-				printf("inside%s\n",str_top );
-				printf("%d %d\n",get_index_nt(str_top), get_index_t(curr.token));
+				// printf("After popping: ");
+				// print_ptr_stack(ts);
+				// printf("inside%s\n",str_top );
+				// printf("%d %d\n",get_index_nt(str_top), get_index_t(curr.token));
 			}
 			else
 			{
 				stack follows = F.follows[get_index_nt(str_top)].rhs;
 				if(find_stack(&follows,curr.token)){
 					sprintf(ts.top->node_info->lexemeCurrentNode,"%s","----");
-					// ts.top->node_info->lineno=curr.line;
 					sprintf(ts.top->node_info->token,"%s","----");
 					sprintf(ts.top->node_info->NodeSymbol,"%s",str_top);
 					ts.top->node_info->isLeafNode=1;
@@ -391,42 +386,43 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G,FirstAndFo
 
 			}
 			NODE populate=G.rules[rule_num].rhs.top;
-			printf("%d %d\n",rule_num,G.rules[rule_num].rhs.stack_size );
+			// printf("%d %d\n",rule_num,G.rules[rule_num].rhs.stack_size );
 			TREE_NODE_PTR prev=(TREE_NODE_PTR)malloc(sizeof(TREE_NODE));
 			prev=NULL;
 			while(populate!=NULL)
 			{	
 				
-				printStack(G.rules[rule_num].rhs);
+				// printStack(G.rules[rule_num].rhs);
 
 				s=push(s,populate->str);
 				// printf("before");
-				fflush(stdout);
+				// fflush(stdout);
 				// printf("%d\n",isEmpty_ptr_stack(ts) );
 				
 				// printf("after");
-				fflush(stdout);
-				printf("Current NT %s\n",populate->str );
-				printf("Before pushing: ");
+				// fflush(stdout);
+				// printf("Current NT %s\n",populate->str );
+				// printf("Before pushing: ");
 				// if(isEmpty_ptr_stack(ts))
 				// 	printf("Hiatkaa se pehle\n");
-				fflush(stdout);
-				print_ptr_stack(ts);
+				// fflush(stdout);
+				// print_ptr_stack(ts);
 				ts=push_ptr_stack(ts,fillnode(curr_st,curr,populate->str));
 				// printf("Atkaaaa\n");
-				print_ptr_stack(ts);
-				// fflush(stdout);
+				// print_ptr_stack(ts);
+				
 					(ts.top)->node_info->sibling=prev;
-					if(prev!=NULL)
-					printf("Sibling of %s is %s\n",(ts.top)->node_info->NodeSymbol,prev->NodeSymbol);
+					// if(prev!=NULL)
+					// printf("Sibling of %s is %s\n",(ts.top)->node_info->NodeSymbol,prev->NodeSymbol);
 					if(!isEmpty_ptr_stack(ts)){
-						printf("Hi\n");
+						// printf("Hi\n");
 					prev=ts.top->node_info;
-					printf("%s\n",prev->NodeSymbol );	
+					fflush(stdout);
+					// printf("%s\n",prev->NodeSymbol );	
 					}
 
 				if(populate->link==NULL){
-					printf("Sibling(child) of %s is %s\n",curr_st.node_info->NodeSymbol,(ts.top)->node_info->NodeSymbol);
+					// printf("Sibling(child) of %s is %s\n",curr_st.node_info->NodeSymbol,(ts.top)->node_info->NodeSymbol);
 					curr_st.node_info->child=(ts.top)->node_info;
 					(ts.top)->node_info->parent=curr_st.node_info->child;
 					if(!isEmpty_ptr_stack(ts)){
@@ -434,8 +430,8 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G,FirstAndFo
 					// printf("%s\n",(*prev)->node_info->NodeSymbol );	
 					}
 				} 
-				printf("After pushing: ");
-				print_ptr_stack(ts);
+				// printf("After pushing: ");
+				// print_ptr_stack(ts);
 				populate=populate->link;
 			}
 			// ts=populate_tree(s);
@@ -467,41 +463,29 @@ void LexerOutput(char *testcaseFile)
 		printf("%s %s\n",curr.lexeme,curr.token );
 	}
 }
-void parseTreePrint(TREE_NODE_PTR root)
+void parseTreePrint(TREE_NODE_PTR root,FILE* out_fp)
 {
-	// printf("root: %s\n",root->NodeSymbol);
+
 	while(root== NULL)
 		return;
-	if(root->child !=NULL){
-		// printf("Left: %s\n", root->child->NodeSymbol);
-		parseTreePrint(root->child);
-	}		
-	else
-		printf("Root%s child is null above\n",root->NodeSymbol);
-	
-	printf("Root: %s\n",root->NodeSymbol );
+	if(root->child !=NULL)
+		parseTreePrint(root->child,out_fp);
+
 	if(strcmp(root->token,"NUM")!=0 && strcmp(root->token,"RNUM")!=0)
-		printf("Current %s\t%d\t%s\t%s\t%s\t%d\t%s\n",root->lexemeCurrentNode,root->lineno,root->token," N/A ",root->parentNodeSymbol,root->isLeafNode,root->NodeSymbol);
+		fprintf(out_fp,"%s\t%d\t%s\t%s\t%s\t%d\t%s\n",root->lexemeCurrentNode,root->lineno,root->token," N/A ",root->parentNodeSymbol,root->isLeafNode,root->NodeSymbol);
 	else
-	printf("Current %s\t%d\t%s\t%lf\t%s\t%d\t%s\n",root->lexemeCurrentNode,root->lineno,root->token,root->valueLfNumber,root->parentNodeSymbol,root->isLeafNode,root->NodeSymbol);
+	fprintf(out_fp,"%s\t%d\t%s\t%lf\t%s\t%d\t%s\n",root->lexemeCurrentNode,root->lineno,root->token,root->valueLfNumber,root->parentNodeSymbol,root->isLeafNode,root->NodeSymbol);
 	
 
 	if(root->child !=NULL){
 		if((root->child)->sibling !=NULL){
 			TREE_NODE_PTR temp=(root->child)->sibling;
-			while(temp!=NULL){
-				// printf("Sibling: %s\n", root->sibling->NodeSymbol);
-				parseTreePrint(temp);
+			while(temp!=NULL)
+			{
+				parseTreePrint(temp,out_fp);
 				temp=temp->sibling;
 			}
 		}
-		else
-			printf("Root%s ka child's sibling is null\n",root->NodeSymbol);
-		
 	}		
-		
-	else
-		printf("Root%s ka child is null below\n",root->NodeSymbol);
-	
 }
 

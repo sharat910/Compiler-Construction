@@ -105,9 +105,23 @@ end
     
 
      
-       the semantics of while needs an increment and will be taken care of at the second phase kjjebd.kjsf  bakdfenldsf 
+      
+<<module readArr>>
+takes input [arr1:array[1..15] of real,k:integer];
+start
+	declare tempvar:real;
+	declare i:integer;
+	i:=1;
+	while(i<=k)
+	start
+		get_value(tempvar);
+		arr1[i]:=tempvar;
+		i:=i+1;
+		
+	end
+	print(random);
 
-     <<module readArr>>
+<<module readArr>>
 takes input [arr1:array[1..15] of real,k:integer];
 start
 	declare tempvar:real;

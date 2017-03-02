@@ -105,7 +105,7 @@ end
     
 
      
-     ** bakdfenldsf ** ******
+     ** bakdfenldsf ** ****
 <<module readArr>>
 takes input [arr1:array[1..15] of real,k:integer];
 start
@@ -121,16 +121,7 @@ start
 	end
 	print(random);
 
-
-
-    
-
-
-** kjjebd.kjsf** ** **
-     
-     ** bakdfenldsf ** ******
-****
-     <<module readArr>>
+<<module readArr>>
 takes input [arr1:array[1..15] of real,k:integer];
 start
 	declare tempvar:real;
