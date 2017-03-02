@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-rule rules[101];
-rule rules_back[101];
+rule rules[109];
+rule rules_back[109];
 void rule_table_init()
 {
 	char s[50];
@@ -47,7 +47,7 @@ grammar get_grammar()
 {
 	rule_table_init();
 	grammar g;
-	for (int i = 1; i < 101; ++i)
+	for (int i = 1; i < 109; ++i)
 	{
 
 		sprintf(g.rules[i].lhs,"%s",rules[i].lhs);

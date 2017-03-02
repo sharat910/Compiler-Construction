@@ -10,7 +10,7 @@ typedef struct
 
 typedef struct 
 {
-	int parseTable[53][59];
+	int parseTable[56][59];
 }table;
 
 #endif

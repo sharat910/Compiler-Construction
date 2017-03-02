@@ -1,15 +1,7 @@
 #include "parseTable.h"
-#include <stdio.h>
-#include "index_nt.h"
-#include "index_t.h"
-#include "rule_table.h"
-#include "stackadt.h"
-#include "parser.h"
-#include <string.h>
-#include <stdlib.h>
 
 // extern entry lookup_table[40];
-extern entry_map_nt map_nt[53];
+extern entry_map_nt map_nt[56];
 extern entry_map_t map_t[59];
 
 
@@ -41,9 +33,9 @@ stack total_first(stack rhs,rule firsts[])
 	return ans;
 }
 
-void fill_parseTable(grammar g,FirstAndFollow f,int parseTable[53][59])
+void fill_parseTable(grammar g,FirstAndFollow f,int parseTable[56][59])
 {
-	for(int i=1;i<101;i++)
+	for(int i=1;i<109;i++)
 	{
 
 		int found=0;

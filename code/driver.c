@@ -1,23 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "map.h"
-#include "index_nt.h"
-#include "index_t.h"
-#include "rule_table.h"
-#include "parseTable.h"
+
 #include "parser.h"
 #include "lexer.h"
-#include "parseTree.h"
 
 int line;
 int column;
 char last,ch;
 FILE * fp;
 extern entry lookup_table[40];
-extern entry_map_nt map_nt[53];
+extern entry_map_nt map_nt[56];
 extern entry_map_t map_t[59];
-int parseTable[53][59];
+int parseTable[56][59];
 table T;
 int main(int argc, char* argv[])
 {
