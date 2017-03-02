@@ -6,7 +6,7 @@
 #include "index_t.h"
 #include <string.h>
 #include <stdlib.h>
-
+int cnt;
 int isTerminal(NODE top)
 {
 	if(top->str[0]=='<')
@@ -247,7 +247,8 @@ TREE_NODE_PTR fillnode(ptr ts,tokenInfo curr,char* a)
 }
 
 parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G,FirstAndFollow F)
-{
+{	
+	cnt=0;
 	parseTree programNode=*((parseTree* )malloc(sizeof(parseTree)));
 	char str_top[25];
 	removeComments(testcaseFile,"clean_code.txt");
@@ -335,7 +336,9 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G,FirstAndFo
 				//fillnode()
 			}
 			else {
-				printf("error 404 in matching terminal: %s and terminal: %s\n",str_top,curr.token);
+				printf("The token %s for lexeme %s does not match at line %d. ",curr.token,curr.lexeme,curr.line);
+				printf("The expected token here is %s.\n\n",str_top );
+				cnt++;
 				read=1;
 				if(strcmp(curr.token,"$")==0)
 						break;
@@ -376,8 +379,8 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G,FirstAndFo
 					continue;
 				}
 				else{
-					printf("error: rule not found 404 NT: %s and T: %s\n",str_top,curr.token);
-
+					printf("Syntactic structure incorrect: rule not for Non-terminal: %s and Terminal: %s\n",str_top,curr.token);
+					cnt++;
 					read=1;
 					if(strcmp(curr.token,"$")==0)
 						break;
@@ -442,12 +445,13 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G,FirstAndFo
 		// printf("%s ", curr.token);	
 
 	}
-	
+	if(cnt>0)
+		return programNode;
 	if(s.top!=NULL)
 		printf("wrong\n");
 	if(s.top==NULL)
 		printf("good\n");
-	fflush(stdout);
+	// fflush(stdout);
 	return programNode;
 }
 void LexerOutput(char *testcaseFile)
