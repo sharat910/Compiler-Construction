@@ -41,7 +41,7 @@
 <AOBE> -> <AnyTerm> <WithLogOp>
 <WithLogOp> -> <logicalOp> <AnyTerm2> <WithLogOp> | e
 <AnyTerm> -> <arithmeticExpr> <WithRelOp>
-<AnyTerm2> -> BO <AnyTerm> BC | <AnyTerm>
+<AnyTerm2> -> BO <AOBE> BC | <AnyTerm>
 <WithRelOp> -> <relationalOp> <negOrPosAE> <WithRelOp> | e
 <AOBE> -> BO <AOBE> BC <alpha>
 <alpha> -> <all_ops> <AOBE> | e

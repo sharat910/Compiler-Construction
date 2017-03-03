@@ -570,7 +570,7 @@ e
 <AnyTerm2>
 3
 BC
-<AnyTerm>
+<AOBE>
 BO
 108
 <AnyTerm2>
