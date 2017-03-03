@@ -378,9 +378,9 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G,FirstAndFo
 	if(cnt>0)
 		return programNode;
 	if(s.top!=NULL)
-		printf("wrong\n");
+		printf("\n\nIncorrect Syntax.\n\n\n");
 	if(s.top==NULL)
-		printf("good\n");
+		printf("\n\nCorrect Syntax.\n\n\n");
 	return programNode;
 }
 void LexerOutput(char *testcaseFile)
