@@ -1,6 +1,9 @@
+// Group 56
+// Rishabh Garg (2014A7PS065P)
+// M Sharat Chandra (2014A7PS108P)
+
 #include "parseTable.h"
 
-// extern entry lookup_table[40];
 extern entry_map_nt map_nt[56];
 extern entry_map_t map_t[59];
 
@@ -57,12 +60,10 @@ void fill_parseTable(grammar g,FirstAndFollow f,int parseTable[56][59])
 			NODE top=curr_follows.top;
 			while(top!=NULL)
 			{
-				if(isTerminal(top)){
-					// fflush(stdout);
+				if(isTerminal(top)){					
 					parseTable[get_index_nt(lhs)][get_index_t(top->str)]=i;
 				}
-				top=top->link;
-				// fflush(stdout);
+				top=top->link;				
 			}
 		}
 	}

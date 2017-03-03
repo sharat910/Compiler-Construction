@@ -1,15 +1,12 @@
+// Group 56
+// Rishabh Garg (2014A7PS065P)
+// M Sharat Chandra (2014A7PS108P)
+
 #include "stack_ptr.h"
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-// #include"element.h"
-// #include"boolean.h"
-
-// typedef struct
-// {
-// 	char str[50];
-// }element;
 
 ptr_map createNodeTree(TREE_NODE_PTR current)
 {
@@ -57,17 +54,13 @@ ptr_stack push_ptr_stack(ptr_stack st, TREE_NODE_PTR curr)
 void pop_ptr_stack(ptr_stack* st)
 {
 	if(!isEmpty_ptr_stack(*st))
-	{
-		// printStack(*st);
+	{		
 		ptr_map p=st->top;
 		if(st->stack_size==1)
 			st->top=NULL;
 		else	
 		st->top=p->link;
 		st->stack_size--;
-		// free(p);
-		// printf("here\n");
-		// printStack(*st);
 	}
 }
 
@@ -81,8 +74,7 @@ int isEmpty_ptr_stack(ptr_stack st)
 }
 
 void print_ptr_stack(ptr_stack st)
- {
-	// printf("TOP :");
+ {	
  	ptr_map p;
  	p = st.top;
  	while(p!=NULL)

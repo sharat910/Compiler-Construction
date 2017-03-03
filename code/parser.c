@@ -1,3 +1,7 @@
+// Group 56
+// Rishabh Garg (2014A7PS065P)
+// M Sharat Chandra (2014A7PS108P)
+
 #include "parser.h"
 int cnt;
 int isTerminal(NODE top)

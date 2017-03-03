@@ -1,3 +1,7 @@
+// Group 56
+// Rishabh Garg (2014A7PS065P)
+// M Sharat Chandra (2014A7PS108P)
+
 #include "rule_table.h"
 #include <stdio.h>
 #include <stdlib.h>

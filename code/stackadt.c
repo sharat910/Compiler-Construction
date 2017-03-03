@@ -1,17 +1,11 @@
-// Rishabh Garg
-// 2014A7PS065P
+// Group 56
+// Rishabh Garg (2014A7PS065P)
+// M Sharat Chandra (2014A7PS108P)
 
 #include "stackadt.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-// #include"element.h"
-// #include"boolean.h"
-
-// typedef struct
-// {
-// 	char str[50];
-// }element;
 
 NODE createNode(char * a)
 {
@@ -58,7 +52,6 @@ void pop(stack* st)
 {
 	if(!isEmptyStack(*st))
 	{
-		// printStack(*st);
 		NODE p=st->top;
 		if(st->stack_size==1)
 			st->top=NULL;
@@ -66,8 +59,6 @@ void pop(stack* st)
 		st->top=p->link;
 		st->stack_size--;
 		free(p);
-		// printf("here\n");
-		// printStack(*st);
 	}
 }
 
@@ -123,7 +114,6 @@ stack merge_without_e(stack one, stack two)
 
 void printStack(stack st)
  {
-	// printf("TOP :");
  	NODE p;
  	p = st.top;
  	while(p!=NULL)

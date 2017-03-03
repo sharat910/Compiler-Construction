@@ -1,5 +1,7 @@
-// Rishabh Garg
-// 2014A7PS065P
+// Group 56
+// Rishabh Garg (2014A7PS065P)
+// M Sharat Chandra (2014A7PS108P)
+
 #ifndef _stackadt
 #define _stackadt
 
