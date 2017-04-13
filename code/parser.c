@@ -3,7 +3,9 @@
 // M Sharat Chandra (2014A7PS108P)
 
 #include "parser.h"
+#include "symbol_table.h"
 int cnt;
+int offset_arr[100];
 int isTerminal(NODE top)
 {
 	if(top->str[0]=='<')
@@ -426,5 +428,81 @@ void parseTreePrint(TREE_NODE_PTR root,FILE* out_fp)
 			}
 		}
 	}		
+}
+void DFS(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nesting)
+{
+	int n=nesting;
+	int h=hash_value;
+	if(root!=NULL)
+	{
+		if(strcmp(root->token,"NUM")!=0 && strcmp(root->token,"RNUM")!=0)
+			fprintf(out_fp,"%s\t%d\t%s\t%s\t%s\t%d\t%s\n",root->lexemeCurrentNode,root->lineno,root->token," N/A ",root->parentNodeSymbol,root->isLeafNode,root->NodeSymbol);
+		else
+			fprintf(out_fp,"%s\t%d\t%s\t%lf\t%s\t%d\t%s\n",root->lexemeCurrentNode,root->lineno,root->token,root->valueLfNumber,root->parentNodeSymbol,root->isLeafNode,root->NodeSymbol);
+		
+		if(strcmp(root->token,"DRIVER")==0)
+		{
+			h=get_func_hash_value("DRIVER");
+			create_func_entry("DRIVER");
+			list_params l=initialize_queue_params();
+			create_func_scope(0,"void",l,"DRIVER");
+			
+		}
+
+		if(strcmp(root->token,"START")==0)
+			n++;
+		if(strcmp(root->token,"END")==0){
+			n--;
+			offset_arr[n]++;
+			if(n==0)
+				h=-1;
+		}
+
+
+
+		if(strcmp(root->token,"ID")==0)
+		{
+			if(strcmp(root->parentNodeSymbol,"<moduleDeclaration>")==0)
+				{// make func_entry;
+					printf("Declaring%s\n",root->lexemeCurrentNode);
+					h=get_func_hash_value(root->lexemeCurrentNode);
+					create_func_entry(root->lexemeCurrentNode);
+					list_params l=initialize_queue_params();
+					create_func_scope(0,"void",l,root->lexemeCurrentNode);
+				}
+			else if(strcmp(root->parentNodeSymbol,"<module>")==0)
+				{// check existence and feed parameters;
+				}
+			else if(strcmp(root->parentNodeSymbol,"<moduleReuseStmt>")==0)
+				{// check params;
+				}
+			else if(strcmp(root->parentNodeSymbol,"<assignmentStmt>")==0 || 
+				strcmp(root->parentNodeSymbol,"<condionalStmt>")==0 ||
+				strcmp(root->parentNodeSymbol,"<ioStmt>")==0)
+				{// check var entry in hash_table
+				}
+			else if(strcmp(root->parentNodeSymbol,"<declareStmt>")==0)
+				{// create var entry
+				}
+		}
+
+
+
+
+
+
+		if(root->child!=NULL)
+		{
+			DFS(root->child,out_fp,h,n);
+			if((root->child)->sibling !=NULL){
+				TREE_NODE_PTR temp=(root->child)->sibling;
+				while(temp!=NULL)
+				{
+					DFS(temp,out_fp,h,n);
+					temp=temp->sibling;
+				}
+			}
+		}
+	}
 }
 

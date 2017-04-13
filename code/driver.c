@@ -8,6 +8,7 @@
 
 #include "parser.h"
 #include "lexer.h"
+#include "symbol_table.h"
 
 int line;
 int column;
@@ -29,7 +30,21 @@ int main(int argc, char* argv[])
 		grammar g = get_grammar();
 
 		FirstAndFollow f = ComputeFirstAndFollowSets(g);
-		
+		printf("FIRSTS\n\n\n\n");
+		for(int i=0;i<57;i++)
+		{
+			printf("%s\n",f.firsts[i].lhs );
+			printStack(f.firsts[i].rhs);
+		}
+		printf("FOLLOWS\n\n\n\n");
+		for(int i=0;i<57;i++)
+		{
+			printf("%s\n",f.follows[i].lhs );
+			printStack(f.follows[i].rhs);
+
+
+		}
+		fflush(stdout);
 		fill_parseTable(g,f,T.parseTable);
 		parseTree programNode=*((parseTree* )malloc(sizeof(parseTree)));
 		
@@ -70,7 +85,12 @@ int main(int argc, char* argv[])
 			{
 				FILE* out_fp=fopen(argv[2],"w");
 				programNode=parseInputSourceCode(argv[1],T,g,f);
-				parseTreePrint(&programNode.begin,out_fp);
+				DFS(&programNode.begin,out_fp,-1,0);
+				printf("%d\n", get_func_hash_value("readArr"));
+				printf("hello%s\n",symbol_table[get_func_hash_value("readArr")].func_name );
+				if(symbol_table[get_func_hash_value("readArr")].scope.func_table[0][0].variables[0]->next==NULL)
+					printf("hello\n");
+				fflush(stdout);
 				fp=fopen( "clean_code.txt", "r" );
 				num=-1;
 				line=0;
@@ -101,5 +121,21 @@ int main(int argc, char* argv[])
 	else{
 	    printf("Insufficient arguments.\n");
 	}
+
+	// GenerateSymbolTable()
+	// {
+	// 	removeComments(testcaseFile,"clean_code.txt");
+	// 	while(1)
+	// 	{		
+	// 		tokenInfo curr;
+	// 		curr=getNextToken();
+	// 		if (strcmp(curr.token,"$")==0)
+	// 			break;
+	// 		printf("%s %s %d \n",curr.lexeme,curr.token , curr.line);
+	// 	}
+
+	// }
+
+
 	return 0;
 }

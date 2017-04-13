@@ -1,9 +1,12 @@
+declare module readArr;
+
 <<<driver program>>>
 start
-	
+	declare a:boolean;
 end
 <<module empty>>
 takes input[a:boolean];
 start
-
+	declare a:boolean;
+	a:=(2*43/245>34 OR 54/34-46<=35 AND true) AND true;
 end

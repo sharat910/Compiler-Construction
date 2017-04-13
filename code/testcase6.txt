@@ -1,6 +1,8 @@
+declare module readArr;
+
 <<<driver program>>>
 start
-	
+	declare a:boolean;
 end
 <<module empty>>
 takes input[a:boolean];

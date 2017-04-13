@@ -24,5 +24,6 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G,FirstAndFo
 void printParseTree(parseTree  PT, char *outfile);
 void LexerOutput(char *testcaseFile);
 void parseTreePrint(TREE_NODE_PTR root,FILE* out_fp);
+void DFS(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nesting);
 
 #endif
