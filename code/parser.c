@@ -307,12 +307,13 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G,FirstAndFo
 				pop_ptr_stack(&ts);
 			}
 			else {
+				if(strcmp(curr.token,"$")==0)
+						break;
 				printf("The token %s for lexeme %s does not match at line %d. ",curr.token,curr.lexeme,curr.line);
 				printf("The expected token here is %s.\n\n",str_top );
 				cnt++;
 				read=1;
-				if(strcmp(curr.token,"$")==0)
-						break;
+				
 				continue;
 			}
 			
@@ -379,8 +380,10 @@ parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G,FirstAndFo
 		}
 
 	}
-	if(cnt>0)
+	if(cnt>0){
+		printf("\n\nIncorrect Syntax.\n\n\n");
 		return programNode;
+	}
 	if(s.top!=NULL)
 		printf("\n\nIncorrect Syntax.\n\n\n");
 	if(s.top==NULL)
@@ -396,7 +399,7 @@ void LexerOutput(char *testcaseFile)
 		curr=getNextToken();
 		if (strcmp(curr.token,"$")==0)
 			break;
-		printf("%s %s\n",curr.lexeme,curr.token );
+		printf("%s %s %d \n",curr.lexeme,curr.token , curr.line);
 	}
 }
 void parseTreePrint(TREE_NODE_PTR root,FILE* out_fp)

@@ -152,7 +152,7 @@ void init_map_t()
 }
 int get_index_nt(char * a)
 {
-	// printf("in map%s\n",a );
+	// printf("in map%s\n\n\n",a );
 	for(int i=0;i<56;i++)
 	{
 		if(!strcmp(map_nt[i].incoming,a)){
@@ -523,7 +523,7 @@ tokenInfo getNextToken()
 			}
 			else
 			{
-				printf("Unknown pattern %c%c in line no. %d\n",last,ch,line );
+				printf("\n\nLexical Error: Unknown pattern %c%c in line no. %d\n\n\n",last,ch,line );
 				last=custom_fgetc();
 				continue;
 			}
@@ -544,7 +544,7 @@ tokenInfo getNextToken()
 			}
 			else
 			{
-				printf("Unknown pattern %c%c in line no. %d\n",last,ch,line );
+				printf("\n\nLexical Error: Unknown pattern %c%c in line no. %d\n\n\n",last,ch,line );
 				last=custom_fgetc();
 				continue;
 			}
@@ -691,7 +691,7 @@ tokenInfo getNextToken()
 			sprintf(curr.token,"%s",resolve(str));
 			if(strlen(str)>8 && strcmp(curr.token,"ID")==0)
 			{
-				printf("%s: This Identifier is too long\n",str );
+				printf("\n\nLexical Error: This Identifier is too long: %s \n\n\n",str );
 				last=ch;
 				continue;
 			}
@@ -699,7 +699,7 @@ tokenInfo getNextToken()
 			curr.column=column;
 			// indentifyToken();
 			last=ch;
-			// printf("Input: %c %d %d\n",last,buffer_pointer,buffer_size);
+			// printf("Input: %c %d %d\n\n\n",last,buffer_pointer,buffer_size);
 			return curr;
 		}
 		else if(last=='.')
@@ -717,7 +717,7 @@ tokenInfo getNextToken()
 			}
 			else
 			{
-				printf("Unidentified pattern %c%c in line no. %d\n",last,ch,line );
+				printf("\n\nLexical Error : Unidentified pattern %c%c in line no. %d\n\n\n",last,ch,line );
 				last=custom_fgetc();
 				continue;
 			}
@@ -740,7 +740,7 @@ tokenInfo getNextToken()
 				column++;
 				if(ch=='.')
 				{
-					// printf("hi1\n");
+					// printf("hi1\n\n\n");
 					sprintf(curr.token,"%s","NUM");
 					curr.line=line;
 					curr.column=column;
@@ -780,7 +780,7 @@ tokenInfo getNextToken()
 								}
 							}
 							else {
-								printf("1Unidentified Symbol %c in line no. %d\n",ch,line );
+								printf("\n\nLexical Error : Unidentified Symbol %c in line no. %d\n\n\n",ch,line );
 								last=custom_fgetc();
 								continue;
 							}
@@ -794,9 +794,9 @@ tokenInfo getNextToken()
 						return curr;
 					}
 				else {
-					printf("2Unidentified Symbol %c in line no. %d\n",ch,line );
+					printf("\n\nLexical Error : Unidentified Symbol %c in line no. %d\n\n\n",ch,line );
 					last=custom_fgetc();
-					printf("%c\n", last);
+					// printf("%c\n\n\n", last);
 					continue;
 				}
 			}
@@ -818,7 +818,7 @@ tokenInfo getNextToken()
 					}
 				}
 				else {
-					printf("1Unidentified Symbol %c in line no. %d\n",ch,line );
+					printf("\n\nLexical Error : Unidentified Symbol %c in line no. %d\n\n\n",ch,line );
 					last=custom_fgetc();
 					continue;
 				}
@@ -837,7 +837,7 @@ tokenInfo getNextToken()
 				// 	ch=custom_fgetc();
 				// 	column++;
 				// }
-				// printf("hi\n");
+				// printf("hi\n\n\n");
 				str[i]='\0';
 				sprintf(curr.token,"%s","NUM");
 				curr.line=line;
@@ -849,7 +849,7 @@ tokenInfo getNextToken()
 		}
 		else
 		{
-			printf("Foreign symbol %c in line no. %d\n",last,line );
+			printf("Foreign symbol %c in line no. %d\n\n\n",last,line );
 			last=custom_fgetc();
 		}
 	}
