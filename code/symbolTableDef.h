@@ -5,7 +5,6 @@
 #ifndef _symbol_table_def
 #define _symbol_table_def
 
-
 typedef struct v
 {
 	char var_name[20];

@@ -4,10 +4,13 @@
 
 #ifndef _symbol_table
 #define _symbol_table
-#include "symbolTableDef.h"
+
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "symbolTableDef.h"
+#include "parseTree.h"
 
 extern func_entry symbol_table[101];
 
@@ -26,5 +29,6 @@ extern int get_func_hash_value(char* a);
 extern int find_var(char* a,int hash,int nesting,int offset);
 extern int find_param(list_params st,char* a);
 extern int complete_find(char* a,int h,int n,int o);
-
+extern VAR return_var(char* a,int hash,int nesting,int offset);
+extern VAR get_symbol_table_var_entry(TREE_NODE_PTR ptr);
 #endif

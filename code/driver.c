@@ -25,14 +25,30 @@ int main(int argc, char* argv[])
 {
 	if( argc == 3 ) 
 	{
+		printf("Here1\n");
+		fflush(stdout);
 		init();
+		printf("Here2\n");
+		fflush(stdout);
 		init_map_t();
+		printf("Here3\n");
+		fflush(stdout);
 		init_map_nt();
+		printf("Here4\n");
+		fflush(stdout);
 
 		grammar g = get_grammar();
-
+		printf("Here5\n");
+		fflush(stdout);
+		for (int i = 1; i <= 108; ++i)
+		{
+			printf("rule %d: %s -> ",i,g.rules_back[i].lhs);
+			printStack(g.rules_back[i].rhs);
+		}
+		fflush(stdout);
 		FirstAndFollow f = ComputeFirstAndFollowSets(g);
 		printf("FIRSTS\n\n\n\n");
+		fflush(stdout);
 		for(int i=0;i<57;i++)
 		{
 			printf("%s\n",f.firsts[i].lhs );
@@ -93,6 +109,8 @@ int main(int argc, char* argv[])
 				// fprintf(out_fp,"\n\n\n\n");
 				// ASTPrint(&programNode.begin,out_fp);
 				DFS(&programNode.begin,out_fp,-1,0,0);
+				constructAST(&programNode.begin);
+				printAST(programNode.begin.nptr);
 				// printf("%d\n", get_func_hash_value("readArr"));
 				// printf("hello%s\n",symbol_table[get_func_hash_value("readArr")].func_name );
 				// if(symbol_table[get_func_hash_value("readArr")].scope.func_table[0][0].variables[0]->next==NULL)

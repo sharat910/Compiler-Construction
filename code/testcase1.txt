@@ -1,9 +1,10 @@
 <<<driver program>>>
 start
-	
+	declare k:integer;
+	k := 2+3*4;
 end
 <<module empty>>
 takes input[a:boolean];
 start
-	declare a:integer;
+	declare b:integer;
 end

@@ -1,0 +1,5 @@
+print
+get_value
+while
+for
+switch

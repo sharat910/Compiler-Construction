@@ -50,7 +50,7 @@ start
 				    break;
 			case false: print(sum);
 				    declare x,u1, x_5: integer;    **ERROR_V: variables u1 and x are already declared**
-				    print(index);
+				    print(y_1);
 				    break;
 		end
 	end     
@@ -84,5 +84,5 @@ start
 		arr1[i]:=tempvar;				**ERROR_T: type mismatch, tempvar is visible and is of type real while the array element is boolean**
 		i:=i+1;
 	end
-	declare x_1, x_2, x_3: boolean;				**scope: Nesting level 1; module: readArr; lines: 71 to 87 **
+	declare x_2, x_1, x_3: boolean;				**scope: Nesting level 1; module: readArr; lines: 71 to 87 **
 end

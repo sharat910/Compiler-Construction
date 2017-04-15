@@ -3,7 +3,7 @@
 // M Sharat Chandra (2014A7PS108P)
 
 #include "parser.h"
-#include "symbol_table.h"
+#include "parseTree.h"
 int cnt;
 int offset_arr[100];
 int isTerminal(NODE top)
@@ -339,6 +339,7 @@ parseTree parseInputSourceCode(char *testcaseFile, table T,grammar G,FirstAndFol
 			int rule_num=T.parseTable[get_index_nt(str_top)][get_index_t(curr.token)];
 			if(rule_num !=0)
 			{
+				curr_st.node_info->rule_no = rule_num;
 				pop(&s);				
 				pop_ptr_stack(&ts);
 			}

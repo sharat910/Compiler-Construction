@@ -10,7 +10,6 @@
 #include "lexer.h"
 #include "parseTree.h"
 #include "parserDef.h"
-#include "parser.h"
 #include "stack_ptr.h"
 #include <stdio.h>
 #include <string.h>

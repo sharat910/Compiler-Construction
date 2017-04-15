@@ -2,9 +2,9 @@
 // Rishabh Garg (2014A7PS065P)
 // M Sharat Chandra (2014A7PS108P)
 
-
-#include "symbol_table.h"
 #include "parseTree.h"
+#include "symbol_table.h"
+
 func_entry symbol_table[101];
 
 extern int offset_arr[100];
@@ -172,8 +172,7 @@ int find_var(char* a,int hash,int nesting,int offset)
 	
 	while(n>0)
 	{
-		if(strcmp(a,"x")==0)
-			printf("Nesting:%d Offset:%d\n",n,o );
+		printf("Nesting:%d Offset:%d\n",n,o );
 		for(int i=0;i<1009;i++)
 		{
 			if(symbol_table[hash].scope.func_table[n][o].variables[i]!=NULL)
@@ -206,6 +205,7 @@ VAR return_var(char* a,int hash,int nesting,int offset)
 	
 	while(n>0)
 	{
+		printf("Nesting:%d Offset:%d\n",n,o );
 		for(int i=0;i<1009;i++)
 		{
 			if(symbol_table[hash].scope.func_table[n][o].variables[i]!=NULL)
@@ -213,15 +213,16 @@ VAR return_var(char* a,int hash,int nesting,int offset)
 				if(strcmp(a,symbol_table[hash].scope.func_table[n][o].variables[i]->var_name)==0)
 					{
 						// printf("nesting:%d offset:%d\n",n,o );
-						return symbol_table[hash].scope.func_table[nesting][offset].variables[i];
+						return symbol_table[hash].scope.func_table[n][o].variables[i];
 					}
 			}
 		}
 		n--;
-		offset=symbol_table[hash].scope.func_table[n][o].parent;
+		o=symbol_table[hash].scope.func_table[n][o].parent;
 	}
 	return NULL;
 }
+
 VAR get_symbol_table_var_entry(TREE_NODE_PTR ptr)
 {
 	return return_var(ptr->lexemeCurrentNode,ptr->hash_value,ptr->nesting,ptr->offset);
@@ -310,18 +311,23 @@ void DFS(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nesting,int offset)
 
 				}
 			else if(strcmp(root->parentNodeSymbol,"<assignmentStmt>")==0 || 
+				strcmp(root->parentNodeSymbol,"<iterativeStmt>")==0 ||
 				strcmp(root->parentNodeSymbol,"<condionalStmt>")==0 ||
 				strcmp(root->parentNodeSymbol,"<whichId>")==0 ||
 				strcmp(root->parentNodeSymbol,"<var>")==0 ||
+				strcmp(root->parentNodeSymbol,"<index>")==0 ||
 				strcmp(root->parentNodeSymbol,"<ioStmt>")==0)
 				{// check var entry in hash_table
-					root->hash_value=h;
-					root->nesting=n;
-					root->offset=o;
+
 					printf("3 ");
 					if(complete_find(root->lexemeCurrentNode,h,n,o)==0)
 						printf("Not declared.\n");
-					else printf("Declared.\n");
+					else {
+						printf("Declared.\n");
+						root->hash_value=h;
+						root->nesting=n;
+						root->offset=o;
+					}
 				}
 			else if(strcmp(root->parentNodeSymbol,"<idList>")==0)
 			{
@@ -392,7 +398,7 @@ void DFS(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nesting,int offset)
 						sprintf(v->var_name,"%s",a->lexemeCurrentNode);
 						v->line_no=a->lineno;
 						sprintf(v->type,"%s",type);
-						a=a->sibling;
+						
 						if(this_array)
 						{
 							v->is_array=1;
@@ -407,17 +413,22 @@ void DFS(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nesting,int offset)
 						
 						if(complete_find(v->var_name,h,n,o)){
 							printf("Redeclaration.\n");
-							VAR v=return_var(root->lexemeCurrentNode,h,n,o);
+							VAR v=return_var(v->var_name,h,n,o);
 							if(v!=NULL)
 								printf("Yeah_Bitches %s\n",v->var_name);
 						}
 						else{
-							root->hash_value=h;
-							root->nesting=n;
-							root->offset=o;
+							a->hash_value=h;
+							a->nesting=n;
+							a->offset=o;
 							printf("Declared of type%s in nesting %d and offset %d.\n",type,n,o );
 							add_variable(h,n,o,v);
+							VAR v1=return_var(v->var_name,h,n,o);
+							if(v1!=NULL)
+								printf("declared and found %s\n",v1->var_name);
+							else printf("sad\n");
 						}
+						a=a->sibling;
 					}
 					// printf("here2\n");
 				}
@@ -428,7 +439,13 @@ void DFS(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nesting,int offset)
 					d=0;
 					if(complete_find(root->lexemeCurrentNode,h,n,o)==0)
 						printf("Undeclared.\n");
-					else printf("Declared.\n");
+					else {
+						printf("Declared.\n");
+
+						root->hash_value=h;
+						root->nesting=n;
+						root->offset=o;
+					}
 					TREE_NODE_PTR a=root->sibling;
 					while(strcmp(a->child->NodeSymbol,"e")!=0)
 					{
@@ -436,7 +453,12 @@ void DFS(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nesting,int offset)
 						printf("ID->%s ",a->lexemeCurrentNode );
 						if(complete_find(a->lexemeCurrentNode,h,n,o)==0)
 							printf("Undeclared.\n");
-						else printf("Declared.\n");
+						else {
+							printf("Declared.\n");
+							a->hash_value=h;
+							a->nesting=n;
+							a->offset=o;
+						}
 						a=a->sibling;
 					}
 				}
@@ -475,7 +497,7 @@ void DFS(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nesting,int offset)
 				symbol_table[h].scope.in_num++;
 				add_variable(h,n+1,o,v);
 				root->hash_value=h;
-				root->nesting=n;
+				root->nesting=n+1;
 				root->offset=o;
 				symbol_table[h].scope.in_list=distinct_queue_params(symbol_table[h].scope.in_list,v);
 				fflush(stdout);
@@ -496,7 +518,7 @@ void DFS(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nesting,int offset)
 				symbol_table[h].scope.out_num++;
 				add_variable(h,n+1,o,v);
 				root->hash_value=h;
-				root->nesting=n;
+				root->nesting=n+1;
 				root->offset=o;
 				symbol_table[h].scope.out_list=distinct_queue_params(symbol_table[h].scope.out_list,v);
 				fflush(stdout);

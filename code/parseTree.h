@@ -5,6 +5,8 @@
 #ifndef _parseTree
 #define _parseTree
 
+#include "astDef.h"
+
 typedef struct tree_node
 {
 	char lexemeCurrentNode[25];
@@ -20,6 +22,11 @@ typedef struct tree_node
 	int hash_value;
 	int nesting;
 	int offset;
+	
+	int rule_no;
+	AST_NODE* nptr;
+	char* type;
+
 	struct tree_node *ASTparent;
     struct tree_node *ASTchild;
     struct tree_node *ASTsibling;
@@ -29,7 +36,7 @@ typedef struct tree_node
 typedef TREE_NODE* TREE_NODE_PTR;
 
 typedef struct {
-
 	TREE_NODE begin;
 }parseTree;
+
 #endif

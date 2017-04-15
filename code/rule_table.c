@@ -11,7 +11,7 @@ rule rules_back[109];
 void rule_table_init()
 {
 	char s[50];
-	FILE* fp=fopen("line_numbered_grammar_normal.txt","r");
+	FILE* fp=fopen("line_numbered_grammar_normal1.txt","r");
 	while(fscanf(fp,"%s",s) != EOF)
 	{
 		int l=atoi(s);
@@ -29,7 +29,7 @@ void rule_table_init()
 		}
 	}
 
-	FILE* fp2=fopen("line_numbered_grammar_reverse.txt","r");
+	FILE* fp2=fopen("line_numbered_grammar_reverse1.txt","r");
 	while(fscanf(fp2,"%s",s) != EOF)
 	{
 		int l=atoi(s);
