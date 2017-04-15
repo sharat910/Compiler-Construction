@@ -2,19 +2,21 @@ declare module readArr;
 
 **the following function computes the sum of first n elements of the array**
 <<module arraySum>>
-takes input[list:array[1..15] of    real, n:integer];
+takes input[list:array[1..15] of    real, n:integer,p:boolean];
 returns  [sum:real];
 start
-	declare index:integer;
+	declare index,index2:integer;
 	declare t:boolean;
 	sum:=0.0;
+	declare p:boolean;
 	for(index in  1..15)
 	start
+		declare index3,index4:integer;
 		t:= index<=n;
-		switch(t)
+		switch(p)
 		start
-			case true: print(list[index]);
-				   sum:=sum+list[index];
+			case true: print(list[index3]);
+				   sum:=sum+list[index4];
 				   break;
 			case false: print(sum);
 				    print(index);
@@ -26,19 +28,25 @@ start
 				    break;
 
 			case false: print(sum);
-				    print(index);
+				    print(p);
 				    **prints the values of sum and index  15-n times**
 				    break;
 		end
+
 		** no need to increment the value of index as it will be taken care by the semantic rules associated with for construct, but an increment statement does not make its syntax incorrect**
+	end
+	
+	for(index in  1..15)
+	start
+		p:=10;
 	end
 	print(sum);
 end
-<<module arraySum>>
+<<module arraySun>>
 takes input[list:array[1..15] of    real, n:integer];
 returns  [sum:real];
 start
-	declare index:integer;
+	declare index,index2:integer;
 	declare t:boolean;
 	sum:=3.0e+10;
 	for(index in  1..15)
@@ -47,7 +55,7 @@ start
 		switch(t)
 		start
 			case true: print(list[index]);
-				   sum:=sum+list[index];
+				   sum:=sum+list[index2];
 				   break;
 			case false: print(sum);
 				    print(index);
@@ -83,63 +91,5 @@ end
 **The array variable is not returned as the translation will**
 **use the same locations for array elements**
 
-<<module readArr>>
-takes input [arr1:array[1..15] of real,k:integer];
-start
-	declare tempvar:real;
-	declare i:integer;
-	i:=1;
-	while(i<=k)
-	start
-		get_value(tempvar);
-		arr1[i]:=tempvar;
-		i:=i+1;
-		** the semantics of while needs an increment and will be taken care of at the second phase**
-	end
-	print(random);
 
-
-end
-    
-
-     
-     ** testing ** ****
-<<module readArr>>
-takes input [arr1:array[1..15] of real,k:integer];
-start
-	declare tempvar:real;
-	declare i:integer;
-	i:=1;
-	while(i<=k)
-	start
-		get_value(tempvar);
-		arr1[i]:=tempvar;
-		i:=i+1;
-		** the semantics of while needs an increment and will be taken care of at the second phase**
-	end
-	print(random);
-end
-<<module readArr>>
-takes input [arr1:array[1..15] of real,k:integer];
-start
-	declare tempvar:real;
-	declare i:integer;
-	i:=1;
-	while(i<=k)
-	start
-		get_value(tempvar);
-		arr1[i]:=tempvar;
-		i:=i+1;
-		** the semantics of while needs an increment and will be taken care of at the second phase**
-	end
-	print(random);
-end
-
-
-    
-
-
-** stray** ** **
-     
-     ** end test ** ******
 

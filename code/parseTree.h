@@ -17,6 +17,13 @@ typedef struct tree_node
 	struct tree_node* parent;
 	struct tree_node* child;
 	struct tree_node* sibling;
+	int hash_value;
+	int nesting;
+	int offset;
+	struct tree_node *ASTparent;
+    struct tree_node *ASTchild;
+    struct tree_node *ASTsibling;
+
 }TREE_NODE;
 
 typedef TREE_NODE* TREE_NODE_PTR;

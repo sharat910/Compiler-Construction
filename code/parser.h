@@ -23,7 +23,8 @@ void createParseTable(grammar G,FirstAndFollow  F, table T);
 parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G,FirstAndFollow  F);
 void printParseTree(parseTree  PT, char *outfile);
 void LexerOutput(char *testcaseFile);
-void parseTreePrint(TREE_NODE_PTR root,FILE* out_fp);
-void DFS(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nesting);
+void parseTreePrint(TREE_NODE_PTR root,TREE_NODE_PTR parent,FILE* out_fp);
+void ASTPrint(TREE_NODE_PTR root,FILE* out_fp);
+void DFS(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nesting,int offset);
 
 #endif

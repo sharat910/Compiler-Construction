@@ -9,6 +9,7 @@
 #include "parser.h"
 #include "lexer.h"
 #include "symbol_table.h"
+#include "ast.h" 
 
 int line;
 int column;
@@ -19,6 +20,7 @@ extern entry_map_nt map_nt[56];
 extern entry_map_t map_t[59];
 int parseTable[56][59];
 table T;
+extern int main_seen;
 int main(int argc, char* argv[])
 {
 	if( argc == 3 ) 
@@ -85,11 +87,16 @@ int main(int argc, char* argv[])
 			{
 				FILE* out_fp=fopen(argv[2],"w");
 				programNode=parseInputSourceCode(argv[1],T,g,f);
-				DFS(&programNode.begin,out_fp,-1,0);
-				printf("%d\n", get_func_hash_value("readArr"));
-				printf("hello%s\n",symbol_table[get_func_hash_value("readArr")].func_name );
-				if(symbol_table[get_func_hash_value("readArr")].scope.func_table[0][0].variables[0]->next==NULL)
-					printf("hello\n");
+				programNode.begin.ASTparent=NULL;
+				// createAST(&programNode.begin,((programNode.begin).child));
+				parseTreePrint(&programNode.begin,NULL,out_fp);
+				// fprintf(out_fp,"\n\n\n\n");
+				// ASTPrint(&programNode.begin,out_fp);
+				DFS(&programNode.begin,out_fp,-1,0,0);
+				// printf("%d\n", get_func_hash_value("readArr"));
+				// printf("hello%s\n",symbol_table[get_func_hash_value("readArr")].func_name );
+				// if(symbol_table[get_func_hash_value("readArr")].scope.func_table[0][0].variables[0]->next==NULL)
+				// 	printf("hello\n");
 				fflush(stdout);
 				fp=fopen( "clean_code.txt", "r" );
 				num=-1;
