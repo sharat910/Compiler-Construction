@@ -3,8 +3,8 @@
 // M Sharat Chandra (2014A7PS108P)
 
 #include "parser.h"
-#include "parseTree.h"
-#include "symbol_table.h"
+#include "astDef.h"
+#include "symbolTable.h"
 int cnt;
 int offset_arr[100];
 int isTerminal(NODE top)
@@ -463,7 +463,6 @@ void assignParents(TREE_NODE_PTR root,TREE_NODE_PTR parent,FILE* out_fp)
 	}		
 }
 
-
 void ASTPrint(TREE_NODE_PTR root,FILE* out_fp)
 {
 
@@ -482,4 +481,3 @@ void ASTPrint(TREE_NODE_PTR root,FILE* out_fp)
 		ASTPrint(root->ASTchild,out_fp);
 		ASTPrint(root->ASTsibling,out_fp);	
 }
-

@@ -6,10 +6,10 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
-extern int line;
-extern int column;
-extern char last;
-extern FILE* fp;
+int line;
+int column;
+char last;
+FILE* fp;
 char buffer[200];
 int buffer_pointer=0;
 int buffer_size=0;

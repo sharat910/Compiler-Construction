@@ -2,8 +2,8 @@
 // Rishabh Garg (2014A7PS065P)
 // M Sharat Chandra (2014A7PS108P)
 
-#include "parseTree.h"
-#include "symbol_table.h"
+#include "astDef.h"
+#include "symbolTable.h"
 
 func_entry symbol_table[101];
 
@@ -44,6 +44,7 @@ int isEmpty_queue_params(list_params st)
 
 list_params distinct_queue_params(list_params st,VAR v)
 {
+	v->next=NULL;
 	VAR p;
 	p = st.front;
 	if(st.no_of_params==0)
@@ -140,15 +141,28 @@ void add_variable(int h,int nesting,int offset,VAR v)
 			sprintf(symbol_table[h].scope.func_table[nesting][offset].variables[n]->var_name,"%s",v->var_name);
 			sprintf(symbol_table[h].scope.func_table[nesting][offset].variables[n]->type,"%s",v->type);
 			symbol_table[h].scope.func_table[nesting][offset].variables[n]->line_no=v->line_no;
+			symbol_table[h].scope.func_table[nesting][offset].variables[n]->h=h;
+			symbol_table[h].scope.func_table[nesting][offset].variables[n]->n=nesting;
+			symbol_table[h].scope.func_table[nesting][offset].variables[n]->o=offset;
+			symbol_table[h].scope.func_table[nesting][offset].variables[n]->dec=1;
+			symbol_table[h].scope.func_table[nesting][offset].variables[n]->is_array=v->is_array;
+			symbol_table[h].scope.func_table[nesting][offset].variables[n]->s_range=v->s_range;
+			symbol_table[h].scope.func_table[nesting][offset].variables[n]->e_range=v->e_range;
+			symbol_table[h].scope.func_table[nesting][offset].variables[n]->m=v->m;
+			symbol_table[h].scope.func_table[nesting][offset].variables[n]->size=v->size;
 			break;
 		}
 		n=(n+i)%1009;
 		i++;
 	}
 }
-
-
-
+// {
+// 	printf("%s\n",a );
+// 	fflush(stdout);
+// 	int num=get_hash_value(a);
+// 	symbol_table[h].scope.func_table[n][o].variables[num]=(VAR)malloc(sizeof(var));
+// 	symbol_table[h].scope.func_table[n][o].variables[num]->dec=0;
+// }
 void symbol_table_init()
 {
 	for(int i=0;i<101;i++)
@@ -205,7 +219,7 @@ VAR return_var(char* a,int hash,int nesting,int offset)
 	
 	while(n>0)
 	{
-		printf("Nesting:%d Offset:%d\n",n,o );
+		// printf("Nesting:%d Offset:%d\n",n,o );
 		for(int i=0;i<1009;i++)
 		{
 			if(symbol_table[hash].scope.func_table[n][o].variables[i]!=NULL)
@@ -228,8 +242,8 @@ VAR get_symbol_table_var_entry(TREE_NODE_PTR ptr)
 	return return_var(ptr->lexemeCurrentNode,ptr->hash_value,ptr->nesting,ptr->offset);
 }
 
-
 int main_seen=0;
+int m=0;;
 void constructSymbolTable(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nesting,int offset)
 {
 	// printf("Function %d %d\n",hash_value,nesting);
@@ -239,10 +253,10 @@ void constructSymbolTable(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nes
 	int d=1;
 	if(root!=NULL)
 	{
-		if(strcmp(root->token,"NUM")!=0 && strcmp(root->token,"RNUM")!=0)
-			fprintf(out_fp,"%s\t%d\t%s\t%s\t%s\t%d\t%s\n",root->lexemeCurrentNode,root->lineno,root->token," N/A ",root->parentNodeSymbol,root->isLeafNode,root->NodeSymbol);
-		else
-			fprintf(out_fp,"%s\t%d\t%s\t%lf\t%s\t%d\t%s\n",root->lexemeCurrentNode,root->lineno,root->token,root->valueLfNumber,root->parentNodeSymbol,root->isLeafNode,root->NodeSymbol);
+		// if(strcmp(root->token,"NUM")!=0 && strcmp(root->token,"RNUM")!=0)
+		// 	fprintf(out_fp,"%s\t%d\t%s\t%s\t%s\t%d\t%s\n",root->lexemeCurrentNode,root->lineno,root->token," N/A ",root->parentNodeSymbol,root->isLeafNode,root->NodeSymbol);
+		// else
+		// 	fprintf(out_fp,"%s\t%d\t%s\t%lf\t%s\t%d\t%s\n",root->lexemeCurrentNode,root->lineno,root->token,root->valueLfNumber,root->parentNodeSymbol,root->isLeafNode,root->NodeSymbol);
 		if(strcmp(root->token,"DRIVER")==0)
 		{
 			h=get_func_hash_value("DRIVER");
@@ -252,6 +266,7 @@ void constructSymbolTable(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nes
 				offset_arr[i]=0;
 			n=0;
 			printf("Driver Function seen.\n");
+			m=0;
 		}
 
 		if(strcmp(root->token,"START")==0){
@@ -259,10 +274,11 @@ void constructSymbolTable(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nes
 			symbol_table[h].scope.func_table[n][o].parent=o;
 			printf("Line %d parent offset %d\n", root->lineno,o);
 			o=offset_arr[++n];
+			symbol_table[h].scope.func_table[n][o].start=root->lineno;
 		}
 
 		if(strcmp(root->token,"END")==0){
-			
+			symbol_table[h].scope.func_table[n][o].end=root->lineno;
 			o=symbol_table[h].scope.func_table[n][o].parent;
 			offset_arr[n]++;
 			n--;
@@ -283,6 +299,7 @@ void constructSymbolTable(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nes
 					printf("Declaring%s\n",root->lexemeCurrentNode);
 					h=get_func_hash_value(root->lexemeCurrentNode);
 					create_func_scope(0,0,root->lexemeCurrentNode);
+					m=0;
 				}
 			else if(strcmp(root->parentNodeSymbol,"<module>")==0)
 				{// check existence and feed parameters;
@@ -294,15 +311,16 @@ void constructSymbolTable(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nes
 						for(int i=1;i<100;i++)
 							offset_arr[i]=0;
 						n=0;
+						m=0;
 					}
 					else{
 						printf("Function %s not declared.\n",root->lexemeCurrentNode );
 						h=get_func_hash_value(root->lexemeCurrentNode);
-						// create_func_entry(root->lexemeCurrentNode);
 						create_func_scope(0,0,root->lexemeCurrentNode);
 						for(int i=1;i<100;i++)
 							offset_arr[i]=0;
 						n=0;
+						m=0;
 					}
 				}
 			else if(strcmp(root->parentNodeSymbol,"<moduleReuseStmt>")==0)
@@ -353,14 +371,25 @@ void constructSymbolTable(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nes
 						st=a->sibling->sibling->child->valueLfNumber;
 						en=a->sibling->sibling->child->sibling->sibling->valueLfNumber;
 						a=a->sibling->sibling->sibling->sibling->sibling->child;
-						printf("type of array%s\n", a->NodeSymbol);
+						printf("type of array %s\n", a->NodeSymbol);
 						sprintf(type,"%s",a->NodeSymbol);
 						this_array=1;
+						if(strcmp(type,"BOOLEAN")==0)
+							v->size=en-st+1;
+						else if(strcmp(type,"INTEGER")==0)
+							v->size=(en-st+1)*2;
+						else v->size=(en-st+1)*4;
 						v->is_array=1;
 						v->s_range=st;
 						v->e_range=en;
 					}
 					else{
+						if(strcmp(type,"BOOLEAN")==0)
+							v->size=1;
+						else if(strcmp(type,"INTEGER")==0)
+							v->size=2;
+						else v->size=4;
+						
 						v->is_array=0;
 						v->s_range=-1;
 						v->e_range=-1;
@@ -369,12 +398,15 @@ void constructSymbolTable(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nes
 					sprintf(v->type,"%s",type);
 					v->line_no=root->lineno;
 					
-					if(complete_find(root->lexemeCurrentNode,h,n,o))
+					if(complete_find(root->lexemeCurrentNode,h,n,o)){
 						printf("Redeclaration.\n");
+					}
 					else{
 						root->hash_value=h;
 						root->nesting=n;
 						root->offset=o;
+						v->m=m;
+						m+=v->size;
 						printf("%s Declared of type",root->lexemeCurrentNode );
 						printf("%s in nesting %d and offset %d.\n",type,n,o);
 						add_variable(h,n,o,v);
@@ -385,8 +417,6 @@ void constructSymbolTable(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nes
 					}
 
 					a=root->sibling;
-					// printf("here\n");
-					// printf("YE%s\n",a->parent->NodeSymbol );e
 					while(strcmp(a->child->NodeSymbol,"e")!=0)
 					{
 						a=a->child->sibling;
@@ -404,8 +434,19 @@ void constructSymbolTable(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nes
 							v->is_array=1;
 							v->s_range=st;
 							v->e_range=en;
+						if(strcmp(type,"BOOLEAN")==0)
+							v->size=en-st+1;
+						else if(strcmp(type,"INTEGER")==0)
+							v->size=(en-st+1)*2;
+						else v->size=(en-st+1)*4;
 						}
 						else{
+							if(strcmp(type,"BOOLEAN")==0)
+								v->size=1;
+							else if(strcmp(type,"INTEGER")==0)
+								v->size=2;
+							else v->size=4;
+						
 							v->is_array=0;
 							v->s_range=-1;
 							v->e_range=-1;
@@ -413,14 +454,14 @@ void constructSymbolTable(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nes
 						
 						if(complete_find(v->var_name,h,n,o)){
 							printf("Redeclaration.\n");
-							VAR v=return_var(v->var_name,h,n,o);
-							if(v!=NULL)
-								printf("Yeah_Bitches %s\n",v->var_name);
 						}
 						else{
+							v->m=m;
+							m+=v->size;
 							a->hash_value=h;
 							a->nesting=n;
 							a->offset=o;
+							
 							printf("Declared of type%s in nesting %d and offset %d.\n",type,n,o );
 							add_variable(h,n,o,v);
 							VAR v1=return_var(v->var_name,h,n,o);
@@ -441,7 +482,6 @@ void constructSymbolTable(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nes
 						printf("Undeclared.\n");
 					else {
 						printf("Declared.\n");
-
 						root->hash_value=h;
 						root->nesting=n;
 						root->offset=o;
@@ -488,17 +528,30 @@ void constructSymbolTable(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nes
 					v->is_array=1;
 					v->s_range=st;
 					v->e_range=en;
+					if(strcmp(v->type,"BOOLEAN")==0)
+						v->size=en-st+1;
+					else if(strcmp(v->type,"INTEGER")==0)
+						v->size=(en-st+1)*2;
+					else v->size=(en-st+1)*4;
 				}
 				else{
 					v->is_array=0;
 					v->s_range=-1;
 					v->e_range=-1;
+					if(strcmp(v->type,"BOOLEAN")==0)
+						v->size=1;
+					else if(strcmp(v->type,"INTEGER")==0)
+						v->size=2;
+					else v->size=4;
 				}
 				symbol_table[h].scope.in_num++;
+				v->m=m;
+				m+=v->size;
 				add_variable(h,n+1,o,v);
 				root->hash_value=h;
 				root->nesting=n+1;
 				root->offset=o;
+				
 				symbol_table[h].scope.in_list=distinct_queue_params(symbol_table[h].scope.in_list,v);
 				fflush(stdout);
 			}
@@ -515,11 +568,18 @@ void constructSymbolTable(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nes
 				sprintf(v->var_name,"%s",root->lexemeCurrentNode);
 				printf("Declared of type %s.\n", root->sibling->sibling->child->token);
 				sprintf(v->type,"%s",root->sibling->sibling->child->token);
+				if(strcmp(v->type,"BOOLEAN")==0)
+					v->size=1;
+				else if(strcmp(v->type,"INTEGER")==0)
+					v->size=2;
+				else v->size=4;	
+				v->m=m;
 				symbol_table[h].scope.out_num++;
 				add_variable(h,n+1,o,v);
 				root->hash_value=h;
 				root->nesting=n+1;
 				root->offset=o;
+				m+=v->size;
 				symbol_table[h].scope.out_list=distinct_queue_params(symbol_table[h].scope.out_list,v);
 				fflush(stdout);
 			}

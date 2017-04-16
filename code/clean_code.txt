@@ -60,10 +60,14 @@ end
 start
 	declare A:array[1..15] of real;                            
 	declare k:integer;					   
+	declare l:integer;	
+	declare m:integer;	
 	declare s:real;						   
 	get_value(k);
 			   
 	[s]:= use module arraySum with parameters A,k;
+	use module readArr with parameters A,k,l,m;		   
+	[s]:= use module arraySum with parameters A,k,l,m;
 	print(s);
 end
 

@@ -1,5 +1,5 @@
 #include "ast.h"
-#include "symbol_table.h"
+#include "symbolTable.h"
 #include <stdio.h>
 
 # define ID_TYPE 1
@@ -30,7 +30,7 @@ AST_NODE* make_ast_leaf(TREE_NODE_PTR node, int type, int value){
 	leaf->type=type;
 	switch (type){
 		case ID_TYPE:
-			printf("Function hash:%d Nest:%d Offset:%d\n",node->hash_value,node->nesting,node->offset );
+			// printf("Function hash:%d Nest:%d Offset:%d\n",node->hash_value,node->nesting,node->offset );
 			leaf->st_ptr = get_symbol_table_var_entry(node);
 			break;
 		
@@ -43,7 +43,7 @@ AST_NODE* make_ast_leaf(TREE_NODE_PTR node, int type, int value){
 		// default:
 		// 	printf("Unidentified type \"%d\" in make_ast_leaf\n",type);
 	}
-	printf("Creating leaf for %s whose type is %d\n",identifier,type);
+	// printf("Creating leaf for %s whose type is %d\n",identifier,type);
 	return leaf;	
 }
 
@@ -63,9 +63,7 @@ AST_NODE* make_ast_node(TREE_NODE_PTR node){
 	}
 
 	ast_node->count = i;
-	printf("Creating ast node for %s\n with count %d\n",node->NodeSymbol,ast_node->count);
-	if(ast_node==NULL)
-		printf("Sorry\n");
+	// printf("Creating ast node for %s with count %d\n",node->NodeSymbol,ast_node->count);
 	return ast_node;
 }
 
@@ -126,21 +124,25 @@ AST_NODE* get_nptr_range(TREE_NODE_PTR node){
 //Typecheck function
 void type_check(TREE_NODE_PTR node){
 	int rule_no = node->rule_no;
-	printf("type_check called on node %s with rule no %d\n",node->NodeSymbol,rule_no);
-	fflush(stdout);
+	// printf("type_check called on node %s with rule no %d\n",node->NodeSymbol,rule_no);
+	// fflush(stdout);
 	//<arithmeticExpr> → <term> <N4> 
 	//<term> → <factor> <N5>
 	if (rule_no == 77 || rule_no == 80)
 	{
 		TREE_NODE_PTR factor1 = node->child;
 		TREE_NODE_PTR n5 = factor1->sibling;
-		printf("Fine till here\n");
-		fflush(stdout);
 		if (n5->nptr != NULL)
 			if (strcmp(factor1->type,"BOOLEAN") == 0)
 				printf("Type Error in line %d: BOOLEAN type var invalid here\n",node->lineno);
-		printf("Fine till here2\n");
-		fflush(stdout);
+	}
+
+	//<assignmentStmt> →  ID <whichStmt>
+	else if (rule_no == 43){
+		TREE_NODE_PTR id = node->child;
+		TREE_NODE_PTR whichStmt = id->sibling;
+		if (strcmp(id->type,whichStmt->type) != 0)
+			printf("Type Error in line %d: Mismatch between %s and %s\n",node->lineno,id->type,whichStmt->type);
 	}
 
 	//<moduleReuseStmt> → <optional> USE MODULE ID WITH PARAMETERS <idList> SEMICOL
@@ -150,24 +152,15 @@ void type_check(TREE_NODE_PTR node){
 		AST_NODE* id = find_id_ka_nptr(node);
 		char *identifier = id->name;
 		int h = get_func_hash_value(identifier);
-		printf("%s\n",identifier);
-		fflush(stdout);
 		VAR function_exit = symbol_table[h].scope.out_list.front;
-		printf("Fine till here0.1\n");
-		fflush(stdout);
 		int no_of_out_params = symbol_table[h].scope.out_num;
-		printf("Fine till here1\n");
-		fflush(stdout);
-		if (opt->nptr == NULL && function_exit != NULL){
-			printf("Error in line %d: The function is returning %d no. of arguments\n",
-				opt->lineno,no_of_out_params);
+		if (opt->nptr == NULL){
+			if (function_exit != NULL)
+				printf("Error in line %d: The function is returning %d no. of arguments\n",
+					opt->lineno,no_of_out_params);
 		}
 		else{
-			printf("Fine till here2\n");
-			fflush(stdout);
 			TREE_NODE_PTR idd = opt->child->sibling->child;
-			printf("Fine till here3\n");
-			fflush(stdout);
 			while(idd->nptr != NULL && function_exit != NULL)
 			{
 				VAR id_st_entry = get_symbol_table_var_entry(idd);
@@ -183,19 +176,19 @@ void type_check(TREE_NODE_PTR node){
 				idd = idd->sibling->child;
 				function_exit = function_exit->next;
 				
-				if (idd->nptr == NULL)
-					if (function_exit != NULL)
+				if(strcmp(idd->NodeSymbol,"e")==0)
+					{if (function_exit != NULL)
 						printf("Error in line %d: More parameters returned by function\n",idd->lineno);
+					}
+				else
+					 idd=idd->sibling;
 
 				if (function_exit == NULL)
-					if (idd->nptr != NULL)
+					if(strcmp(idd->NodeSymbol,"e")!=0)
 						printf("Error in line %d: Less parameters returned by function\n",idd->lineno);
 
 			}
 		}
-
-		printf("Fine till here4\n");
-		fflush(stdout);
 		// Checking input params
 		VAR function_entry = symbol_table[h].scope.in_list.front;
 		TREE_NODE_PTR first_id=opt->sibling->sibling->sibling->sibling->sibling->sibling->child;
@@ -206,23 +199,27 @@ void type_check(TREE_NODE_PTR node){
 				if (strcmp(id_st_entry->type,function_entry->type) != 0)
 						printf("Type Mismatch in line %d: Expected %s but got %s\n",
 							first_id->lineno,function_entry->type,id_st_entry->type);
-				printf("%d %d\n",id_st_entry->is_array, function_entry->is_array);
+				// printf("%d %d\n",id_st_entry->is_array, function_entry->is_array);
 				if (id_st_entry->is_array && function_entry->is_array){
 					if (id_st_entry->e_range - id_st_entry->s_range != id_st_entry->e_range - id_st_entry->s_range)
 						printf("Range length Mismatch in line %d\n",first_id->lineno);
 				}
-				else
+				else if(id_st_entry->is_array || function_entry->is_array)
 					printf("Type Mismatch in line %d: Array type mismatch\n",first_id->lineno);
 			}
 			first_id = first_id->sibling->child;
 			function_entry = function_entry->next;
 			
-			if (first_id->nptr == NULL)
+			if (strcmp(first_id->NodeSymbol,"e")==0)
+			{
 				if (function_entry != NULL)
 					printf("Error in line %d: More parameters required by function\n",first_id->lineno);
-
+			}
+			else{ 
+				first_id=first_id->sibling;
+			}
 			if (function_entry == NULL)
-				if (first_id->nptr != NULL)
+				if(strcmp(first_id->NodeSymbol,"e")!=0)
 					printf("Error in line %d: More parameters passed into the function\n",first_id->lineno);
 
 		}
@@ -250,15 +247,15 @@ void type_check(TREE_NODE_PTR node){
 	{
 		TREE_NODE_PTR negOrPosAE = node->child->sibling;
 		TREE_NODE_PTR WithRelOp = negOrPosAE->sibling;
-		printf("Hererrerere\n");
-		fflush(stdout);
+		// printf("Hererrerere\n");
+		// fflush(stdout);
 		if (WithRelOp->nptr != NULL)
 			printf("Error in line %d: Multiple relationalOps in same expression\n",node->lineno);
 	
 		if (strcmp(negOrPosAE->type,"BOOLEAN") == 0)
 			printf("Type Error in line %d: BOOLEAN type expression invalid here\n",node->lineno);
-		printf("Hererrererexit\n");
-		fflush(stdout);
+		// printf("Hererrererexit\n");
+		// fflush(stdout);
 	}
 
 	//<AOBE>​1​ → BO <AOBE>​2​ BC <alpha>
@@ -268,22 +265,18 @@ void type_check(TREE_NODE_PTR node){
 		if (alpha->nptr != NULL)
 		{
 			TREE_NODE_PTR all_ops = aobe->sibling->sibling->child;
-			printf("Debug\n");
-			fflush(stdout);
 			if (strcmp(all_ops->child->NodeSymbol,"<logicalOp>")==0){
-				printf("IF Debug2\n");
-				fflush(stdout);
+				// printf("IF Debug2\n");
+				// fflush(stdout);
 				if (strcmp(aobe->type,"BOOLEAN") != 0)
 					printf("Type Error in line %d: Expecting BOOLEAN type expression here\n",node->lineno);
 			}
 			else{
-				printf("ELSE Debug2\n");
-				fflush(stdout);			
+				// printf("ELSE Debug2\n");
+				// fflush(stdout);			
 				if (strcmp(aobe->type,"BOOLEAN") == 0)
 					printf("Type Error in line %d:  BOOLEAN type expression invalid here\n",node->lineno);
 			}
-			printf("Debug2\n");
-			fflush(stdout);
 		}
 	}
 
@@ -307,8 +300,8 @@ void type_check(TREE_NODE_PTR node){
 	else if (rule_no == 78 || rule_no == 81)
 	{
 		TREE_NODE_PTR factor1 = node->child->sibling;
-		printf("here %s\n",factor1->type);
-		fflush(stdout);
+		// printf("here %s\n",factor1->type);
+		// fflush(stdout);
 		if (strcmp(factor1->type,"BOOLEAN") == 0)
 			printf("Type Error in line %d: BOOLEAN type var invalid here\n",node->lineno);
 	}
@@ -350,7 +343,7 @@ void type_check(TREE_NODE_PTR node){
 void magic_function(TREE_NODE_PTR node)
 {
 	int rule_no = node->rule_no;
-	printf("%d\n",rule_no);
+	// printf("%d\n",rule_no);
 	// printf("Line no. %d ",node->lineno );
 	if (is_non_terminal(node))
 		switch(rule_no){
@@ -366,8 +359,6 @@ void magic_function(TREE_NODE_PTR node)
 			case 14:
 			case 15:
 			case 25:
-			case 43:
-
 			case 53:
 			case 54:
 			case 106:
@@ -378,13 +369,12 @@ void magic_function(TREE_NODE_PTR node)
 			case 77:
 			case 80:			
 			//Typecheck
-			// type_check(node);			
+			type_check(node);			
 			node->nptr = make_ast_node(node);
 			node->type = node->child->type;
-			printf("Setting type of %s to be %s\n",node->NodeSymbol,node->type);
-			fflush(stdout);
 			break;
 
+			case 43:
 			case 50:
 			case 63:
 			case 68:
@@ -396,8 +386,6 @@ void magic_function(TREE_NODE_PTR node)
 			case 99:
 			case 107:
 			type_check(node);
-			printf("After type check\n");
-			fflush(stdout);
 			node->nptr = make_ast_node(node);
 			break;
 
@@ -580,11 +568,13 @@ void magic_function(TREE_NODE_PTR node)
 			node->type = (char*) malloc(sizeof(char)*10);
 			sprintf(node->type,"%s","DUMMY");
 		}
+		node->nptr->ptNode = node;
 	}
 	else if (strcmp(node->NodeSymbol,"NUM") == 0){
 		node->nptr = make_ast_leaf(node,NUM_RNUM_TYPE,node->valueLfNumber);
 		node->type = (char*) malloc(sizeof(char)*10);
 		sprintf(node->type,"%s","INTEGER");
+		node->nptr->st_ptr = NULL;
 	}
 		
 	else if	(strcmp(node->NodeSymbol,"RNUM") == 0)
@@ -592,6 +582,7 @@ void magic_function(TREE_NODE_PTR node)
 		node->nptr = make_ast_leaf(node,NUM_RNUM_TYPE,node->valueLfNumber);
 		node->type = (char*) malloc(sizeof(char)*10);
 		sprintf(node->type,"%s","REAL");
+		node->nptr->st_ptr = NULL;
 	}
 	else if ((strcmp(node->NodeSymbol,"TRUE") == 0) || 
 		(strcmp(node->NodeSymbol,"FALSE") == 0))
@@ -599,6 +590,7 @@ void magic_function(TREE_NODE_PTR node)
 		node->nptr = make_ast_leaf(node,BOOL_TYPE,0);
 		node->type = (char*) malloc(sizeof(char)*10);
 		sprintf(node->type,"%s","BOOLEAN");
+		node->nptr->st_ptr = NULL;
 	}
 	else{
 	}
@@ -609,8 +601,8 @@ void recursive_function(TREE_NODE_PTR node)
 {
 	if (node->child != NULL)
 		recursive_function(node->child);
-	printf("Line no. %d ",node->lineno);
-	printf("Calling magic_function on %s\n",node->NodeSymbol);
+	// printf("Line no. %d ",node->lineno);
+	// printf("Calling magic_function on %s\n",node->NodeSymbol);
 	magic_function(node);
 	fflush(stdout);
 	if (node->sibling != NULL)
@@ -629,19 +621,85 @@ void printAST(AST_NODE* root)
 		fflush(stdout);
 		return;
 	}
-	else 
-		if (root->is_leaf)
+	 
+	else if (root->is_leaf)
+	{
+		printf("Line No. %d ", root->line_no);
+		print_ast_leaf(root);
+	}
+	else
+	{
+		int loop_count = root->count;
+		for (int i = 0; i < loop_count; i++)
 		{
-			printf("Line No. %d ", root->line_no);
-			print_ast_leaf(root);
+			// printf("Printing nptr array entry %d of %s\n",i,root->name);
+			printAST(root->array[i]);
 		}
-		else
+	}
+}
+int ne=1;
+int printSymbolTable(AST_NODE* root,int num)
+{
+	fflush(stdout);
+	if(root == NULL){
+		// printf("nptr is NULL\n");
+		fflush(stdout);
+		return 0;
+	}
+	if (root->ptNode != NULL)
+	{
+		// printf("NS: %s\n",root->ptNode->lexemeCurrentNode );
+	}else
+		// printf("Root ka ptNode null h\n");
+	fflush(stdout);
+	if(root->is_leaf && root->type==ID_TYPE && strcmp(root->ptNode->parentNodeSymbol,"<idList>")==0 &&
+	strcmp(root->ptNode->parent->parentNodeSymbol,"<moduleReuseStmt>")==0 )
+		return 1;
+
+	// printf("HERRERERE\n");
+	fflush(stdout);
+
+	// printf("IS LEAF %d\n",root->is_leaf);
+
+	if (root->is_leaf)
+	{
+		VAR v=root->st_ptr;
+		if(v!=NULL)
 		{
-			int loop_count = root->count;
-			for (int i = 0; i < loop_count; i++)
+			if((strcmp(root->ptNode->parentNodeSymbol,"<output_plist>")==0 ||
+			strcmp(root->ptNode->parentNodeSymbol,"<output_plist_ex>")==0 ||
+			strcmp(root->ptNode->parentNodeSymbol,"<input_plist>")==0 ||
+			strcmp(root->ptNode->parentNodeSymbol,"<input_plist_ex>")==0 ||
+			strcmp(root->ptNode->parentNodeSymbol,"<idList>")==0 ||
+			strcmp(root->ptNode->parentNodeSymbol,"<idList_ex>")==0 ||
+			strcmp(root->ptNode->parent->parentNodeSymbol,"<declareStmt>")==0) &&
+			strcmp(root->ptNode->parent->parentNodeSymbol,"<optional>")!=0 &&
+			strcmp(root->ptNode->parent->parentNodeSymbol,"<moduleReuseStmt>")!=0	)
 			{
-				// printf("Printing nptr array entry %d of %s\n",i,root->name);
-				printAST(root->array[i]);
+				ne++;
+				int start=symbol_table[v->h].scope.func_table[v->n][v->o].start;
+				int end=symbol_table[v->h].scope.func_table[v->n][v->o].end;
+				printf("%d\t%8s\t",num,v->var_name );
+				if(v->is_array)
+					printf("%5s(%d,%s)\t%5d to %d\t%7d\t%5d\t%d\n","array",v->e_range-v->s_range+1,v->type, start,end,v->n,v->size,v->m);
+				else printf("%10s\t%10d to %d\t%2d\t%5d\t%d\n",v->type, start,end,v->n,v->size,v->m);
 			}
 		}
+		fflush(stdout);
+		return 0;
+	}
+	
+	// printf("HERRERERE2\n");
+	fflush(stdout);
+
+	int loop_count = root->count;
+	for (int i = 0; i < loop_count; i++)
+	{
+		// printf("Printing nptr array entry %d of %s\n",i,root->name);
+		fflush(stdout);
+		if(printSymbolTable(root->array[i],ne))
+			break;
+	}
+	fflush(stdout);
+	return 0;
 }

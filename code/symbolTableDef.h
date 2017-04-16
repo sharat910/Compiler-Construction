@@ -14,16 +14,23 @@ typedef struct v
 	int is_array;
 	int s_range;
 	int e_range;
-	int dec;
 	int start;
 	int end;
+	int dec;
+	int size;
+	int m;
 	char func_name[100];
+	int h;
+	int n;
+	int o;
 }var;
 
 typedef var* VAR;
 typedef struct
 {	int parent;
 	int exist;
+	int start;
+	int end;
 	VAR variables[1009];
 }hash_table;
 
@@ -48,7 +55,7 @@ typedef struct
 typedef struct
 {
 	int exist;
-	
+
 	char func_name[50];
 	func_scope scope;
 }func_entry;

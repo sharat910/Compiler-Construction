@@ -5,7 +5,7 @@
 #ifndef _stack_ptr
 #define _stack_ptr
 
-#include "parseTree.h"
+#include "astDef.h"
 
 struct ptr 
 {
