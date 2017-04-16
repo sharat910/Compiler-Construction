@@ -1,0 +1,1694 @@
+rule 1: <program> ->  <moduleDeclarations> --> <otherModules> --> <driverModule> --> <otherModules> -->
+rule 2: <moduleDeclarations> ->  <moduleDeclaration> --> <moduleDeclarations> -->
+rule 3: <moduleDeclarations> ->  e -->
+rule 4: <moduleDeclaration> ->  DECLARE --> MODULE --> ID --> SEMICOL -->
+rule 5: <otherModules> ->  <module> --> <otherModules> -->
+rule 6: <otherModules> ->  e -->
+rule 7: <driverModule> ->  DRIVERDEF --> DRIVER --> PROGRAM --> DRIVERENDDEF --> <moduleDef> -->
+rule 8: <module> ->  DEF --> MODULE --> ID --> ENDDEF --> TAKES --> INPUT --> SQBO --> <input_plist> --> SQBC --> SEMICOL --> <ret> --> <moduleDef> -->
+rule 9: <ret> ->  RETURNS --> SQBO --> <output_plist> --> SQBC --> SEMICOL -->
+rule 10: <ret> ->  e -->
+rule 11: <input_plist> ->  ID --> COLON --> <dataType> --> <input_plist_ex> -->
+rule 12: <input_plist_ex> ->  COMMA --> ID --> COLON --> <dataType> --> <input_plist_ex> -->
+rule 13: <input_plist_ex> ->  e -->
+rule 14: <output_plist> ->  ID --> COLON --> <type> --> <output_plist_ex> -->
+rule 15: <output_plist_ex> ->  COMMA --> ID --> COLON --> <type> --> <output_plist_ex> -->
+rule 16: <output_plist_ex> ->  e -->
+rule 17: <dataType> ->  INTEGER -->
+rule 18: <dataType> ->  REAL -->
+rule 19: <dataType> ->  BOOLEAN -->
+rule 20: <dataType> ->  ARRAY --> SQBO --> <range> --> SQBC --> OF --> <type> -->
+rule 21: <type> ->  INTEGER -->
+rule 22: <type> ->  REAL -->
+rule 23: <type> ->  BOOLEAN -->
+rule 24: <moduleDef> ->  START --> <statements> --> END -->
+rule 25: <statements> ->  <statement> --> <statements> -->
+rule 26: <statements> ->  e -->
+rule 27: <statement> ->  <ioStmt> -->
+rule 28: <statement> ->  <simpleStmt> -->
+rule 29: <statement> ->  <declareStmt> -->
+rule 30: <statement> ->  <condionalStmt> -->
+rule 31: <statement> ->  <iterativeStmt> -->
+rule 32: <ioStmt> ->  GET_VALUE --> BO --> ID --> BC --> SEMICOL -->
+rule 33: <ioStmt> ->  PRINT --> BO --> <var> --> BC --> SEMICOL -->
+rule 34: <var> ->  ID --> <whichId> -->
+rule 35: <var> ->  NUM -->
+rule 36: <var> ->  RNUM -->
+rule 37: <var> ->  TRUE -->
+rule 38: <var> ->  FALSE -->
+rule 39: <whichId> ->  SQBO --> ID --> SQBC -->
+rule 40: <whichId> ->  e -->
+rule 41: <simpleStmt> ->  <assignmentStmt> -->
+rule 42: <simpleStmt> ->  <moduleReuseStmt> -->
+rule 43: <assignmentStmt> ->  ID --> <whichStmt> -->
+rule 44: <whichStmt> ->  <lvalueIDStmt> -->
+rule 45: <whichStmt> ->  <lvalueARRStmt> -->
+rule 46: <lvalueIDStmt> ->  ASSIGNOP --> <expression> --> SEMICOL -->
+rule 47: <lvalueARRStmt> ->  SQBO --> <index> --> SQBC --> ASSIGNOP --> <expression> --> SEMICOL -->
+rule 48: <index> ->  NUM -->
+rule 49: <index> ->  ID -->
+rule 50: <moduleReuseStmt> ->  <optional> --> USE --> MODULE --> ID --> WITH --> PARAMETERS --> <idList> --> SEMICOL -->
+rule 51: <optional> ->  SQBO --> <idList> --> SQBC --> ASSIGNOP -->
+rule 52: <optional> ->  e -->
+rule 53: <idList> ->  ID --> <idList_ex> -->
+rule 54: <idList_ex> ->  COMMA --> ID --> <idList_ex> -->
+rule 55: <idList_ex> ->  e -->
+rule 56: <expression> ->  <AOBE> -->
+rule 57: <expression> ->  MINUS --> <BorNBAE> -->
+rule 58: <negOrPosAE> ->  MINUS --> <BorNBAE> -->
+rule 59: <negOrPosAE> ->  <BorNBAE> -->
+rule 60: <BorNBAE> ->  BO --> <arithmeticExpr> --> BC -->
+rule 61: <BorNBAE> ->  <arithmeticExpr> -->
+rule 62: <AOBE> ->  <AnyTerm> --> <WithLogOp> -->
+rule 63: <WithLogOp> ->  <logicalOp> --> <AnyTerm2> --> <WithLogOp> -->
+rule 64: <WithLogOp> ->  e -->
+rule 65: <AnyTerm> ->  <arithmeticExpr> --> <WithRelOp> -->
+rule 66: <AnyTerm2> ->  BO --> <AOBE> --> BC -->
+rule 67: <AnyTerm2> ->  <AnyTerm> -->
+rule 68: <WithRelOp> ->  <relationalOp> --> <negOrPosAE> --> <WithRelOp> -->
+rule 69: <WithRelOp> ->  e -->
+rule 70: <AOBE> ->  BO --> <AOBE> --> BC --> <alpha> -->
+rule 71: <alpha> ->  <all_ops> --> <AOBE> -->
+rule 72: <alpha> ->  e -->
+rule 73: <all_ops> ->  <logicalOp> -->
+rule 74: <all_ops> ->  <relationalOp> -->
+rule 75: <all_ops> ->  <op1> -->
+rule 76: <all_ops> ->  <op2> -->
+rule 77: <arithmeticExpr> ->  <term> --> <N4> -->
+rule 78: <N4> ->  <op1> --> <term> --> <N4> -->
+rule 79: <N4> ->  e -->
+rule 80: <term> ->  <factor> --> <N5> -->
+rule 81: <N5> ->  <op2> --> <factor> --> <N5> -->
+rule 82: <N5> ->  e -->
+rule 83: <factor> ->  <var> -->
+rule 84: <op1> ->  PLUS -->
+rule 85: <op1> ->  MINUS -->
+rule 86: <op2> ->  MUL -->
+rule 87: <op2> ->  DIV -->
+rule 88: <logicalOp> ->  AND -->
+rule 89: <logicalOp> ->  OR -->
+rule 90: <relationalOp> ->  LT -->
+rule 91: <relationalOp> ->  LE -->
+rule 92: <relationalOp> ->  GT -->
+rule 93: <relationalOp> ->  GE -->
+rule 94: <relationalOp> ->  EQ -->
+rule 95: <relationalOp> ->  NE -->
+rule 96: <declareStmt> ->  DECLARE --> <idList> --> COLON --> <dataType> --> SEMICOL -->
+rule 97: <condionalStmt> ->  SWITCH --> BO --> ID --> BC --> START --> <caseStmts> --> <default> --> END -->
+rule 98: <caseStmts> ->  CASE --> <value> --> COLON --> <statements> --> BREAK --> SEMICOL --> <MultiCase> -->
+rule 99: <MultiCase> ->  CASE --> <value> --> COLON --> <statements> --> BREAK --> SEMICOL --> <MultiCase> -->
+rule 100: <MultiCase> ->  e -->
+rule 101: <value> ->  NUM -->
+rule 102: <value> ->  TRUE -->
+rule 103: <value> ->  FALSE -->
+rule 104: <default> ->  DEFAULT --> COLON --> <statements> --> BREAK --> SEMICOL -->
+rule 105: <default> ->  e -->
+rule 106: <iterativeStmt> ->  FOR --> BO --> ID --> IN --> <range> --> BC --> START --> <statements> --> END -->
+rule 107: <iterativeStmt> ->  WHILE --> BO --> <AOBE> --> BC --> START --> <statements> --> END -->
+rule 108: <range> ->  NUM --> RANGEOP --> NUM -->
+FIRSTS
+
+
+
+<AOBE>
+ ID --> NUM --> RNUM --> TRUE --> FALSE --> BO -->
+<output_plist>
+ ID -->
+<idList>
+ ID -->
+<statement>
+ USE --> SQBO --> ID --> FOR --> WHILE --> SWITCH --> DECLARE --> GET_VALUE --> PRINT -->
+<whichStmt>
+ SQBO --> ASSIGNOP -->
+<WithLogOp>
+ AND --> OR --> e -->
+<moduleReuseStmt>
+ USE --> SQBO -->
+<idList_ex>
+ e --> COMMA -->
+<declareStmt>
+ DECLARE -->
+<MultiCase>
+ e --> CASE -->
+<simpleStmt>
+ SQBO --> USE --> ID -->
+<expression>
+ FALSE --> TRUE --> RNUM --> NUM --> ID --> BO --> MINUS -->
+<term>
+ FALSE --> TRUE --> RNUM --> NUM --> ID -->
+<index>
+ ID --> NUM -->
+<module>
+ DEF -->
+<lvalueARRStmt>
+ SQBO -->
+<negOrPosAE>
+ ID --> NUM --> RNUM --> TRUE --> FALSE --> BO --> MINUS -->
+<dataType>
+ ARRAY --> BOOLEAN --> REAL --> INTEGER -->
+<input_plist>
+ ID -->
+<var>
+ FALSE --> TRUE --> RNUM --> NUM --> ID -->
+<op2>
+ DIV --> MUL -->
+<N4>
+ PLUS --> MINUS --> e -->
+<output_plist_ex>
+ e --> COMMA -->
+<driverModule>
+ DRIVERDEF -->
+<program>
+ DEF --> DECLARE --> DRIVERDEF -->
+<iterativeStmt>
+ WHILE --> FOR -->
+<caseStmts>
+ CASE -->
+<logicalOp>
+ OR --> AND -->
+<whichId>
+ e --> SQBO -->
+<ioStmt>
+ PRINT --> GET_VALUE -->
+<input_plist_ex>
+ e --> COMMA -->
+<ret>
+ e --> RETURNS -->
+<WithRelOp>
+ LT --> LE --> GT --> GE --> EQ --> NE --> e -->
+<condionalStmt>
+ SWITCH -->
+<optional>
+ e --> SQBO -->
+<op1>
+ MINUS --> PLUS -->
+<range>
+ NUM -->
+<relationalOp>
+ NE --> EQ --> GE --> GT --> LE --> LT -->
+<BorNBAE>
+ FALSE --> TRUE --> RNUM --> NUM --> ID --> BO -->
+<factor>
+ ID --> NUM --> RNUM --> TRUE --> FALSE -->
+<value>
+ FALSE --> TRUE --> NUM -->
+<moduleDeclarations>
+ DECLARE --> e -->
+<otherModules>
+ DEF --> e -->
+<type>
+ BOOLEAN --> REAL --> INTEGER -->
+<moduleDeclaration>
+ DECLARE -->
+<moduleDef>
+ START -->
+<default>
+ e --> DEFAULT -->
+<N5>
+ MUL --> DIV --> e -->
+<assignmentStmt>
+ ID -->
+<lvalueIDStmt>
+ ASSIGNOP -->
+<statements>
+ SQBO --> USE --> ID --> PRINT --> GET_VALUE --> DECLARE --> SWITCH --> WHILE --> FOR --> e -->
+<arithmeticExpr>
+ ID --> NUM --> RNUM --> TRUE --> FALSE -->
+<AnyTerm>
+ FALSE --> TRUE --> RNUM --> NUM --> ID -->
+<all_ops>
+ MUL --> DIV --> PLUS --> MINUS --> LT --> LE --> GT --> GE --> EQ --> NE --> AND --> OR -->
+<alpha>
+ OR --> AND --> NE --> EQ --> GE --> GT --> LE --> LT --> MINUS --> PLUS --> DIV --> MUL --> e -->
+<AnyTerm2>
+ ID --> NUM --> RNUM --> TRUE --> FALSE --> BO -->
+
+
+FOLLOWS
+
+
+
+<AOBE>
+ BC --> SEMICOL -->
+<output_plist>
+ SQBC -->
+<idList>
+ COLON --> SQBC --> SEMICOL -->
+<statement>
+ FOR --> WHILE --> SWITCH --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> BREAK --> END -->
+<whichStmt>
+ FOR --> WHILE --> SWITCH --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> BREAK --> END -->
+<WithLogOp>
+ BC --> SEMICOL -->
+<moduleReuseStmt>
+ FOR --> WHILE --> SWITCH --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> BREAK --> END -->
+<idList_ex>
+ COLON --> SQBC --> SEMICOL -->
+<declareStmt>
+ FOR --> WHILE --> SWITCH --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> BREAK --> END -->
+<MultiCase>
+ END --> DEFAULT -->
+<simpleStmt>
+ FOR --> WHILE --> SWITCH --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> BREAK --> END -->
+<expression>
+ SEMICOL -->
+<term>
+ MINUS --> PLUS --> NE --> EQ --> GE --> GT --> LE --> LT --> OR --> AND --> BC --> SEMICOL -->
+<index>
+ SQBC -->
+<module>
+ DEF --> DRIVERDEF --> $ -->
+<lvalueARRStmt>
+ FOR --> WHILE --> SWITCH --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> BREAK --> END -->
+<negOrPosAE>
+ NE --> EQ --> GE --> GT --> LE --> LT --> OR --> AND --> BC --> SEMICOL -->
+<dataType>
+ SEMICOL --> COMMA --> SQBC -->
+<input_plist>
+ SQBC -->
+<var>
+ DIV --> MUL --> MINUS --> PLUS --> NE --> EQ --> GE --> GT --> LE --> LT --> OR --> AND --> BC --> SEMICOL -->
+<op2>
+ BO --> ID --> NUM --> RNUM --> TRUE --> FALSE -->
+<N4>
+ NE --> EQ --> GE --> GT --> LE --> LT --> OR --> AND --> BC --> SEMICOL -->
+<output_plist_ex>
+ SQBC -->
+<driverModule>
+ DEF --> $ -->
+<program>
+ $ -->
+<iterativeStmt>
+ FOR --> WHILE --> SWITCH --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> BREAK --> END -->
+<caseStmts>
+ END --> DEFAULT -->
+<logicalOp>
+ ID --> NUM --> RNUM --> TRUE --> FALSE --> BO -->
+<whichId>
+ DIV --> MUL --> MINUS --> PLUS --> LT --> LE --> GT --> GE --> EQ --> NE --> AND --> OR --> BC --> SEMICOL -->
+<ioStmt>
+ FOR --> WHILE --> SWITCH --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> BREAK --> END -->
+<input_plist_ex>
+ SQBC -->
+<ret>
+ START -->
+<WithRelOp>
+ OR --> AND --> BC --> SEMICOL -->
+<condionalStmt>
+ FOR --> WHILE --> SWITCH --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> BREAK --> END -->
+<optional>
+ USE -->
+<op1>
+ BO --> FALSE --> TRUE --> RNUM --> NUM --> ID -->
+<range>
+ BC --> SQBC -->
+<relationalOp>
+ MINUS --> ID --> NUM --> RNUM --> TRUE --> FALSE --> BO -->
+<BorNBAE>
+ LT --> LE --> GT --> GE --> EQ --> NE --> AND --> OR --> BC --> SEMICOL -->
+<factor>
+ DIV --> MUL --> MINUS --> PLUS --> NE --> EQ --> GE --> GT --> LE --> LT --> OR --> AND --> BC --> SEMICOL -->
+<value>
+ COLON -->
+<moduleDeclarations>
+ DEF --> DRIVERDEF -->
+<otherModules>
+ DRIVERDEF --> $ -->
+<type>
+ SEMICOL --> COMMA --> SQBC -->
+<moduleDeclaration>
+ DECLARE --> DEF --> DRIVERDEF -->
+<moduleDef>
+ DEF --> DRIVERDEF --> $ -->
+<default>
+ END -->
+<N5>
+ MINUS --> PLUS --> NE --> EQ --> GE --> GT --> LE --> LT --> OR --> AND --> BC --> SEMICOL -->
+<assignmentStmt>
+ FOR --> WHILE --> SWITCH --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> BREAK --> END -->
+<lvalueIDStmt>
+ FOR --> WHILE --> SWITCH --> DECLARE --> GET_VALUE --> PRINT --> ID --> USE --> SQBO --> BREAK --> END -->
+<statements>
+ BREAK --> END -->
+<arithmeticExpr>
+ NE --> EQ --> GE --> GT --> LE --> LT --> OR --> AND --> BC --> SEMICOL -->
+<AnyTerm>
+ OR --> AND --> BC --> SEMICOL -->
+<all_ops>
+ ID --> NUM --> RNUM --> TRUE --> FALSE --> BO -->
+<alpha>
+ BC --> SEMICOL -->
+<AnyTerm2>
+ OR --> AND --> BC --> SEMICOL -->
+
+
+-----FIRST AND FOLLOW AUTOMATED-----
+
+Press:
+1=> For the clean code
+2=> For printing token generated by lexer
+3=> For verifying the syntactic correctness
+4=> For printing the parse tree
+5=> For Exiting
+
+
+Correct Syntax.
+
+
+Line 1 ID encountered->readArr 2 ModuleDefinition.
+Line 2 ID encountered->arr1 6 Declared of type ARRAY. 
+BOOLEAN.
+Line 2 ID encountered->k 6 Declared of type INTEGER. 
+error free
+Line 3 parent offset 0
+Line 4 ID encountered->tempvar 4 Nesting:1 Offset:0
+tempvar Declared of typeREAL in nesting 1 and offset 0.
+Nesting:1 Offset:0
+Yeahhhhh tempvar
+Line 5 ID encountered->i 4 Nesting:1 Offset:0
+i Declared of typeINTEGER in nesting 1 and offset 0.
+Nesting:1 Offset:0
+Yeahhhhh i
+Line 6 ID encountered->i 3 Nesting:1 Offset:0
+Declared.
+Line 7 ID encountered->x_1 3 Nesting:1 Offset:0
+Not declared.
+Line 7 ID encountered->i 3 Nesting:1 Offset:0
+Declared.
+Line 7 ID encountered->u1 3 Nesting:1 Offset:0
+Not declared.
+Line 8 ID encountered->i 4 Nesting:1 Offset:0
+Redeclaration.
+Line 9 ID encountered->i 3 Nesting:1 Offset:0
+Declared.
+Line 9 ID encountered->k 3 Nesting:1 Offset:0
+Declared.
+Line 10 parent offset 0
+Line 11 ID encountered->x_1 4 Nesting:2 Offset:0
+Nesting:1 Offset:0
+x_1 Declared of typeBOOLEAN in nesting 2 and offset 0.
+Nesting:2 Offset:0
+Yeahhhhh x_1
+Line 11 ID encountered->x_2 Nesting:2 Offset:0
+Nesting:1 Offset:0
+Declared of typeBOOLEAN in nesting 2 and offset 0.
+Nesting:2 Offset:0
+declared and found x_2
+Line 12 ID encountered->x_1 3 Nesting:2 Offset:0
+Declared.
+Line 12 ID encountered->u2 3 Nesting:2 Offset:0
+Nesting:1 Offset:0
+Not declared.
+Line 13 ID encountered->tempvar 3 Nesting:2 Offset:0
+Nesting:1 Offset:0
+Declared.
+Line 14 ID encountered->x_1 4 Nesting:2 Offset:0
+Redeclaration.
+Line 14 ID encountered->x_3 Nesting:2 Offset:0
+Nesting:1 Offset:0
+Declared of typeINTEGER in nesting 2 and offset 0.
+Nesting:2 Offset:0
+declared and found x_3
+Line 15 ID encountered->arr1 3 Nesting:2 Offset:0
+Nesting:1 Offset:0
+Declared.
+Line 15 ID encountered->i 3 Nesting:2 Offset:0
+Nesting:1 Offset:0
+Declared.
+Line 15 ID encountered->tempvar 3 Nesting:2 Offset:0
+Nesting:1 Offset:0
+Declared.
+Line 16 ID encountered->i 3 Nesting:2 Offset:0
+Nesting:1 Offset:0
+Declared.
+Line 16 ID encountered->i 3 Nesting:2 Offset:0
+Nesting:1 Offset:0
+Declared.
+Line 18 ID encountered->x_2 4 Nesting:1 Offset:0
+x_2 Declared of typeBOOLEAN in nesting 1 and offset 0.
+Nesting:1 Offset:0
+Yeahhhhh x_2
+Line 18 ID encountered->x_1 Nesting:1 Offset:0
+Declared of typeBOOLEAN in nesting 1 and offset 0.
+Nesting:1 Offset:0
+declared and found x_1
+Line 18 ID encountered->x_3 Nesting:1 Offset:0
+Declared of typeBOOLEAN in nesting 1 and offset 0.
+Nesting:1 Offset:0
+declared and found x_3
+Driver Function seen.
+Line 21 parent offset 0
+Line 22 ID encountered->k 4 Nesting:1 Offset:0
+k Declared of typeINTEGER in nesting 1 and offset 0.
+Nesting:1 Offset:0
+Yeahhhhh k
+Line 23 ID encountered->k 3 Nesting:1 Offset:0
+Declared.
+Line no. 1 Calling magic_function on e
+0
+Line no. 1 Calling magic_function on <moduleDeclarations>
+3
+Line no. 1 Calling magic_function on DEF
+0
+Line no. 1 Calling magic_function on MODULE
+0
+Line no. 1 Calling magic_function on ID
+0
+Function hash:0 Nest:0 Offset:0
+Creating leaf for readArr whose type is 1
+Line no. 1 Calling magic_function on ENDDEF
+0
+Line no. 2 Calling magic_function on TAKES
+0
+Line no. 2 Calling magic_function on INPUT
+0
+Line no. 2 Calling magic_function on SQBO
+0
+Line no. 2 Calling magic_function on ID
+0
+Function hash:29 Nest:1 Offset:0
+Nesting:1 Offset:0
+Creating leaf for arr1 whose type is 1
+Nesting:1 Offset:0
+Line no. 2 Calling magic_function on COLON
+0
+Line no. 2 Calling magic_function on ARRAY
+0
+Line no. 2 Calling magic_function on SQBO
+0
+Line no. 2 Calling magic_function on NUM
+0
+Creating leaf for 1 whose type is 2
+Line no. 2 Calling magic_function on RANGEOP
+0
+Line no. 2 Calling magic_function on NUM
+0
+Creating leaf for 15 whose type is 2
+Line no. 2 Calling magic_function on <range>
+108
+Creating leaf for 1 whose type is 2
+Creating leaf for 15 whose type is 2
+Line no. 2 Calling magic_function on SQBC
+0
+Line no. 2 Calling magic_function on OF
+0
+Line no. 2 Calling magic_function on BOOLEAN
+0
+Line no. 2 Calling magic_function on <type>
+23
+Line no. 2 Calling magic_function on <dataType>
+20
+Creating ast node for <dataType>
+ with count 2
+Line no. 2 Calling magic_function on COMMA
+0
+Line no. 2 Calling magic_function on ID
+0
+Function hash:29 Nest:1 Offset:0
+Nesting:1 Offset:0
+Creating leaf for k whose type is 1
+Nesting:1 Offset:0
+Line no. 2 Calling magic_function on COLON
+0
+Line no. 2 Calling magic_function on INTEGER
+0
+Line no. 2 Calling magic_function on <dataType>
+17
+Line no. 2 Calling magic_function on e
+0
+Line no. 2 Calling magic_function on <input_plist_ex>
+13
+Line no. 2 Calling magic_function on <input_plist_ex>
+12
+Creating ast node for <input_plist_ex>
+ with count 3
+Line no. 1 Calling magic_function on <input_plist>
+11
+Creating ast node for <input_plist>
+ with count 3
+Line no. 2 Calling magic_function on SQBC
+0
+Line no. 2 Calling magic_function on SEMICOL
+0
+Line no. 3 Calling magic_function on e
+0
+Line no. 1 Calling magic_function on <ret>
+10
+Line no. 3 Calling magic_function on START
+0
+Line no. 4 Calling magic_function on DECLARE
+0
+Line no. 4 Calling magic_function on ID
+0
+Function hash:29 Nest:1 Offset:0
+Nesting:1 Offset:0
+Creating leaf for tempvar whose type is 1
+Nesting:1 Offset:0
+Line no. 4 Calling magic_function on e
+0
+Line no. 4 Calling magic_function on <idList_ex>
+55
+Line no. 4 Calling magic_function on <idList>
+53
+Creating ast node for <idList>
+ with count 2
+Line no. 4 Calling magic_function on COLON
+0
+Line no. 4 Calling magic_function on REAL
+0
+Line no. 4 Calling magic_function on <dataType>
+18
+Line no. 4 Calling magic_function on SEMICOL
+0
+Line no. 4 Calling magic_function on <declareStmt>
+96
+Creating ast node for <declareStmt>
+ with count 2
+Line no. 4 Calling magic_function on <statement>
+29
+Line no. 5 Calling magic_function on DECLARE
+0
+Line no. 5 Calling magic_function on ID
+0
+Function hash:29 Nest:1 Offset:0
+Nesting:1 Offset:0
+Creating leaf for i whose type is 1
+Nesting:1 Offset:0
+Line no. 5 Calling magic_function on e
+0
+Line no. 5 Calling magic_function on <idList_ex>
+55
+Line no. 5 Calling magic_function on <idList>
+53
+Creating ast node for <idList>
+ with count 2
+Line no. 5 Calling magic_function on COLON
+0
+Line no. 5 Calling magic_function on INTEGER
+0
+Line no. 5 Calling magic_function on <dataType>
+17
+Line no. 5 Calling magic_function on SEMICOL
+0
+Line no. 5 Calling magic_function on <declareStmt>
+96
+Creating ast node for <declareStmt>
+ with count 2
+Line no. 5 Calling magic_function on <statement>
+29
+Line no. 6 Calling magic_function on ID
+0
+Function hash:29 Nest:1 Offset:0
+Nesting:1 Offset:0
+Creating leaf for i whose type is 1
+Nesting:1 Offset:0
+Line no. 6 Calling magic_function on ASSIGNOP
+0
+Line no. 6 Calling magic_function on NUM
+0
+Creating leaf for 1 whose type is 2
+Line no. 6 Calling magic_function on <var>
+35
+Line no. 6 Calling magic_function on <factor>
+83
+Line no. 6 Calling magic_function on e
+0
+Line no. 6 Calling magic_function on <N5>
+82
+Line no. 6 Calling magic_function on <term>
+80
+Creating ast node for <term>
+ with count 2
+Line no. 6 Calling magic_function on e
+0
+Line no. 6 Calling magic_function on <N4>
+79
+Line no. 6 Calling magic_function on <arithmeticExpr>
+77
+Creating ast node for <arithmeticExpr>
+ with count 2
+Line no. 6 Calling magic_function on e
+0
+Line no. 6 Calling magic_function on <WithRelOp>
+69
+Line no. 6 Calling magic_function on <AnyTerm>
+65
+Creating ast node for <AnyTerm>
+ with count 2
+Line no. 6 Calling magic_function on e
+0
+Line no. 6 Calling magic_function on <WithLogOp>
+64
+Line no. 6 Calling magic_function on <AOBE>
+62
+Creating ast node for <AOBE>
+ with count 2
+Line no. 6 Calling magic_function on <expression>
+56
+Line no. 6 Calling magic_function on SEMICOL
+0
+Line no. 6 Calling magic_function on <lvalueIDStmt>
+46
+Line no. 6 Calling magic_function on <whichStmt>
+44
+Line no. 6 Calling magic_function on <assignmentStmt>
+43
+Creating ast node for <assignmentStmt>
+ with count 2
+Line no. 6 Calling magic_function on <simpleStmt>
+41
+Line no. 6 Calling magic_function on <statement>
+28
+Line no. 7 Calling magic_function on ID
+0
+Function hash:0 Nest:0 Offset:0
+Creating leaf for x_1 whose type is 1
+Line no. 7 Calling magic_function on ASSIGNOP
+0
+Line no. 7 Calling magic_function on ID
+0
+Function hash:29 Nest:1 Offset:0
+Nesting:1 Offset:0
+Creating leaf for i whose type is 1
+Nesting:1 Offset:0
+Line no. 7 Calling magic_function on e
+0
+Line no. 7 Calling magic_function on <whichId>
+40
+Line no. 7 Calling magic_function on <var>
+34
+Creating ast node for <var>
+ with count 2
+Line no. 7 Calling magic_function on <factor>
+83
+Line no. 7 Calling magic_function on e
+0
+Line no. 7 Calling magic_function on <N5>
+82
+Line no. 7 Calling magic_function on <term>
+80
+Creating ast node for <term>
+ with count 2
+Line no. 7 Calling magic_function on PLUS
+0
+Line no. 7 Calling magic_function on <op1>
+84
+Creating leaf for + whose type is 3
+Line no. 7 Calling magic_function on ID
+0
+Function hash:0 Nest:0 Offset:0
+Creating leaf for u1 whose type is 1
+Line no. 7 Calling magic_function on e
+0
+Line no. 7 Calling magic_function on <whichId>
+40
+Line no. 7 Calling magic_function on <var>
+34
+Creating ast node for <var>
+ with count 2
+Line no. 7 Calling magic_function on <factor>
+83
+Line no. 7 Calling magic_function on e
+0
+Line no. 7 Calling magic_function on <N5>
+82
+Line no. 7 Calling magic_function on <term>
+80
+Creating ast node for <term>
+ with count 2
+Line no. 7 Calling magic_function on e
+0
+Line no. 7 Calling magic_function on <N4>
+79
+Line no. 7 Calling magic_function on <N4>
+78
+Creating ast node for <N4>
+ with count 3
+Line no. 7 Calling magic_function on <arithmeticExpr>
+77
+Creating ast node for <arithmeticExpr>
+ with count 2
+Line no. 7 Calling magic_function on e
+0
+Line no. 7 Calling magic_function on <WithRelOp>
+69
+Line no. 7 Calling magic_function on <AnyTerm>
+65
+Creating ast node for <AnyTerm>
+ with count 2
+Line no. 7 Calling magic_function on e
+0
+Line no. 7 Calling magic_function on <WithLogOp>
+64
+Line no. 7 Calling magic_function on <AOBE>
+62
+Creating ast node for <AOBE>
+ with count 2
+Line no. 7 Calling magic_function on <expression>
+56
+Line no. 7 Calling magic_function on SEMICOL
+0
+Line no. 7 Calling magic_function on <lvalueIDStmt>
+46
+Line no. 7 Calling magic_function on <whichStmt>
+44
+Line no. 7 Calling magic_function on <assignmentStmt>
+43
+Creating ast node for <assignmentStmt>
+ with count 2
+Line no. 7 Calling magic_function on <simpleStmt>
+41
+Line no. 7 Calling magic_function on <statement>
+28
+Line no. 8 Calling magic_function on DECLARE
+0
+Line no. 8 Calling magic_function on ID
+0
+Function hash:0 Nest:0 Offset:0
+Creating leaf for i whose type is 1
+Line no. 8 Calling magic_function on e
+0
+Line no. 8 Calling magic_function on <idList_ex>
+55
+Line no. 8 Calling magic_function on <idList>
+53
+Creating ast node for <idList>
+ with count 2
+Line no. 8 Calling magic_function on COLON
+0
+Line no. 8 Calling magic_function on REAL
+0
+Line no. 8 Calling magic_function on <dataType>
+18
+Line no. 8 Calling magic_function on SEMICOL
+0
+Line no. 8 Calling magic_function on <declareStmt>
+96
+Creating ast node for <declareStmt>
+ with count 2
+Line no. 8 Calling magic_function on <statement>
+29
+Line no. 9 Calling magic_function on WHILE
+0
+Line no. 9 Calling magic_function on BO
+0
+Line no. 9 Calling magic_function on ID
+0
+Function hash:29 Nest:1 Offset:0
+Nesting:1 Offset:0
+Creating leaf for i whose type is 1
+Nesting:1 Offset:0
+Line no. 9 Calling magic_function on e
+0
+Line no. 9 Calling magic_function on <whichId>
+40
+Line no. 9 Calling magic_function on <var>
+34
+Creating ast node for <var>
+ with count 2
+Line no. 9 Calling magic_function on <factor>
+83
+Line no. 9 Calling magic_function on e
+0
+Line no. 9 Calling magic_function on <N5>
+82
+Line no. 9 Calling magic_function on <term>
+80
+Creating ast node for <term>
+ with count 2
+Line no. 9 Calling magic_function on e
+0
+Line no. 9 Calling magic_function on <N4>
+79
+Line no. 9 Calling magic_function on <arithmeticExpr>
+77
+Creating ast node for <arithmeticExpr>
+ with count 2
+Line no. 9 Calling magic_function on LE
+0
+Line no. 9 Calling magic_function on <relationalOp>
+91
+Creating leaf for <= whose type is 3
+Line no. 9 Calling magic_function on ID
+0
+Function hash:29 Nest:1 Offset:0
+Nesting:1 Offset:0
+Creating leaf for k whose type is 1
+Nesting:1 Offset:0
+Line no. 9 Calling magic_function on e
+0
+Line no. 9 Calling magic_function on <whichId>
+40
+Line no. 9 Calling magic_function on <var>
+34
+Creating ast node for <var>
+ with count 2
+Line no. 9 Calling magic_function on <factor>
+83
+Line no. 9 Calling magic_function on e
+0
+Line no. 9 Calling magic_function on <N5>
+82
+Line no. 9 Calling magic_function on <term>
+80
+Creating ast node for <term>
+ with count 2
+Line no. 9 Calling magic_function on e
+0
+Line no. 9 Calling magic_function on <N4>
+79
+Line no. 9 Calling magic_function on <arithmeticExpr>
+77
+Creating ast node for <arithmeticExpr>
+ with count 2
+Line no. 9 Calling magic_function on <BorNBAE>
+61
+Line no. 9 Calling magic_function on <negOrPosAE>
+59
+Line no. 9 Calling magic_function on e
+0
+Line no. 9 Calling magic_function on <WithRelOp>
+69
+Line no. 9 Calling magic_function on <WithRelOp>
+68
+Creating ast node for <WithRelOp>
+ with count 3
+Line no. 9 Calling magic_function on <AnyTerm>
+65
+Creating ast node for <AnyTerm>
+ with count 2
+Line no. 9 Calling magic_function on e
+0
+Line no. 9 Calling magic_function on <WithLogOp>
+64
+Line no. 9 Calling magic_function on <AOBE>
+62
+Creating ast node for <AOBE>
+ with count 2
+Line no. 9 Calling magic_function on BC
+0
+Line no. 10 Calling magic_function on START
+0
+Line no. 11 Calling magic_function on DECLARE
+0
+Line no. 11 Calling magic_function on ID
+0
+Function hash:29 Nest:2 Offset:0
+Nesting:2 Offset:0
+Creating leaf for x_1 whose type is 1
+Nesting:2 Offset:0
+Line no. 11 Calling magic_function on COMMA
+0
+Line no. 11 Calling magic_function on ID
+0
+Function hash:29 Nest:2 Offset:0
+Nesting:2 Offset:0
+Creating leaf for x_2 whose type is 1
+Nesting:2 Offset:0
+Line no. 11 Calling magic_function on e
+0
+Line no. 11 Calling magic_function on <idList_ex>
+55
+Line no. 11 Calling magic_function on <idList_ex>
+54
+Creating ast node for <idList_ex>
+ with count 2
+Line no. 11 Calling magic_function on <idList>
+53
+Creating ast node for <idList>
+ with count 2
+Line no. 11 Calling magic_function on COLON
+0
+Line no. 11 Calling magic_function on BOOLEAN
+0
+Line no. 11 Calling magic_function on <dataType>
+19
+Line no. 11 Calling magic_function on SEMICOL
+0
+Line no. 11 Calling magic_function on <declareStmt>
+96
+Creating ast node for <declareStmt>
+ with count 2
+Line no. 11 Calling magic_function on <statement>
+29
+Line no. 12 Calling magic_function on ID
+0
+Function hash:29 Nest:2 Offset:0
+Nesting:2 Offset:0
+Creating leaf for x_1 whose type is 1
+Nesting:2 Offset:0
+Line no. 12 Calling magic_function on ASSIGNOP
+0
+Line no. 12 Calling magic_function on TRUE
+0
+Creating leaf for true whose type is 4
+Line no. 12 Calling magic_function on <var>
+37
+Line no. 12 Calling magic_function on <factor>
+83
+Line no. 12 Calling magic_function on e
+0
+Line no. 12 Calling magic_function on <N5>
+82
+Line no. 12 Calling magic_function on <term>
+80
+Creating ast node for <term>
+ with count 2
+Line no. 12 Calling magic_function on e
+0
+Line no. 12 Calling magic_function on <N4>
+79
+Line no. 12 Calling magic_function on <arithmeticExpr>
+77
+Creating ast node for <arithmeticExpr>
+ with count 2
+Line no. 12 Calling magic_function on e
+0
+Line no. 12 Calling magic_function on <WithRelOp>
+69
+Line no. 12 Calling magic_function on <AnyTerm>
+65
+Creating ast node for <AnyTerm>
+ with count 2
+Line no. 12 Calling magic_function on AND
+0
+Line no. 12 Calling magic_function on <logicalOp>
+88
+Creating leaf for AND whose type is 3
+Line no. 12 Calling magic_function on ID
+0
+Function hash:0 Nest:0 Offset:0
+Creating leaf for u2 whose type is 1
+Line no. 12 Calling magic_function on e
+0
+Line no. 12 Calling magic_function on <whichId>
+40
+Line no. 12 Calling magic_function on <var>
+34
+Creating ast node for <var>
+ with count 2
+Line no. 12 Calling magic_function on <factor>
+83
+Line no. 12 Calling magic_function on e
+0
+Line no. 12 Calling magic_function on <N5>
+82
+Line no. 12 Calling magic_function on <term>
+80
+Creating ast node for <term>
+ with count 2
+Line no. 12 Calling magic_function on e
+0
+Line no. 12 Calling magic_function on <N4>
+79
+Line no. 12 Calling magic_function on <arithmeticExpr>
+77
+Creating ast node for <arithmeticExpr>
+ with count 2
+Line no. 12 Calling magic_function on LE
+0
+Line no. 12 Calling magic_function on <relationalOp>
+91
+Creating leaf for <= whose type is 3
+Line no. 12 Calling magic_function on NUM
+0
+Creating leaf for 10 whose type is 2
+Line no. 12 Calling magic_function on <var>
+35
+Line no. 12 Calling magic_function on <factor>
+83
+Line no. 12 Calling magic_function on e
+0
+Line no. 12 Calling magic_function on <N5>
+82
+Line no. 12 Calling magic_function on <term>
+80
+Creating ast node for <term>
+ with count 2
+Line no. 12 Calling magic_function on e
+0
+Line no. 12 Calling magic_function on <N4>
+79
+Line no. 12 Calling magic_function on <arithmeticExpr>
+77
+Creating ast node for <arithmeticExpr>
+ with count 2
+Line no. 12 Calling magic_function on <BorNBAE>
+61
+Line no. 12 Calling magic_function on <negOrPosAE>
+59
+Line no. 12 Calling magic_function on e
+0
+Line no. 12 Calling magic_function on <WithRelOp>
+69
+Line no. 12 Calling magic_function on <WithRelOp>
+68
+Creating ast node for <WithRelOp>
+ with count 3
+Line no. 12 Calling magic_function on <AnyTerm>
+65
+Creating ast node for <AnyTerm>
+ with count 2
+Line no. 12 Calling magic_function on <AnyTerm2>
+67
+Line no. 12 Calling magic_function on e
+0
+Line no. 12 Calling magic_function on <WithLogOp>
+64
+Line no. 12 Calling magic_function on <WithLogOp>
+63
+Creating ast node for <WithLogOp>
+ with count 3
+Line no. 12 Calling magic_function on <AOBE>
+62
+Creating ast node for <AOBE>
+ with count 2
+Line no. 12 Calling magic_function on <expression>
+56
+Line no. 12 Calling magic_function on SEMICOL
+0
+Line no. 12 Calling magic_function on <lvalueIDStmt>
+46
+Line no. 12 Calling magic_function on <whichStmt>
+44
+Line no. 12 Calling magic_function on <assignmentStmt>
+43
+Creating ast node for <assignmentStmt>
+ with count 2
+Line no. 12 Calling magic_function on <simpleStmt>
+41
+Line no. 12 Calling magic_function on <statement>
+28
+Line no. 13 Calling magic_function on GET_VALUE
+0
+Line no. 13 Calling magic_function on BO
+0
+Line no. 13 Calling magic_function on ID
+0
+Function hash:29 Nest:2 Offset:0
+Nesting:2 Offset:0
+Nesting:1 Offset:0
+Creating leaf for tempvar whose type is 1
+Nesting:2 Offset:0
+Nesting:1 Offset:0
+Line no. 13 Calling magic_function on BC
+0
+Line no. 13 Calling magic_function on SEMICOL
+0
+Line no. 13 Calling magic_function on <ioStmt>
+32
+Line no. 13 Calling magic_function on <statement>
+27
+Line no. 14 Calling magic_function on DECLARE
+0
+Line no. 14 Calling magic_function on ID
+0
+Function hash:0 Nest:0 Offset:0
+Creating leaf for x_1 whose type is 1
+Line no. 14 Calling magic_function on COMMA
+0
+Line no. 14 Calling magic_function on ID
+0
+Function hash:29 Nest:2 Offset:0
+Nesting:2 Offset:0
+Creating leaf for x_3 whose type is 1
+Nesting:2 Offset:0
+Line no. 14 Calling magic_function on e
+0
+Line no. 14 Calling magic_function on <idList_ex>
+55
+Line no. 14 Calling magic_function on <idList_ex>
+54
+Creating ast node for <idList_ex>
+ with count 2
+Line no. 14 Calling magic_function on <idList>
+53
+Creating ast node for <idList>
+ with count 2
+Line no. 14 Calling magic_function on COLON
+0
+Line no. 14 Calling magic_function on INTEGER
+0
+Line no. 14 Calling magic_function on <dataType>
+17
+Line no. 14 Calling magic_function on SEMICOL
+0
+Line no. 14 Calling magic_function on <declareStmt>
+96
+Creating ast node for <declareStmt>
+ with count 2
+Line no. 14 Calling magic_function on <statement>
+29
+Line no. 15 Calling magic_function on ID
+0
+Function hash:29 Nest:2 Offset:0
+Nesting:2 Offset:0
+Nesting:1 Offset:0
+Creating leaf for arr1 whose type is 1
+Nesting:2 Offset:0
+Nesting:1 Offset:0
+Line no. 15 Calling magic_function on SQBO
+0
+Line no. 15 Calling magic_function on ID
+0
+Function hash:29 Nest:2 Offset:0
+Nesting:2 Offset:0
+Nesting:1 Offset:0
+Creating leaf for i whose type is 1
+Nesting:2 Offset:0
+Nesting:1 Offset:0
+Line no. 15 Calling magic_function on <index>
+49
+Line no. 15 Calling magic_function on SQBC
+0
+Line no. 15 Calling magic_function on ASSIGNOP
+0
+Line no. 15 Calling magic_function on ID
+0
+Function hash:29 Nest:2 Offset:0
+Nesting:2 Offset:0
+Nesting:1 Offset:0
+Creating leaf for tempvar whose type is 1
+Nesting:2 Offset:0
+Nesting:1 Offset:0
+Line no. 15 Calling magic_function on e
+0
+Line no. 15 Calling magic_function on <whichId>
+40
+Line no. 15 Calling magic_function on <var>
+34
+Creating ast node for <var>
+ with count 2
+Line no. 15 Calling magic_function on <factor>
+83
+Line no. 15 Calling magic_function on e
+0
+Line no. 15 Calling magic_function on <N5>
+82
+Line no. 15 Calling magic_function on <term>
+80
+Creating ast node for <term>
+ with count 2
+Line no. 15 Calling magic_function on e
+0
+Line no. 15 Calling magic_function on <N4>
+79
+Line no. 15 Calling magic_function on <arithmeticExpr>
+77
+Creating ast node for <arithmeticExpr>
+ with count 2
+Line no. 15 Calling magic_function on e
+0
+Line no. 15 Calling magic_function on <WithRelOp>
+69
+Line no. 15 Calling magic_function on <AnyTerm>
+65
+Creating ast node for <AnyTerm>
+ with count 2
+Line no. 15 Calling magic_function on e
+0
+Line no. 15 Calling magic_function on <WithLogOp>
+64
+Line no. 15 Calling magic_function on <AOBE>
+62
+Creating ast node for <AOBE>
+ with count 2
+Line no. 15 Calling magic_function on <expression>
+56
+Line no. 15 Calling magic_function on SEMICOL
+0
+Line no. 15 Calling magic_function on <lvalueARRStmt>
+47
+Creating ast node for <lvalueARRStmt>
+ with count 2
+Line no. 15 Calling magic_function on <whichStmt>
+45
+Line no. 15 Calling magic_function on <assignmentStmt>
+43
+Creating ast node for <assignmentStmt>
+ with count 2
+Line no. 15 Calling magic_function on <simpleStmt>
+41
+Line no. 15 Calling magic_function on <statement>
+28
+Line no. 16 Calling magic_function on ID
+0
+Function hash:29 Nest:2 Offset:0
+Nesting:2 Offset:0
+Nesting:1 Offset:0
+Creating leaf for i whose type is 1
+Nesting:2 Offset:0
+Nesting:1 Offset:0
+Line no. 16 Calling magic_function on ASSIGNOP
+0
+Line no. 16 Calling magic_function on ID
+0
+Function hash:29 Nest:2 Offset:0
+Nesting:2 Offset:0
+Nesting:1 Offset:0
+Creating leaf for i whose type is 1
+Nesting:2 Offset:0
+Nesting:1 Offset:0
+Line no. 16 Calling magic_function on e
+0
+Line no. 16 Calling magic_function on <whichId>
+40
+Line no. 16 Calling magic_function on <var>
+34
+Creating ast node for <var>
+ with count 2
+Line no. 16 Calling magic_function on <factor>
+83
+Line no. 16 Calling magic_function on e
+0
+Line no. 16 Calling magic_function on <N5>
+82
+Line no. 16 Calling magic_function on <term>
+80
+Creating ast node for <term>
+ with count 2
+Line no. 16 Calling magic_function on PLUS
+0
+Line no. 16 Calling magic_function on <op1>
+84
+Creating leaf for + whose type is 3
+Line no. 16 Calling magic_function on NUM
+0
+Creating leaf for 1 whose type is 2
+Line no. 16 Calling magic_function on <var>
+35
+Line no. 16 Calling magic_function on <factor>
+83
+Line no. 16 Calling magic_function on e
+0
+Line no. 16 Calling magic_function on <N5>
+82
+Line no. 16 Calling magic_function on <term>
+80
+Creating ast node for <term>
+ with count 2
+Line no. 16 Calling magic_function on e
+0
+Line no. 16 Calling magic_function on <N4>
+79
+Line no. 16 Calling magic_function on <N4>
+78
+Creating ast node for <N4>
+ with count 3
+Line no. 16 Calling magic_function on <arithmeticExpr>
+77
+Creating ast node for <arithmeticExpr>
+ with count 2
+Line no. 16 Calling magic_function on e
+0
+Line no. 16 Calling magic_function on <WithRelOp>
+69
+Line no. 16 Calling magic_function on <AnyTerm>
+65
+Creating ast node for <AnyTerm>
+ with count 2
+Line no. 16 Calling magic_function on e
+0
+Line no. 16 Calling magic_function on <WithLogOp>
+64
+Line no. 16 Calling magic_function on <AOBE>
+62
+Creating ast node for <AOBE>
+ with count 2
+Line no. 16 Calling magic_function on <expression>
+56
+Line no. 16 Calling magic_function on SEMICOL
+0
+Line no. 16 Calling magic_function on <lvalueIDStmt>
+46
+Line no. 16 Calling magic_function on <whichStmt>
+44
+Line no. 16 Calling magic_function on <assignmentStmt>
+43
+Creating ast node for <assignmentStmt>
+ with count 2
+Line no. 16 Calling magic_function on <simpleStmt>
+41
+Line no. 16 Calling magic_function on <statement>
+28
+Line no. 17 Calling magic_function on e
+0
+Line no. 16 Calling magic_function on <statements>
+26
+Line no. 15 Calling magic_function on <statements>
+25
+Creating ast node for <statements>
+ with count 2
+Line no. 14 Calling magic_function on <statements>
+25
+Creating ast node for <statements>
+ with count 2
+Line no. 13 Calling magic_function on <statements>
+25
+Creating ast node for <statements>
+ with count 2
+Line no. 12 Calling magic_function on <statements>
+25
+Creating ast node for <statements>
+ with count 2
+Line no. 11 Calling magic_function on <statements>
+25
+Creating ast node for <statements>
+ with count 2
+Line no. 9 Calling magic_function on <statements>
+25
+Creating ast node for <statements>
+ with count 2
+Line no. 17 Calling magic_function on END
+0
+Line no. 9 Calling magic_function on <iterativeStmt>
+107
+Creating ast node for <iterativeStmt>
+ with count 2
+Line no. 9 Calling magic_function on <statement>
+31
+Line no. 18 Calling magic_function on DECLARE
+0
+Line no. 18 Calling magic_function on ID
+0
+Function hash:29 Nest:1 Offset:0
+Nesting:1 Offset:0
+Creating leaf for x_2 whose type is 1
+Nesting:1 Offset:0
+Line no. 18 Calling magic_function on COMMA
+0
+Line no. 18 Calling magic_function on ID
+0
+Function hash:29 Nest:1 Offset:0
+Nesting:1 Offset:0
+Creating leaf for x_1 whose type is 1
+Nesting:1 Offset:0
+Line no. 18 Calling magic_function on COMMA
+0
+Line no. 18 Calling magic_function on ID
+0
+Function hash:29 Nest:1 Offset:0
+Nesting:1 Offset:0
+Creating leaf for x_3 whose type is 1
+Nesting:1 Offset:0
+Line no. 18 Calling magic_function on e
+0
+Line no. 18 Calling magic_function on <idList_ex>
+55
+Line no. 18 Calling magic_function on <idList_ex>
+54
+Creating ast node for <idList_ex>
+ with count 2
+Line no. 18 Calling magic_function on <idList_ex>
+54
+Creating ast node for <idList_ex>
+ with count 2
+Line no. 18 Calling magic_function on <idList>
+53
+Creating ast node for <idList>
+ with count 2
+Line no. 18 Calling magic_function on COLON
+0
+Line no. 18 Calling magic_function on BOOLEAN
+0
+Line no. 18 Calling magic_function on <dataType>
+19
+Line no. 18 Calling magic_function on SEMICOL
+0
+Line no. 18 Calling magic_function on <declareStmt>
+96
+Creating ast node for <declareStmt>
+ with count 2
+Line no. 18 Calling magic_function on <statement>
+29
+Line no. 19 Calling magic_function on e
+0
+Line no. 18 Calling magic_function on <statements>
+26
+Line no. 9 Calling magic_function on <statements>
+25
+Creating ast node for <statements>
+ with count 2
+Line no. 8 Calling magic_function on <statements>
+25
+Creating ast node for <statements>
+ with count 2
+Line no. 7 Calling magic_function on <statements>
+25
+Creating ast node for <statements>
+ with count 2
+Line no. 6 Calling magic_function on <statements>
+25
+Creating ast node for <statements>
+ with count 2
+Line no. 5 Calling magic_function on <statements>
+25
+Creating ast node for <statements>
+ with count 2
+Line no. 4 Calling magic_function on <statements>
+25
+Creating ast node for <statements>
+ with count 2
+Line no. 3 Calling magic_function on <statements>
+25
+Creating ast node for <statements>
+ with count 2
+Line no. 19 Calling magic_function on END
+0
+Line no. 1 Calling magic_function on <moduleDef>
+24
+Line no. 1 Calling magic_function on <module>
+8
+Creating ast node for <module>
+ with count 4
+Line no. 20 Calling magic_function on e
+0
+Line no. 1 Calling magic_function on <otherModules>
+6
+Line no. 1 Calling magic_function on <otherModules>
+5
+Creating ast node for <otherModules>
+ with count 2
+Line no. 20 Calling magic_function on DRIVERDEF
+0
+Line no. 20 Calling magic_function on DRIVER
+0
+Line no. 20 Calling magic_function on PROGRAM
+0
+Line no. 20 Calling magic_function on DRIVERENDDEF
+0
+Line no. 21 Calling magic_function on START
+0
+Line no. 22 Calling magic_function on DECLARE
+0
+Line no. 22 Calling magic_function on ID
+0
+Function hash:66 Nest:1 Offset:0
+Nesting:1 Offset:0
+Creating leaf for k whose type is 1
+Nesting:1 Offset:0
+Line no. 22 Calling magic_function on e
+0
+Line no. 22 Calling magic_function on <idList_ex>
+55
+Line no. 22 Calling magic_function on <idList>
+53
+Creating ast node for <idList>
+ with count 2
+Line no. 22 Calling magic_function on COLON
+0
+Line no. 22 Calling magic_function on INTEGER
+0
+Line no. 22 Calling magic_function on <dataType>
+17
+Line no. 22 Calling magic_function on SEMICOL
+0
+Line no. 22 Calling magic_function on <declareStmt>
+96
+Creating ast node for <declareStmt>
+ with count 2
+Line no. 22 Calling magic_function on <statement>
+29
+Line no. 23 Calling magic_function on ID
+0
+Function hash:66 Nest:1 Offset:0
+Nesting:1 Offset:0
+Creating leaf for k whose type is 1
+Nesting:1 Offset:0
+Line no. 23 Calling magic_function on ASSIGNOP
+0
+Line no. 23 Calling magic_function on NUM
+0
+Creating leaf for 2 whose type is 2
+Line no. 23 Calling magic_function on <var>
+35
+Line no. 23 Calling magic_function on <factor>
+83
+Line no. 23 Calling magic_function on e
+0
+Line no. 23 Calling magic_function on <N5>
+82
+Line no. 23 Calling magic_function on <term>
+80
+Creating ast node for <term>
+ with count 2
+Line no. 23 Calling magic_function on PLUS
+0
+Line no. 23 Calling magic_function on <op1>
+84
+Creating leaf for + whose type is 3
+Line no. 23 Calling magic_function on NUM
+0
+Creating leaf for 3 whose type is 2
+Line no. 23 Calling magic_function on <var>
+35
+Line no. 23 Calling magic_function on <factor>
+83
+Line no. 23 Calling magic_function on MUL
+0
+Line no. 23 Calling magic_function on <op2>
+86
+Creating leaf for * whose type is 3
+Line no. 23 Calling magic_function on NUM
+0
+Creating leaf for 4 whose type is 2
+Line no. 23 Calling magic_function on <var>
+35
+Line no. 23 Calling magic_function on <factor>
+83
+Line no. 23 Calling magic_function on e
+0
+Line no. 23 Calling magic_function on <N5>
+82
+Line no. 23 Calling magic_function on <N5>
+81
+Creating ast node for <N5>
+ with count 3
+Line no. 23 Calling magic_function on <term>
+80
+Creating ast node for <term>
+ with count 2
+Line no. 23 Calling magic_function on e
+0
+Line no. 23 Calling magic_function on <N4>
+79
+Line no. 23 Calling magic_function on <N4>
+78
+Creating ast node for <N4>
+ with count 3
+Line no. 23 Calling magic_function on <arithmeticExpr>
+77
+Creating ast node for <arithmeticExpr>
+ with count 2
+Line no. 23 Calling magic_function on e
+0
+Line no. 23 Calling magic_function on <WithRelOp>
+69
+Line no. 23 Calling magic_function on <AnyTerm>
+65
+Creating ast node for <AnyTerm>
+ with count 2
+Line no. 23 Calling magic_function on e
+0
+Line no. 23 Calling magic_function on <WithLogOp>
+64
+Line no. 23 Calling magic_function on <AOBE>
+62
+Creating ast node for <AOBE>
+ with count 2
+Line no. 23 Calling magic_function on <expression>
+56
+Line no. 23 Calling magic_function on SEMICOL
+0
+Line no. 23 Calling magic_function on <lvalueIDStmt>
+46
+Line no. 23 Calling magic_function on <whichStmt>
+44
+Line no. 23 Calling magic_function on <assignmentStmt>
+43
+Creating ast node for <assignmentStmt>
+ with count 2
+Line no. 23 Calling magic_function on <simpleStmt>
+41
+Line no. 23 Calling magic_function on <statement>
+28
+Line no. 24 Calling magic_function on e
+0
+Line no. 23 Calling magic_function on <statements>
+26
+Line no. 22 Calling magic_function on <statements>
+25
+Creating ast node for <statements>
+ with count 2
+Line no. 21 Calling magic_function on <statements>
+25
+Creating ast node for <statements>
+ with count 2
+Line no. 24 Calling magic_function on END
+0
+Line no. 20 Calling magic_function on <moduleDef>
+24
+Line no. 1 Calling magic_function on <driverModule>
+7
+Creating ast node for <driverModule>
+ with count 1
+Line no. 24 Calling magic_function on e
+0
+Line no. 1 Calling magic_function on <otherModules>
+6
+Line no. 1 Calling magic_function on <program>
+1
+Creating ast node for <program>
+ with count 4
+Line No. 1 ID_TYPE Name: readArr | ST_PTR (null)
+Line No. 2 ID_TYPE Name: arr1 | ST_PTR arr1
+Line No. 2 NUM_RNUM_TYPE Name: 1 | Value: 1
+Line No. 2 NUM_RNUM_TYPE Name: 15 | Value: 15
+Line No. 2 ID_TYPE Name: k | ST_PTR k
+Line No. 4 ID_TYPE Name: tempvar | ST_PTR tempvar
+Line No. 5 ID_TYPE Name: i | ST_PTR i
+Line No. 6 ID_TYPE Name: i | ST_PTR i
+Line No. 6 NUM_RNUM_TYPE Name: 1 | Value: 1
+Line No. 7 ID_TYPE Name: x_1 | ST_PTR (null)
+Line No. 7 ID_TYPE Name: i | ST_PTR i
+Line No. 7 OP_TYPE Name: +
+Line No. 7 ID_TYPE Name: u1 | ST_PTR (null)
+Line No. 8 ID_TYPE Name: i | ST_PTR (null)
+Line No. 9 ID_TYPE Name: i | ST_PTR i
+Line No. 9 OP_TYPE Name: <=
+Line No. 9 ID_TYPE Name: k | ST_PTR k
+Line No. 11 ID_TYPE Name: x_1 | ST_PTR x_1
+Line No. 11 ID_TYPE Name: x_2 | ST_PTR x_2
+Line No. 12 ID_TYPE Name: x_1 | ST_PTR x_1
+Line No. 12 BOOL_TYPE Name: true
+Line No. 12 OP_TYPE Name: AND
+Line No. 12 ID_TYPE Name: u2 | ST_PTR (null)
+Line No. 12 OP_TYPE Name: <=
+Line No. 12 NUM_RNUM_TYPE Name: 10 | Value: 10
+Line No. 13 ID_TYPE Name: tempvar | ST_PTR tempvar
+Line No. 14 ID_TYPE Name: x_1 | ST_PTR (null)
+Line No. 14 ID_TYPE Name: x_3 | ST_PTR x_3
+Line No. 15 ID_TYPE Name: arr1 | ST_PTR arr1
+Line No. 15 ID_TYPE Name: i | ST_PTR i
+Line No. 15 ID_TYPE Name: tempvar | ST_PTR tempvar
+Line No. 16 ID_TYPE Name: i | ST_PTR i
+Line No. 16 ID_TYPE Name: i | ST_PTR i
+Line No. 16 OP_TYPE Name: +
+Line No. 16 NUM_RNUM_TYPE Name: 1 | Value: 1
+Line No. 18 ID_TYPE Name: x_2 | ST_PTR x_2
+Line No. 18 ID_TYPE Name: x_1 | ST_PTR x_1
+Line No. 18 ID_TYPE Name: x_3 | ST_PTR x_3
+Line No. 22 ID_TYPE Name: k | ST_PTR k
+Line No. 23 ID_TYPE Name: k | ST_PTR k
+Line No. 23 NUM_RNUM_TYPE Name: 2 | Value: 2
+Line No. 23 OP_TYPE Name: +
+Line No. 23 NUM_RNUM_TYPE Name: 3 | Value: 3
+Line No. 23 OP_TYPE Name: *
+Line No. 23 NUM_RNUM_TYPE Name: 4 | Value: 4
+
+Press:
+1=> For the clean code
+2=> For printing token generated by lexer
+3=> For verifying the syntactic correctness
+4=> For printing the parse tree
+5=> For Exiting
