@@ -4,6 +4,7 @@
 
 #include "parser.h"
 #include "parseTree.h"
+#include "symbol_table.h"
 int cnt;
 int offset_arr[100];
 int isTerminal(NODE top)
@@ -423,10 +424,10 @@ void parseTreePrint(TREE_NODE_PTR root,TREE_NODE_PTR parent,FILE* out_fp)
 	if(root->child !=NULL)
 		parseTreePrint(root->child,root,out_fp);
 
-	// if(strcmp(root->token,"NUM")!=0 && strcmp(root->token,"RNUM")!=0)
-	// 	fprintf(out_fp,"%s\t%d\t%s\t%s\t%s\t%d\t%s\n",root->lexemeCurrentNode,root->lineno,root->token," N/A ",root->parentNodeSymbol,root->isLeafNode,root->NodeSymbol);
-	// else
-	// fprintf(out_fp,"%s\t%d\t%s\t%lf\t%s\t%d\t%s\n",root->lexemeCurrentNode,root->lineno,root->token,root->valueLfNumber,root->parentNodeSymbol,root->isLeafNode,root->NodeSymbol);
+	if(strcmp(root->token,"NUM")!=0 && strcmp(root->token,"RNUM")!=0)
+		fprintf(out_fp,"%s\t%d\t%s\t%s\t%s\t%d\t%s\n",root->lexemeCurrentNode,root->lineno,root->token," N/A ",root->parentNodeSymbol,root->isLeafNode,root->NodeSymbol);
+	else
+	fprintf(out_fp,"%s\t%d\t%s\t%lf\t%s\t%d\t%s\n",root->lexemeCurrentNode,root->lineno,root->token,root->valueLfNumber,root->parentNodeSymbol,root->isLeafNode,root->NodeSymbol);
 	
 
 	if(root->child !=NULL){
@@ -440,6 +441,28 @@ void parseTreePrint(TREE_NODE_PTR root,TREE_NODE_PTR parent,FILE* out_fp)
 		}
 	}		
 }
+
+void assignParents(TREE_NODE_PTR root,TREE_NODE_PTR parent,FILE* out_fp)
+{
+	
+	while(root== NULL)
+		return;
+	if(parent!=NULL)
+		root->parent=parent;
+	if(root->child !=NULL)
+		parseTreePrint(root->child,root,out_fp);
+	if(root->child !=NULL){
+		if((root->child)->sibling !=NULL){
+			TREE_NODE_PTR temp=(root->child)->sibling;
+			while(temp!=NULL)
+			{
+				parseTreePrint(temp,root,out_fp);
+				temp=temp->sibling;
+			}
+		}
+	}		
+}
+
 
 void ASTPrint(TREE_NODE_PTR root,FILE* out_fp)
 {

@@ -16,5 +16,5 @@ extern AST_NODE* find_id_ka_nptr(TREE_NODE_PTR node);
 extern void magic_function(TREE_NODE_PTR node);
 extern void recursive_function(TREE_NODE_PTR node);
 extern void constructAST(TREE_NODE_PTR root);
-
+extern void printAST(AST_NODE* root);
 #endif

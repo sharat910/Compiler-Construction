@@ -61,6 +61,7 @@ AST_NODE* make_ast_node(TREE_NODE_PTR node){
 		}
 		temp = temp->sibling;
 	}
+
 	ast_node->count = i;
 	printf("Creating ast node for %s\n with count %d\n",node->NodeSymbol,ast_node->count);
 	if(ast_node==NULL)
@@ -126,7 +127,7 @@ void magic_function(TREE_NODE_PTR node)
 {
 	int rule_no = node->rule_no;
 	printf("%d\n",rule_no);
-	printf("Line no. %d ",node->lineno );
+	// printf("Line no. %d ",node->lineno );
 	if (is_non_terminal(node))
 		switch(rule_no){
 			// Just make a new node
@@ -156,8 +157,6 @@ void magic_function(TREE_NODE_PTR node)
 			case 106:
 			case 107:
 			node->nptr = make_ast_node(node);
-			if(node->nptr==NULL)
-				printf("Sorry2\n");
 			break;
 
 			// Datatype statements
@@ -212,7 +211,7 @@ void magic_function(TREE_NODE_PTR node)
 
 			// <dataType> → ARRAY SQBO <range> SQBC OF <type>
 			case 20:
-			make_ast_node(node);
+			node->nptr=make_ast_node(node);
 			node->type = node->child->sibling->sibling->sibling->sibling->sibling->lexemeCurrentNode;
 			break;
 
@@ -220,6 +219,7 @@ void magic_function(TREE_NODE_PTR node)
 			case 47:
 			node->nptr = make_ast_node(node);
 			node->type = node->child->sibling->sibling->sibling->sibling->type;
+			break;
 
 			// One non-terminal in child
 			case 24:
@@ -354,7 +354,8 @@ void recursive_function(TREE_NODE_PTR node)
 {
 	if (node->child != NULL)
 		recursive_function(node->child);
-	printf("Calling magic_function on %s\n",node->lexemeCurrentNode);
+	printf("Line no. %d ",node->lineno);
+	printf("Calling magic_function on %s\n",node->NodeSymbol);
 	magic_function(node);
 	if (node->sibling != NULL)
 		recursive_function(node->sibling);
@@ -377,7 +378,8 @@ void printAST(AST_NODE* root)
 		{
 			printf("Line No. %d ", root->line_no);
 			print_ast_leaf(root);
-		}else
+		}
+		else
 		{
 			int loop_count = root->count;
 			for (int i = 0; i < loop_count; i++)

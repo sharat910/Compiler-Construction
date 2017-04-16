@@ -230,7 +230,7 @@ VAR get_symbol_table_var_entry(TREE_NODE_PTR ptr)
 
 
 int main_seen=0;
-void DFS(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nesting,int offset)
+void constructSymbolTable(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nesting,int offset)
 {
 	// printf("Function %d %d\n",hash_value,nesting);
 	int n=nesting;
@@ -526,8 +526,8 @@ void DFS(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nesting,int offset)
 		}
 		if(d)
 		{
-			DFS(root->child,out_fp,h,n,o);
-			DFS(root->sibling,out_fp,h,n,o);
+			constructSymbolTable(root->child,out_fp,h,n,o);
+			constructSymbolTable(root->sibling,out_fp,h,n,o);
 		}
 		fflush(out_fp);
 	}
