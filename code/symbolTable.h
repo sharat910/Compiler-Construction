@@ -10,7 +10,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "symbolTableDef.h"
-#include "parseTree.h"
+#include "astDef.h"
 
 extern func_entry symbol_table[101];
 

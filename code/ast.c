@@ -1,5 +1,5 @@
 #include "ast.h"
-#include "symbol_table.h"
+#include "symbolTable.h"
 #include <stdio.h>
 
 # define ID_TYPE 1
@@ -329,6 +329,7 @@ void magic_function(TREE_NODE_PTR node)
 	{
 		node->nptr = make_ast_leaf(node,ID_TYPE,0);
 		node->type = get_symbol_table_var_entry(node)->type;
+		node->nptr->ptNode=node;
 	}
 	else if (strcmp(node->NodeSymbol,"NUM") == 0){
 		node->nptr = make_ast_leaf(node,NUM_RNUM_TYPE,node->valueLfNumber);
@@ -354,8 +355,8 @@ void recursive_function(TREE_NODE_PTR node)
 {
 	if (node->child != NULL)
 		recursive_function(node->child);
-	printf("Line no. %d ",node->lineno);
-	printf("Calling magic_function on %s\n",node->NodeSymbol);
+	// printf("Line no. %d ",node->lineno);
+	// printf("Calling magic_function on %s\n",node->NodeSymbol);
 	magic_function(node);
 	if (node->sibling != NULL)
 		recursive_function(node->sibling);
@@ -373,19 +374,70 @@ void printAST(AST_NODE* root)
 		fflush(stdout);
 		return;
 	}
-	else 
-		if (root->is_leaf)
+	 
+	else if (root->is_leaf)
+	{
+		printf("Line No. %d ", root->line_no);
+		print_ast_leaf(root);
+	}
+	else
+	{
+		int loop_count = root->count;
+		for (int i = 0; i < loop_count; i++)
 		{
-			printf("Line No. %d ", root->line_no);
-			print_ast_leaf(root);
+			// printf("Printing nptr array entry %d of %s\n",i,root->name);
+			printAST(root->array[i]);
 		}
-		else
+	}
+}
+int ne=1;
+int printSymbolTable(AST_NODE* root,int num)
+{
+	if(root == NULL){
+		// printf("nptr is NULL\n");
+		fflush(stdout);
+		return 0;
+	}
+	if(root->is_leaf && root->type==ID_TYPE && strcmp(root->ptNode->parentNodeSymbol,"<idList>")==0 &&
+	strcmp(root->ptNode->parent->parentNodeSymbol,"<moduleReuseStmt>")==0 )
+	{
+		return 1;
+	}
+	if (root->is_leaf)
+	{
+		VAR v=root->st_ptr; 
+		if(v!=NULL)
 		{
-			int loop_count = root->count;
-			for (int i = 0; i < loop_count; i++)
+			if((strcmp(root->ptNode->parentNodeSymbol,"<output_plist>")==0 ||
+			strcmp(root->ptNode->parentNodeSymbol,"<output_plist_ex>")==0 ||
+			strcmp(root->ptNode->parentNodeSymbol,"<input_plist>")==0 ||
+			strcmp(root->ptNode->parentNodeSymbol,"<input_plist_ex>")==0 ||
+			strcmp(root->ptNode->parentNodeSymbol,"<idList>")==0 ||
+			strcmp(root->ptNode->parentNodeSymbol,"<idList_ex>")==0 ||
+			strcmp(root->ptNode->parent->parentNodeSymbol,"<declareStmt>")==0) &&
+			strcmp(root->ptNode->parent->parentNodeSymbol,"<optional>")!=0 &&
+			strcmp(root->ptNode->parent->parentNodeSymbol,"<moduleReuseStmt>")!=0	)
 			{
-				// printf("Printing nptr array entry %d of %s\n",i,root->name);
-				printAST(root->array[i]);
+				ne++;
+				int start=symbol_table[v->h].scope.func_table[v->n][v->o].start;
+				int end=symbol_table[v->h].scope.func_table[v->n][v->o].end;
+				printf("%d\t%8s\t",num,v->var_name );
+				if(v->is_array)
+					printf("%5s(%d,%s)\t%5d to %d\t%7d\t%5d\t%d\n","array",v->e_range-v->s_range+1,v->type, start,end,v->n,v->size,v->m);
+				else printf("%10s\t%10d to %d\t%2d\t%10d\t%d\n",v->type, start,end,v->n,v->size,v->m);
 			}
 		}
+		fflush(stdout);
+		return 0;
+	}
+	
+	int loop_count = root->count;
+	for (int i = 0; i < loop_count; i++)
+	{
+		// printf("Printing nptr array entry %d of %s\n",i,root->name);
+
+		if(printSymbolTable(root->array[i],ne))
+			break;
+	}
+	return 0;
 }

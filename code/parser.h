@@ -8,7 +8,7 @@
 #include "rule_table.h"
 #include "parseTable.h"
 #include "lexer.h"
-#include "parseTree.h"
+#include "astDef.h"
 #include "parserDef.h"
 #include "stack_ptr.h"
 #include <stdio.h>

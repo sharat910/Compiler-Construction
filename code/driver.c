@@ -8,13 +8,14 @@
 
 #include "parser.h"
 #include "lexer.h"
-#include "symbol_table.h"
+#include "symbolTable.h"
 #include "ast.h" 
 
-int line;
-int column;
-char last,ch;
-FILE * fp;
+extern int line;
+extern int column;
+extern char last;
+char ch;
+extern FILE * fp;
 extern entry lookup_table[40];
 extern entry_map_nt map_nt[56];
 extern entry_map_t map_t[59];
@@ -98,6 +99,9 @@ int main(int argc, char* argv[])
 				constructSymbolTable(&programNode.begin,out_fp,-1,0,0);
 				constructAST(&programNode.begin);
 				printAST(programNode.begin.nptr);
+				printf("SYMBOL TABLE\n\n\n\n");
+				fflush(stdout);
+				printSymbolTable(programNode.begin.nptr,1);
 				fflush(stdout);
 				fp=fopen( "clean_code.txt", "r" );
 				num=-1;
@@ -129,21 +133,6 @@ int main(int argc, char* argv[])
 	else{
 	    printf("Insufficient arguments.\n");
 	}
-
-	// GenerateSymbolTable()
-	// {
-	// 	removeComments(testcaseFile,"clean_code.txt");
-	// 	while(1)
-	// 	{		
-	// 		tokenInfo curr;
-	// 		curr=getNextToken();
-	// 		if (strcmp(curr.token,"$")==0)
-	// 			break;
-	// 		printf("%s %s %d \n",curr.lexeme,curr.token , curr.line);
-	// 	}
-
-	// }
-
 
 	return 0;
 }
