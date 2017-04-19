@@ -203,6 +203,24 @@ int find_var(char* a,int hash,int nesting,int offset)
 	}
 	return 0;
 }
+int declare_find_var(char* a,int hash,int nesting,int offset)
+{
+	int n=nesting;
+	int o=offset;
+
+		for(int i=0;i<1009;i++)
+		{
+			if(symbol_table[hash].scope.func_table[n][o].variables[i]!=NULL)
+			{
+				if(strcmp(a,symbol_table[hash].scope.func_table[n][o].variables[i]->var_name)==0)
+					{
+						// printf("nesting:%d offset:%d\n",n,o );
+						return 1;
+					}
+			}
+		}
+	return 0;
+}
 
 int complete_find(char* a,int h,int n,int o)
 {
@@ -398,7 +416,7 @@ void constructSymbolTable(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nes
 					sprintf(v->type,"%s",type);
 					v->line_no=root->lineno;
 					
-					if(complete_find(root->lexemeCurrentNode,h,n,o)){
+					if(declare_find_var(root->lexemeCurrentNode,h,n,o)){
 						printf("Redeclaration.\n");
 					}
 					else{
@@ -410,10 +428,10 @@ void constructSymbolTable(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nes
 						printf("%s Declared of type",root->lexemeCurrentNode );
 						printf("%s in nesting %d and offset %d.\n",type,n,o);
 						add_variable(h,n,o,v);
-						VAR v=get_symbol_table_var_entry(root);
-						if(v!=NULL)
-							printf("Yeahhhhh %s\n",v->var_name);
-						else printf("NOOO\n");
+						// VAR v=get_symbol_table_var_entry(root);
+						// if(v!=NULL)
+						// 	printf("Yeahhhhh %s\n",v->var_name);
+						// else printf("NOOO\n");
 					}
 
 					a=root->sibling;
