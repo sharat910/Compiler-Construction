@@ -333,19 +333,19 @@ void magic_function(TREE_NODE_PTR node)
 	}
 	else if (strcmp(node->NodeSymbol,"NUM") == 0){
 		node->nptr = make_ast_leaf(node,NUM_RNUM_TYPE,node->valueLfNumber);
-		node->type = "integer";
+		node->type = "INTEGER";
 	}
 		
 	else if	(strcmp(node->NodeSymbol,"RNUM") == 0)
 	{
 		node->nptr = make_ast_leaf(node,NUM_RNUM_TYPE,node->valueLfNumber);
-		node->type = "real";
+		node->type = "REAL";
 	}
 	else if ((strcmp(node->NodeSymbol,"TRUE") == 0) || 
 		(strcmp(node->NodeSymbol,"FALSE") == 0))
 	{
 		node->nptr = make_ast_leaf(node,BOOL_TYPE,0);
-		node->type = "boolean";
+		node->type = "BOOLEAN";
 	}
 	else{
 	}
@@ -405,7 +405,9 @@ int printSymbolTable(AST_NODE* root,int num)
 	}
 	if (root->is_leaf)
 	{
-		VAR v=root->st_ptr; 
+		// printf("NAME%s\n",root->name );
+		VAR v=root->st_ptr;
+		// printf("%p\n",v );
 		if(v!=NULL)
 		{
 			if((strcmp(root->ptNode->parentNodeSymbol,"<output_plist>")==0 ||
@@ -423,8 +425,8 @@ int printSymbolTable(AST_NODE* root,int num)
 				int end=symbol_table[v->h].scope.func_table[v->n][v->o].end;
 				printf("%d\t%8s\t",num,v->var_name );
 				if(v->is_array)
-					printf("%5s(%d,%s)\t%5d to %d\t%7d\t%5d\t%d\n","array",v->e_range-v->s_range+1,v->type, start,end,v->n,v->size,v->m);
-				else printf("%10s\t%10d to %d\t%2d\t%10d\t%d\n",v->type, start,end,v->n,v->size,v->m);
+					printf("%5s(%d,%s)\t%5d to %3d\t%7d\t%5d\t%d\n","array",v->e_range-v->s_range+1,v->type, start,end,v->n,v->size,v->m);
+				else printf("%10s\t%10d to %3d\t%2d\t%10d\t%d\n",v->type, start,end,v->n,v->size,v->m);
 			}
 		}
 		fflush(stdout);

@@ -38,7 +38,7 @@ stack total_first(stack rhs,rule firsts[])
 
 void fill_parseTable(grammar g,FirstAndFollow f,int parseTable[56][59])
 {
-	for(int i=1;i<109;i++)
+	for(int i=1;i<110;i++)
 	{
 
 		int found=0;

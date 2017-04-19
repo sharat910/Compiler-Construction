@@ -46,13 +46,13 @@
 <AOBE> -> BO <AOBE> BC <alpha>
 <alpha> -> <all_ops> <AOBE> | e
 
-<arithmeticExpr> -> <term> <N4> 
+<arithmeticExpr> -> <term> <N4>
 <N4> -> <op1> <term> <N4> | e
 
 <term> -> <factor> <N5>
 <N5> -> <op2> <factor> <N5>| e
 
-<factor> -> <var>
+<factor> -> <var> | BO <arithmeticExpr> BC
 <op1> -> PLUS | MINUS 
 <op2> -> MUL | DIV
 

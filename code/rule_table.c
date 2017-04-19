@@ -6,8 +6,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-rule rules[109];
-rule rules_back[109];
+rule rules[110];
+rule rules_back[110];
 void rule_table_init()
 {
 	char s[50];
@@ -51,7 +51,7 @@ grammar get_grammar()
 {
 	rule_table_init();
 	grammar g;
-	for (int i = 1; i < 109; ++i)
+	for (int i = 1; i < 110; ++i)
 	{
 
 		sprintf(g.rules[i].lhs,"%s",rules[i].lhs);

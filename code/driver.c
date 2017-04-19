@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
 		init_map_nt();
 
 		grammar g = get_grammar();
-		for (int i = 1; i <= 108; ++i)
+		for (int i = 1; i < 110; ++i)
 		{
 			printf("rule %d: %s -> ",i,g.rules_back[i].lhs);
 			printStack(g.rules_back[i].rhs);

@@ -15,8 +15,8 @@ typedef struct{
 
 typedef struct 
 {
-	rule rules[109];
-	rule rules_back[109];	
+	rule rules[110];
+	rule rules_back[110];	
 } grammar;
 
 extern grammar get_grammar();

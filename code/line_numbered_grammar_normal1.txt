@@ -576,3 +576,9 @@ END
 NUM
 RANGEOP
 NUM
+109
+<factor>
+3
+BO
+<arithmeticExpr>
+BC
