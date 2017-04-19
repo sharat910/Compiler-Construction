@@ -284,9 +284,14 @@ parseTree parseInputSourceCode(char *testcaseFile, table T,grammar G,FirstAndFol
 			if(isEmptyStack(s))
 				break;
 		}
-		NODE top=s.top;
-		
+		NODE top=s.top;		
 		sprintf(str_top,"%s",top->str);
+		if (strcmp(str_top,"<driverModule>")==0 && terminated)
+		{
+			printf("Syntax Error: Driver module not found\n");
+			cnt++;
+			break;
+		}
 		if(isTerminal(top))
 		{
 			if(strcmp(curr.token,str_top)==0 && strcmp("$",curr.token)){
@@ -354,7 +359,10 @@ parseTree parseInputSourceCode(char *testcaseFile, table T,grammar G,FirstAndFol
 					ts.top->node_info->isLeafNode=1;
 					pop(&s);
 					pop_ptr_stack(&ts);
-					read=1;
+					if (terminated)
+						read=0;
+					else
+						read=1;
 					continue;
 				}
 				else{

@@ -1,9 +1,5 @@
-<<<driver program>>>
+<<module empty>>
+takes input[a:boolean];
 start
-	declare k:integer;
-	k := (2)>true;
-	while(k)
-	start
-		print(k);
-	end
+	declare b:integer;
 end
