@@ -98,7 +98,7 @@ int main(int argc, char* argv[])
 				parseTreePrint(&programNode.begin,NULL,out_fp);
 				constructSymbolTable(&programNode.begin,out_fp,-1,0,0);
 				constructAST(&programNode.begin);
-				printAST(programNode.begin.nptr);
+				// printAST(programNode.begin.nptr);
 				printf("SYMBOL TABLE\n\n\n\n");
 				fflush(stdout);
 				printSymbolTable(programNode.begin.nptr,1);

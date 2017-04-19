@@ -64,7 +64,9 @@ start
 	declare m:integer;	
 	declare s:real;						   **scope: Nesting level 1; module: driver; lines: 59 to 67 **
 	get_value(k);
-	use module readArr with parameters A,u1,l,m;		   **ERROR_V: variable u1 not declared**
+	**use module readArr with parameters A,u1;**		   **ERROR_V: variable u1 not declared**
+	[s]:= use module arraySum with parameters A,k;
+	use module readArr with parameters A,k,l,m;		   **ERROR_V: variable u1 not declared**
 	[s]:= use module arraySum with parameters A,k,l,m;
 	print(s);
 end

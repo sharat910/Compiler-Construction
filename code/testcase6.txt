@@ -1,5 +1,4 @@
 declare module readArr;
-declare module readArr;declare module readArr;declare module readArr;
 <<<driver program>>>
 start
 	declare a:boolean;
@@ -7,10 +6,11 @@ end
 <<module readArr>>
 takes input[a:boolean,b:boolean];
 start
+
 	declare c:integer;
 	declare d,m,n:integer;
 	a:=(2*43/245>34 OR 54/34-46<=35 AND true) AND true;
 	t := true OR y+23>=x AND 23.5<=newarr[v];
-	c:= 2+3*4;
+	b:= 2+3*4;
 	c:=c*d+(m*n)*c*d;
 end

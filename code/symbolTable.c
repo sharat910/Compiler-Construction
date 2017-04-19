@@ -44,6 +44,7 @@ int isEmpty_queue_params(list_params st)
 
 list_params distinct_queue_params(list_params st,VAR v)
 {
+	v->next=NULL;
 	VAR p;
 	p = st.front;
 	if(st.no_of_params==0)
@@ -218,7 +219,7 @@ VAR return_var(char* a,int hash,int nesting,int offset)
 	
 	while(n>0)
 	{
-		printf("Nesting:%d Offset:%d\n",n,o );
+		// printf("Nesting:%d Offset:%d\n",n,o );
 		for(int i=0;i<1009;i++)
 		{
 			if(symbol_table[hash].scope.func_table[n][o].variables[i]!=NULL)
