@@ -10,6 +10,7 @@
 #include "lexer.h"
 #include "symbolTable.h"
 #include "ast.h" 
+#include "codegen.h"
 
 extern int line;
 extern int column;
@@ -98,11 +99,15 @@ int main(int argc, char* argv[])
 				parseTreePrint(&programNode.begin,NULL,out_fp);
 				constructSymbolTable(&programNode.begin,out_fp,-1,0,0);
 				constructAST(&programNode.begin);
-				// printAST(programNode.begin.nptr);
-				printf("SYMBOL TABLE\n\n\n\n");
+				printAST(programNode.begin.nptr);
+				printf("\n\n\n\nSYMBOL TABLE\n");
 				fflush(stdout);
 				printSymbolTable(programNode.begin.nptr,1);
 				fflush(stdout);
+				
+				printf("%s\n","Opened" );
+				fflush(stdout);
+				generate_code(programNode.begin.nptr);
 				fp=fopen( "clean_code.txt", "r" );
 				num=-1;
 				line=0;

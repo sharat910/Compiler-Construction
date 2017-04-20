@@ -63,6 +63,7 @@ AST_NODE* make_ast_node(TREE_NODE_PTR node){
 	}
 
 	ast_node->count = i;
+	ast_node->ptNode = node;
 	// printf("Creating ast node for %s with count %d\n",node->NodeSymbol,ast_node->count);
 	return ast_node;
 }
@@ -351,7 +352,6 @@ void magic_function(TREE_NODE_PTR node)
 			case 1:
 			case 2:
 			case 5:
-			case 7:
 			case 8:
 			case 9:
 			case 11:
@@ -457,7 +457,7 @@ void magic_function(TREE_NODE_PTR node)
 			case 24:
 			case 33:
 			case 51:
-
+			case 7:
 
 			// Only one child which is non_terminal
 			case 27:
@@ -598,6 +598,7 @@ void magic_function(TREE_NODE_PTR node)
 
 	}
 	else{
+		// node->nptr->ptNode = node;
 	}
 }
 
@@ -637,7 +638,7 @@ void printAST(AST_NODE* root)
 		int loop_count = root->count;
 		for (int i = 0; i < loop_count; i++)
 		{
-			// printf("Printing nptr array entry %d of %s\n",i,root->name);
+			printf("Printing nptr array entry %d of %s\n",i,root->name);
 			printAST(root->array[i]);
 		}
 	}

@@ -2,9 +2,23 @@
 start
 	declare k:integer;
 	k := 2+3*4;
-end
-<<module empty>>
-takes input[a:boolean];
-start
 	declare b:integer;
+	get_value(b);
+	list[5]:=23.0;
+	print(b);
+	for(index in  70..15)
+	start
+		
+	end
+	for(index in  7..15)
+	start
+		declare k:integer;
+		k := 2+3*4;
+		
+	end
+	while(3>2) 
+	start
+		declare k:integer;
+		k := 2+3*4;
+	end
 end
