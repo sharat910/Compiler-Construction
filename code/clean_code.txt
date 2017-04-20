@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <<<driver program>>>
 start
 	declare k:integer;
@@ -22,3 +23,97 @@ start
 		k := 2+3*4;
 	end
 end
+=======
+
+
+
+declare module readArr;
+<<module arraySum>>
+takes input[list:array[1..15] of real, n:integer];		    
+returns  [sum:real];						    
+start
+	declare index:integer;					    
+	declare t, a:boolean;					    
+	sum:=0.0;						    
+        t := sum>=20.0;					    
+	while(sum>=12.8 AND t)					    
+        start
+		declare p,q,r: array[1..12] of boolean;		    
+		declare newarr: array[1..15] of real;		    
+		declare u,v: boolean;				    
+		while(sum-3.0 OR sum<=20.3)			    
+		start
+			declare x,y: integer;			    
+			x :=y+3*index-32*5;			    
+			sum:= p+23.5;				    
+			t := true OR y+23>=x AND 23.5<=newarr[v];  
+		end
+		index:= 34-20*index+x-12;			    
+		r[v] := p[v]+q[v];			            
+		r[v]:= p[v] + list[v];				    
+                newarr[v]:=list[v]+list[v]; 			    
+		t:= false AND list[v]+34.5<=newarr[v];		    
+		a:= t AND list[v]+5.3;				    		
+	end
+	for(index in  1..15)
+	start
+           	declare y_1, y_2: real;				    
+           	declare k,l,m: array[1..10] of real;		    
+		declare x:real;					    	
+		t:= index<=n;
+		switch(t)
+		start
+			case true: print(list[index]);
+                                    m[j]:= k[j]+34.5;                
+				    sum:=sum+list[index]+ k[index];  
+                                    value:= sum+15;                 
+                                   declare x_1, x_2: integer;      
+                                    x_1:= 11+index;                   
+                                     x_2:= x_1+x_2;                                                    
+                                    
+				    declare u1, u2:real;            
+				    u2:= n +  u1*23.5; 		          
+				    break;
+			case false: print(sum);
+				    declare x,u1, x_5: integer;    
+				    print(y_1);
+				    break;
+		end
+	end     
+	print(x_2); 						   
+end
+<<<driver program>>>
+start
+	declare A:array[1..15] of real;                            
+	declare k:integer;					   
+	declare l:integer;	
+	declare m:integer;	
+	declare s:real;						   
+	get_value(k);
+			   
+	[s]:= use module arraySum with parameters A,k;
+	use module readArr with parameters A,k,l,m;		   
+	[s]:= use module arraySum with parameters A,k,l,m;
+	print(s);
+end
+
+<<module readArr>>
+takes input [arr1:array[1..15] of boolean,k:integer];		
+start
+	declare tempvar:real;			  		
+	declare i:integer; 					
+	i:=1;
+        x_1:= i + u1;  						
+        declare i:real;						
+	while(i<=k)
+	start
+		declare x_1, x_2:boolean;			
+ 		x_1:= true AND u2<=10;				
+		get_value(tempvar);
+		declare x_1, x_3: integer; 			
+		arr1[i]:=tempvar;				
+		i:=i+1;
+	end
+	declare x_2, x_1, x_3: boolean;				
+end
+>>>>>>> 34891468125d65d8af806016314d3c1db2f0f136

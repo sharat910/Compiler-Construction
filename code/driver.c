@@ -11,6 +11,7 @@
 #include "symbolTable.h"
 #include "ast.h" 
 #include "codegen.h"
+#include "semantic_checker.h"
 
 extern int line;
 extern int column;
@@ -100,7 +101,9 @@ int main(int argc, char* argv[])
 				constructSymbolTable(&programNode.begin,out_fp,-1,0,0);
 				constructAST(&programNode.begin);
 				printAST(programNode.begin.nptr);
-				printf("\n\n\n\nSYMBOL TABLE\n");
+				semantic_check(programNode.begin.nptr);
+				// printAST(programNode.begin.nptr);
+				printf("SYMBOL TABLE\n\n\n\n");
 				fflush(stdout);
 				printSymbolTable(programNode.begin.nptr,1);
 				fflush(stdout);
