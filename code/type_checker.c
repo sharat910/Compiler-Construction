@@ -4,6 +4,7 @@ void type_check(TREE_NODE_PTR node){
 	int rule_no = node->rule_no;
 	// printf("type_check called on node %s with rule no %d\n",node->NodeSymbol,rule_no);
 	// fflush(stdout);
+	
 	//<arithmeticExpr> → <term> <N4> 
 	//<term> → <factor> <N5>
 	if (rule_no == 77 || rule_no == 80)
@@ -13,6 +14,16 @@ void type_check(TREE_NODE_PTR node){
 		if (n5->nptr != NULL)
 			if (strcmp(factor1->type,"BOOLEAN") == 0)
 				printf("Type Error in line %d: BOOLEAN type var invalid here\n",node->lineno);
+	}
+	//<var> →  ID <whichId>
+	else if (rule_no == 34)
+	{
+		VAR a = node->child->st_ptr;
+		if ( a != NULL)
+		{
+			if (a->is_array && node->child->sibling != NULL)
+				printf("Type Error in line %d: Array not indexed\n",node->lineno,a->var_name);
+		}
 	}
 
 	//<assignmentStmt> →  ID <whichStmt>
@@ -173,7 +184,7 @@ void type_check(TREE_NODE_PTR node){
 			
 	}
 
-	//<N4>1 → <op1> <term> <N4>2
+	//<N4>1 → <op1> <term> 
 	//<N5>1 → <op2> <factor> <N5>2
 	else if (rule_no == 78 || rule_no == 81)
 	{

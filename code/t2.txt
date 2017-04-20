@@ -23,7 +23,7 @@ start
 			t := true OR y+23>=x AND 23.5<=newarr[v];  **No type mismatch; t is visible here**
 		end
 		index:= 34-20*index+x-12;			    **ERROR_V: variable x not declared **
-		r[v] := p[1]+q[2];			            **No type mismatch**
+		r[v] := p[v]+q[v];			            **No type mismatch**
 		r[v]:= p[v] + list[v];				    **ERROR_T: type mismatch of elements belonging to two different types of arrays**
                 newarr[v]:=list[v]+list[v]; 			    **No type mismatch**
 		t:= false AND list[v]+34.5<=newarr[v];		    **No type mismatch**

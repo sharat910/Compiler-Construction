@@ -103,6 +103,35 @@ int find_param(list_params st,char* a)
 	return 0;
 }
 
+int find_param2(list_params st,char* a)
+{
+	if(st.no_of_params==0)
+		return -1;
+	VAR v=st.front;
+	int i=0;
+	while(v!=NULL)
+	{
+		if(strcmp(v->var_name,a)==0)
+			return i;
+		v=v->next;
+		i++;
+	}
+	return -1;
+}
+
+char* find_param2_with_index(list_params st,int index)
+{
+	if(st.no_of_params==0)
+		return NULL;
+	VAR v=st.front;
+	while(index != 0)
+	{		
+		v=v->next;
+		index--;
+	}
+	return v->var_name;
+}
+
 int get_hash_value(char* a)
 {
 	long long num=1;

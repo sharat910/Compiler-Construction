@@ -5,6 +5,8 @@ start
 end
 <<module empty>>
 takes input[a:boolean];
+returns  [sum:real];
 start
 	declare b:integer;
+	[b] := use module empty with parameters a;
 end

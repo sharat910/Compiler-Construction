@@ -10,6 +10,7 @@
 #include "lexer.h"
 #include "symbolTable.h"
 #include "ast.h" 
+#include "semantic_checker.h"
 
 extern int line;
 extern int column;
@@ -98,6 +99,7 @@ int main(int argc, char* argv[])
 				parseTreePrint(&programNode.begin,NULL,out_fp);
 				constructSymbolTable(&programNode.begin,out_fp,-1,0,0);
 				constructAST(&programNode.begin);
+				semantic_check(programNode.begin.nptr);
 				// printAST(programNode.begin.nptr);
 				printf("SYMBOL TABLE\n\n\n\n");
 				fflush(stdout);

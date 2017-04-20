@@ -22,6 +22,7 @@ AST_NODE* make_ast_leaf(TREE_NODE_PTR node, int type, int value){
 	sprintf(identifier,"%s",node->lexemeCurrentNode);
 	// VAR st_entryptr = get_symbol_table_var_entry(node);
 	AST_NODE* leaf = (AST_NODE*)malloc(sizeof(AST_NODE));
+	leaf->ptNode = node;
 	leaf->line_no=node->lineno;
 	leaf->is_leaf = 1;
 	sprintf(leaf->name,"%s", identifier);
@@ -51,6 +52,7 @@ AST_NODE* make_ast_node(TREE_NODE_PTR node){
 	AST_NODE* ast_node = (AST_NODE*)malloc(sizeof(AST_NODE));
 	sprintf(ast_node->name,"%s",node->NodeSymbol);
 	ast_node->is_leaf = 0;
+	ast_node->ptNode = node;
 	TREE_NODE_PTR temp = node->child;
 	int i=0;
 	while(temp!=NULL){
@@ -118,6 +120,7 @@ AST_NODE* get_nptr_range(TREE_NODE_PTR node){
 	new_ast_node->array[0] = num1;
 	new_ast_node->array[1] = num2;
 	new_ast_node->count = 2;
+	new_ast_node->ptNode = node;
 	return new_ast_node;
 }
 
@@ -177,11 +180,13 @@ void magic_function(TREE_NODE_PTR node)
 			case 21:
 			case 22:
 			case 23:
+			node->nptr = NULL;
 			node->type=node->child->lexemeCurrentNode;
 			break;
 
 			// <var> → ID <whichId>
 			case 34:
+			type_check(node);
 			node->nptr = make_ast_node(node);
 			node->type = node->child->type;
 			break;
@@ -344,13 +349,13 @@ void magic_function(TREE_NODE_PTR node)
 	{
 		node->nptr = make_ast_leaf(node,ID_TYPE,0);
 		VAR st_entry = get_symbol_table_var_entry(node);
-		if (st_entry != NULL)
+		if (st_entry != NULL){
 			node->type = st_entry->type;
+			}
 		else{
 			node->type = (char*) malloc(sizeof(char)*10);
 			sprintf(node->type,"%s","DUMMY");
 		}
-		node->nptr->ptNode = node;
 	}
 	else if (strcmp(node->NodeSymbol,"NUM") == 0){
 		node->nptr = make_ast_leaf(node,NUM_RNUM_TYPE,node->valueLfNumber);

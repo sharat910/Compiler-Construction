@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -g
 LDFLAGS =
-OBJFILES =parser.o stackadt.o stack_ptr.o rule_table.o parseTable.o driver.o lexer.o symbolTable.o type_checker.o ast.o 
+OBJFILES =parser.o stackadt.o stack_ptr.o rule_table.o parseTable.o driver.o lexer.o symbolTable.o type_checker.o semantic_checker.o ast.o 
 TARGET = stage1exe
 all: $(TARGET)
 $(TARGET): $(OBJFILES)
