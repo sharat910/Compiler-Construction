@@ -83,10 +83,10 @@ void fill_lhs(rule array[57])
 	sprintf(array[54].lhs,"<alpha>");
 	sprintf(array[55].lhs,"<AnyTerm2>");
 }
-void fill_firsts(rule rules_back[110])
+void fill_firsts(rule rules_back[109])
 {
 	fill_lhs(firsts);
-	for(int i=1;i<110;i++)
+	for(int i=1;i<109;i++)
 	{
 		if(isTerminal(rules_back[i].rhs.top))
 		{
@@ -99,7 +99,7 @@ void fill_firsts(rule rules_back[110])
 	while(flag==1)
 	{
 		flag=0;
-		for(int i=1;i<110;i++)
+		for(int i=1;i<109;i++)
 		{
 			out=0;
 			stack right=rules_back[i].rhs;
@@ -153,7 +153,7 @@ void fill_follows(rule rules_back[100]){
 	(*b)=push((*b),"$");
 	while(flag){
 		flag = 0;
-		for(int i=1;i<110;i++)
+		for(int i=1;i<109;i++)
 		{
 			char* lhs = rules_back[i].lhs;
 			stack right=rules_back[i].rhs;

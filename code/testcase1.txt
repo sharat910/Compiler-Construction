@@ -1,24 +1,11 @@
 <<<driver program>>>
 start
 	declare k:integer;
-	k := 2+3*4;
-	declare b:integer;
-	get_value(b);
-	list[5]:=23.0;
-	print(b);
-	for(index in  70..15)
-	start
-		
-	end
-	for(index in  7..15)
-	start
-		declare k:integer;
-		k := 2+3*4;
-		
-	end
-	while(3>2) 
-	start
-		declare k:integer;
-		k := 2+3*4;
-	end
+	declare p,q,r: array[1..12] of integer;
+	declare t:boolean;
+	get_value(k);
+	k :=10;
+	print(k[k]);
+	r[k] := k*3+5/10+4/6;
+	t:=(p+q)/r<=q;
 end

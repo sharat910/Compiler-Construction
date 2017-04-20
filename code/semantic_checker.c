@@ -26,8 +26,8 @@ void semantic_check(AST_NODE* root){
 			AST_NODE* stmt = stmts->array[0];
 
 			// Check for recursions
-			printf("%s\n",stmt->ptNode->NodeSymbol);
-			fflush(stdout);
+			// printf("%s\n",stmt->ptNode->NodeSymbol);
+			// fflush(stdout);
 			if (strcmp(stmt->ptNode->NodeSymbol,"<moduleReuseStmt>")==0)
 			{
 				AST_NODE* use_func_id = stmt->array[1];
