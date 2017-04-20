@@ -18,11 +18,11 @@ void type_check(TREE_NODE_PTR node){
 	//<var> →  ID <whichId>
 	else if (rule_no == 34)
 	{
-		VAR a = node->child->st_ptr;
+		VAR a = node->child->nptr->st_ptr;
 		if ( a != NULL)
 		{
-			if (a->is_array && node->child->sibling != NULL)
-				printf("Type Error in line %d: Array not indexed\n",node->lineno,a->var_name);
+			if (a->is_array && node->child->sibling == NULL)
+				printf("Type Error in line %d: Array %s not indexed\n",node->lineno,a->var_name);
 		}
 	}
 
