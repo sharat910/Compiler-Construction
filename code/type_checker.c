@@ -2,18 +2,19 @@
 //Typecheck function
 void type_check(TREE_NODE_PTR node){
 	int rule_no = node->rule_no;
+	printf("%d\n",rule_no);
 	// printf("type_check called on node %s with rule no %d\n",node->NodeSymbol,rule_no);
 	// fflush(stdout);
 	
 	//<arithmeticExpr> → <term> <N4> 
 	//<term> → <factor> <N5>
-	if (rule_no == 76 || rule_no == 79)
+	if (rule_no == 77 || rule_no == 80 || rule_no==65)
 	{
 		TREE_NODE_PTR factor1 = node->child;
 		TREE_NODE_PTR n5 = factor1->sibling;
 		if (n5->nptr != NULL)
 			if (strcmp(factor1->type,"BOOLEAN") == 0)
-				printf("Type Error in line %d: BOOLEAN type var invalid here\n",node->lineno);
+				printf("Line %d | Type Error: BOOLEAN type variable invalid with operator %s\n",node->lineno,n5->child->NodeSymbol);
 	}
 	//<var> →  ID <whichId>
 	else if (rule_no == 34)
@@ -33,7 +34,7 @@ void type_check(TREE_NODE_PTR node){
 		TREE_NODE_PTR id = node->child;
 		TREE_NODE_PTR whichStmt = id->sibling;
 		if (strcmp(id->type,whichStmt->type) != 0)
-			printf("Type Error in line %d: Mismatch between %s and %s\n",node->lineno,id->type,whichStmt->type);
+			printf("Line %d | Type Error: Mismatch between %s and %s\n",node->lineno,id->type,whichStmt->type);
 	}
 
 	//<moduleReuseStmt> → <optional> USE MODULE ID WITH PARAMETERS <idList> SEMICOL
@@ -88,15 +89,15 @@ void type_check(TREE_NODE_PTR node){
 			VAR id_st_entry = get_symbol_table_var_entry(first_id);
 			if (id_st_entry != NULL){				
 				if (strcmp(id_st_entry->type,function_entry->type) != 0)
-						printf("Type Mismatch in line %d: Expected %s but got %s\n",
+						printf("Line %d | Type Error: Type mismatch expected %s but got %s\n",
 							first_id->lineno,function_entry->type,id_st_entry->type);
 				// printf("%d %d\n",id_st_entry->is_array, function_entry->is_array);
 				if (id_st_entry->is_array && function_entry->is_array){
 					if ((id_st_entry->e_range - id_st_entry->s_range) != (function_entry->e_range - function_entry->s_range))
-						printf("Range length Mismatch in line %d\n",first_id->lineno);
+						printf("Line %d | Type Error: Array type variable's range length mismatch\n",first_id->lineno);
 				}
 				else if(id_st_entry->is_array || function_entry->is_array)
-					printf("Type Mismatch in line %d: Array type mismatch\n",first_id->lineno);
+					printf("Line %d | Type Error: Array type mismatch\n",first_id->lineno);
 			}
 			first_id = first_id->sibling->child;
 			function_entry = function_entry->next;
@@ -104,14 +105,14 @@ void type_check(TREE_NODE_PTR node){
 			if (strcmp(first_id->NodeSymbol,"e")==0)
 			{
 				if (function_entry != NULL)
-					printf("Error in line %d: More parameters required by function\n",first_id->lineno);
+					printf("Line %d | Error: More parameters required by function\n",first_id->lineno);
 			}
 			else{ 
 				first_id=first_id->sibling;
 			}
 			if (function_entry == NULL)
 				if(strcmp(first_id->NodeSymbol,"e")!=0)
-					printf("Error in line %d: More parameters passed into the function\n",first_id->lineno);
+					printf("Line %d | Error: More parameters passed into the function\n",first_id->lineno);
 
 		}
 	}
@@ -122,7 +123,17 @@ void type_check(TREE_NODE_PTR node){
 	{
 		TREE_NODE_PTR child = find_first_nt(node);
 		if (strcmp(child->type,"BOOLEAN") == 0)
-				printf("Type Error in line %d: BOOLEAN type var invalid here\n",node->lineno);
+				printf("Line %d | Type Error: BOOLEAN type expression cannot be negated\n",node->lineno);
+	}
+
+	else if(rule_no == 62)
+	{
+		TREE_NODE_PTR anyterm = node->child;
+		TREE_NODE_PTR withlogop = anyterm->sibling;
+		if (withlogop->nptr != NULL)
+			if (strcmp(anyterm->type,"BOOLEAN") != 0)
+				printf("Line %d | Type Error: BOOLEAN type expression expected.\n",node->lineno);
+		break;
 	}
 
 	//<WithLogOp> → <logicalOp> <AnyTerm2> <WithLogOp>
@@ -130,7 +141,7 @@ void type_check(TREE_NODE_PTR node){
 	{
 		TREE_NODE_PTR AnyTerm2 = node->child->sibling;
 		if (strcmp(AnyTerm2->type,"BOOLEAN") != 0)
-				printf("Type Error in line %d: Expecting BOOLEAN type expression here\n",node->lineno);
+				printf("Line %d | Type Error: BOOLEAN type expression expected.\n",node->lineno);
 	}
 
 	//<WithRelOp> → <relationalOp> <negOrPosAE> <WithRelOp>
@@ -144,7 +155,7 @@ void type_check(TREE_NODE_PTR node){
 			printf("Error in line %d: Multiple relationalOps in same expression\n",node->lineno);
 	
 		if (strcmp(negOrPosAE->type,"BOOLEAN") == 0)
-			printf("Type Error in line %d: BOOLEAN type expression invalid here\n",node->lineno);
+			printf("Line %d | Type Error: BOOLEAN type expression invalid with relational operator\n",node->lineno);
 		// printf("Hererrererexit\n");
 		// fflush(stdout);
 	}
@@ -177,11 +188,11 @@ void type_check(TREE_NODE_PTR node){
 		TREE_NODE_PTR aobe = all_ops->sibling;
 		if (strcmp(all_ops->child->NodeSymbol,"<logicalOp>")==0){
 			if (strcmp(aobe->type,"BOOLEAN") != 0)
-				printf("Type Error in line %d: expression after logicalOp not BOOLEAN type\n",node->lineno);
+				printf("Line %d | Type Error: expression after logicalOp is not BOOLEAN type\n",node->lineno);
 		}
 		else{
 			if (strcmp(aobe->type,"BOOLEAN") == 0)
-				printf("Type Error in line %d: expression after cannot be BOOLEAN type\n",node->lineno);
+				printf("Line %d | Type Error: expression after cannot be BOOLEAN type\n",node->lineno);
 		}
 			
 	}
@@ -194,7 +205,7 @@ void type_check(TREE_NODE_PTR node){
 		// printf("here %s\n",factor1->type);
 		// fflush(stdout);
 		if (strcmp(factor1->type,"BOOLEAN") == 0)
-			printf("Type Error in line %d: BOOLEAN type var invalid here\n",node->lineno);
+			printf("Line %d | Type Error: BOOLEAN type var invalid here\n",node->lineno);
 	}
 
 	//<conditionalStmt> → SWITCH BO ID BC START <caseStmts> <default> END
@@ -204,7 +215,7 @@ void type_check(TREE_NODE_PTR node){
 		TREE_NODE_PTR casestmts = id->sibling->sibling->sibling;
 		if (strcmp(id->type,casestmts->type) != 0)
 		{
-			printf("Type Error in line %d: type of ID (%s) differs from case statements type (%s)\n",
+			printf("Line %d | Type Error: type of switch Identifier (%s) differs from case statements type (%s)\n",
 				node->lineno,id->type,casestmts->child->sibling->type);
 		}
 	}
@@ -218,7 +229,7 @@ void type_check(TREE_NODE_PTR node){
 		TREE_NODE_PTR multicase = value->sibling->sibling->sibling;
 		if (multicase->nptr != NULL)
 			if (strcmp(value->type,multicase->type) != 0)
-				printf("Type Error in line %d: Case value type mismatch\n",node->lineno);
+				printf("Line %d | Type Error: Type mismatch between case values\n",node->lineno);
 		node->type = value->type;
 	}
 
@@ -226,7 +237,7 @@ void type_check(TREE_NODE_PTR node){
 	else if (rule_no == 106)
 	{
 		if(strcmp(node->child->sibling->sibling->type,"BOOLEAN")!=0)
-			printf("Type Error in line %d: while condition not of BOOLEAN type\n",node->lineno);
+			printf("Line %d | Type Error: While condition not of BOOLEAN type\n",node->lineno);
 	}
 
 }
