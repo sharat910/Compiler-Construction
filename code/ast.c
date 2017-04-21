@@ -442,6 +442,37 @@ void printAST(AST_NODE* root)
 		}
 	}
 }
+
+void print_AST_element(AST_NODE* elem, int is_leaf)
+{
+	if (is_leaf)
+		printf("\tLEAF\t%s\t%d\t-\n",elem->name,elem->type);
+	else
+		printf("\tNODE\t%s\t-\t%d\n",elem->name,elem->count);
+}
+
+void printAST2(AST_NODE* root)
+{
+	if(root == NULL){
+		return;
+	}
+	 
+	else if (root->is_leaf)
+	{
+		print_AST_element(root,root->is_leaf);
+	}
+	else
+	{
+		print_AST_element(root,root->is_leaf);
+		int loop_count = root->count;
+		for (int i = 0; i < loop_count; i++)
+		{
+			// printf("Printing nptr array entry %d of %s\n",i,root->name);
+			printAST2(root->array[i]);
+		}
+	}
+}
+
 int ne=1;
 int printSymbolTable(AST_NODE* root,int num)
 {

@@ -3,11 +3,11 @@ extern scanf
 
 
 section .data
-	list:	resb  20
-	constArr:	resb  20
+	x:	resb   2
+	y:	resb   2
+	z:	resb   2
 	sum:	resb   2
-	p:	resb   2
-	k:	resb   2
+	value:	resb   2
 	scanint:	dw "%d", 0
 	putint:	db "%d", 10, 0
 
@@ -18,57 +18,106 @@ main:
 
 
 	push rbp
-	mov	rsi,list
+	mov	rsi,x
 	mov	rdi,scanint
 	call scanf
 
-	mov 	rdi, 1
-loop0:		push	rdi
+	mov	rsi,y
+	mov	rdi,scanint
+	call scanf
+
 	push rax
 
-	mov rax,[k]
+	mov rax,19
 	push rax
-	mov rax,3
+	mov [z],rax
+	pop rax
+
+	push rax
+
+	mov rax,[x]
+	push rax
+	mov rax,20
 	push rax
 	pop rbx
 	pop rax
 	mul rbx
 	push rax
-	mov rax,[k]
-	shl rax, 3
-	add rax,constArr
-	pop [rax]
-
+	mov rax,[y]
+	push rax
+	mov rax,4
+	push rax
+	pop rbx
+	pop rax
+	div rbx
+	push rax
+	pop rbx
+	pop rax
+	mul rbx
+	push rax
+	mov [sum],rax
 	pop rax
 
-	pop	rdi
-	add	rdi, 1
-	cmp	rdi, 10
-	jne	loop0
-	mov 	rdi, 1
-loop1:		push	rdi
 	push rax
 
-	mov rax,[list]
+	mov rax,[sum]
 	push rax
-	mov rax,[constArr]
+	mov rax,[z]
+	push rax
+	mov rax,2
+	push rax
+	pop rbx
+	pop rax
+	mul rbx
+	push rax
+	mov rax,[x]
+	push rax
+	mov rax,[y]
+	push rax
+	pop rbx
+	pop rax
+	mul rbx
+	push rax
+	pop rbx
+	pop rax
+	sub rax,rbx
 	push rax
 	pop rbx
 	pop rax
 	add rax,rbx
 	push rax
-	mov [sum],rax
+	mov [value],rax
 	pop rax
 
+loop0:
+	mov rax,[z]
+	push rax
+	mov rax,2
+	push rax
+	pop rbx
+	pop rax
+	cmp rax,rbx
+	jle endloop0
 	mov	rsi,[sum]
 	mov	rdi,putint
 	call printf
 
-	pop	rdi
-	add	rdi, 1
-	cmp	rdi, 10
-	jne	loop1
-	mov	rsi,[sum]
+	push rax
+
+	mov rax,[z]
+	push rax
+	mov rax,1
+	push rax
+	pop rbx
+	pop rax
+	sub rax,rbx
+	push rax
+	mov [z],rax
+	pop rax
+
+	jmp loop0
+endloop0:
+	mov	rsi,[value]
 	mov	rdi,putint
 	call printf
 

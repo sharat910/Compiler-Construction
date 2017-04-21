@@ -10,6 +10,7 @@
 #include "lexer.h"
 #include "symbolTable.h"
 #include "ast.h" 
+#include "ast2.h" 
 #include "codegen.h"
 #include "semantic_checker.h"
 
@@ -130,7 +131,12 @@ int main(int argc, char* argv[])
 				parseTreePrint(&programNode.begin,NULL,out_fp);
 				constructSymbolTable(&programNode.begin,out_fp,-1,0,0);
 				constructAST(&programNode.begin);
-				printAST(programNode.begin.nptr);
+				//printAST2(programNode.begin.nptr);
+				construct2AST(&programNode.begin);
+				printf("\n\n**********AST:****************\n\n");
+		        printf("\nAST is:\n");
+   printf("%-20s%-20s%-20s%-20s%-20s%-20s%-20s\n","lexemeCurrentNode","lineno","token","valueIfNumber","parentNodeSymbol","isLeafNode(yes/no)","NodeSymbol");
+				print2AST(&programNode.begin);
 				semantic_check(programNode.begin.nptr);
 				// printAST(programNode.begin.nptr);
 				printf("\n\n\n\nSYMBOL TABLE\n");
