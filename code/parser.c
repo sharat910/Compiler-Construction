@@ -458,13 +458,13 @@ void assignParents(TREE_NODE_PTR root,TREE_NODE_PTR parent)
 	if(parent!=NULL)
 		root->parent=parent;
 	if(root->child !=NULL)
-		parseTreePrint(root->child,root);
+		assignParents(root->child,root);
 	if(root->child !=NULL){
 		if((root->child)->sibling !=NULL){
 			TREE_NODE_PTR temp=(root->child)->sibling;
 			while(temp!=NULL)
 			{
-				parseTreePrint(temp,root);
+				assignParents(temp,root);
 				temp=temp->sibling;
 			}
 		}

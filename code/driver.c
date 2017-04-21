@@ -22,6 +22,8 @@ extern FILE * fp;
 extern entry lookup_table[40];
 extern entry_map_nt map_nt[56];
 extern entry_map_t map_t[59];
+extern int ast_node_count;
+extern int parse_tree_node_count;
 int parseTable[56][59];
 table T;
 extern int main_seen;
@@ -100,7 +102,29 @@ int main(int argc, char* argv[])
 			}  
 			else if(num==4)
 			{
-				printf("Pending\n");
+				/*
+				Parse tree     Number of nodes = 150 Allocated Memory = 1024 Bytes
+				AST               Number of nodes = 30 Allocated Memory = 200 Bytes
+				Compression percentage = ((1024‐200)/1024)*100
+				*/
+				removeComments(argv[1],"clean_code.txt"); 
+
+				LexerOutput(argv[1]);
+				fp=fopen( "clean_code.txt", "r" );
+				line=0;
+				column=1;
+				programNode=parseInputSourceCode(argv[1],T,g,f);
+				programNode.begin.ASTparent=NULL;
+				assignParents(&programNode.begin,NULL);
+				construct2AST(&programNode.begin);
+				count_AST_Nodes(&programNode.begin);
+				count_Parse_Tree_Nodes(&programNode.begin);
+				int p_mem = sizeof(TREE_NODE)*parse_tree_node_count;
+				int a_mem = sizeof(AST_NODE)*ast_node_count;
+				printf("Parse tree\tNumber of nodes = %d\tAllocated Memory = %dBytes\n",parse_tree_node_count,p_mem);
+				printf("AST       \tNumber of nodes = %d\tAllocated Memory = %dBytes\n",ast_node_count,a_mem);
+				float cp = (p_mem - a_mem) / (float)p_mem;
+				printf("Compression percentage = ((%d‐%d)/%d)*100 = %f\n",p_mem,a_mem,p_mem,cp);
 				num=8;
 			}
 			else if(num==5){

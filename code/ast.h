@@ -24,4 +24,6 @@ extern int term_to_remove(char *terminal);
 extern void create2AST(TREE_NODE_PTR parent, TREE_NODE_PTR child);
 extern void construct2AST(TREE_NODE_PTR PT);
 extern void print2AST(TREE_NODE_PTR root);
+extern void count_AST_Nodes(TREE_NODE_PTR root);
+extern void count_Parse_Tree_Nodes(TREE_NODE_PTR  t);
 #endif

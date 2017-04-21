@@ -40,6 +40,10 @@ main:
 	push rax
 	mov rax,20
 	push rax
+	pop rbx
+	pop rax
+	mul rbx
+	push rax
 	mov rax,[y]
 	push rax
 	mov rax,4
@@ -47,10 +51,6 @@ main:
 	pop rbx
 	pop rax
 	div rbx
-	push rax
-	pop rbx
-	pop rax
-	mul rbx
 	push rax
 	pop rbx
 	pop rax
