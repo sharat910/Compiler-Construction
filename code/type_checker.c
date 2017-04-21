@@ -2,10 +2,6 @@
 //Typecheck function
 void type_check(TREE_NODE_PTR node){
 	int rule_no = node->rule_no;
-	printf("Type chck called with %d\n and NodeSymbol %s",rule_no,node->NodeSymbol);
-	fflush(stdout);
-	// printf("type_check called on node %s with rule no %d\n",node->NodeSymbol,rule_no);
-	// fflush(stdout);
 	
 	//<arithmeticExpr> → <term> <N4> 
 	//<term> → <factor> <N5>

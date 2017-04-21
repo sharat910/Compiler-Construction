@@ -422,7 +422,7 @@ void LexerOutput(char *testcaseFile)
 		printf("%s %s %d \n",curr.lexeme,curr.token , curr.line);
 	}
 }
-void parseTreePrint(TREE_NODE_PTR root,TREE_NODE_PTR parent,FILE* out_fp)
+void parseTreePrint(TREE_NODE_PTR root,TREE_NODE_PTR parent)
 {
 	
 	while(root== NULL)
@@ -430,12 +430,12 @@ void parseTreePrint(TREE_NODE_PTR root,TREE_NODE_PTR parent,FILE* out_fp)
 	if(parent!=NULL)
 		root->parent=parent;
 	if(root->child !=NULL)
-		parseTreePrint(root->child,root,out_fp);
+		parseTreePrint(root->child,root);
 
 	if(strcmp(root->token,"NUM")!=0 && strcmp(root->token,"RNUM")!=0)
-		fprintf(out_fp,"%s\t%d\t%s\t%s\t%s\t%d\t%s\n",root->lexemeCurrentNode,root->lineno,root->token," N/A ",root->parentNodeSymbol,root->isLeafNode,root->NodeSymbol);
+		printf("%s\t%d\t%s\t%s\t%s\t%d\t%s\n",root->lexemeCurrentNode,root->lineno,root->token," N/A ",root->parentNodeSymbol,root->isLeafNode,root->NodeSymbol);
 	else
-	fprintf(out_fp,"%s\t%d\t%s\t%lf\t%s\t%d\t%s\n",root->lexemeCurrentNode,root->lineno,root->token,root->valueLfNumber,root->parentNodeSymbol,root->isLeafNode,root->NodeSymbol);
+	printf("%s\t%d\t%s\t%lf\t%s\t%d\t%s\n",root->lexemeCurrentNode,root->lineno,root->token,root->valueLfNumber,root->parentNodeSymbol,root->isLeafNode,root->NodeSymbol);
 	
 
 	if(root->child !=NULL){
@@ -443,14 +443,14 @@ void parseTreePrint(TREE_NODE_PTR root,TREE_NODE_PTR parent,FILE* out_fp)
 			TREE_NODE_PTR temp=(root->child)->sibling;
 			while(temp!=NULL)
 			{
-				parseTreePrint(temp,root,out_fp);
+				parseTreePrint(temp,root);
 				temp=temp->sibling;
 			}
 		}
 	}		
 }
 
-void assignParents(TREE_NODE_PTR root,TREE_NODE_PTR parent,FILE* out_fp)
+void assignParents(TREE_NODE_PTR root,TREE_NODE_PTR parent)
 {
 	
 	while(root== NULL)
@@ -458,20 +458,20 @@ void assignParents(TREE_NODE_PTR root,TREE_NODE_PTR parent,FILE* out_fp)
 	if(parent!=NULL)
 		root->parent=parent;
 	if(root->child !=NULL)
-		parseTreePrint(root->child,root,out_fp);
+		parseTreePrint(root->child,root);
 	if(root->child !=NULL){
 		if((root->child)->sibling !=NULL){
 			TREE_NODE_PTR temp=(root->child)->sibling;
 			while(temp!=NULL)
 			{
-				parseTreePrint(temp,root,out_fp);
+				parseTreePrint(temp,root);
 				temp=temp->sibling;
 			}
 		}
 	}		
 }
 
-void ASTPrint(TREE_NODE_PTR root,FILE* out_fp)
+void ASTPrint(TREE_NODE_PTR root)
 {
 
 	while(root== NULL)
@@ -483,9 +483,9 @@ void ASTPrint(TREE_NODE_PTR root,FILE* out_fp)
 	}
 
 	if(strcmp(root->token,"NUM")!=0 && strcmp(root->token,"RNUM")!=0)
-		fprintf(out_fp,"%s\t%d\t%s\t%s\t%s\t%d\t%s\n",root->lexemeCurrentNode,root->lineno,root->token," N/A ",root->ASTparent->NodeSymbol,root->isLeafNode,root->NodeSymbol);
+		printf("%s\t%d\t%s\t%s\t%s\t%d\t%s\n",root->lexemeCurrentNode,root->lineno,root->token," N/A ",root->ASTparent->NodeSymbol,root->isLeafNode,root->NodeSymbol);
 	else
-	fprintf(out_fp,"%s\t%d\t%s\t%lf\t%s\t%d\t%s\n",root->lexemeCurrentNode,root->lineno,root->token,root->valueLfNumber,root->ASTparent->NodeSymbol,root->isLeafNode,root->NodeSymbol);
-		ASTPrint(root->ASTchild,out_fp);
-		ASTPrint(root->ASTsibling,out_fp);	
+	printf("%s\t%d\t%s\t%lf\t%s\t%d\t%s\n",root->lexemeCurrentNode,root->lineno,root->token,root->valueLfNumber,root->ASTparent->NodeSymbol,root->isLeafNode,root->NodeSymbol);
+		ASTPrint(root->ASTchild);
+		ASTPrint(root->ASTsibling);	
 }

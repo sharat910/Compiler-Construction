@@ -31,7 +31,7 @@ extern int find_param(list_params st,char* a);
 extern int find_param2(list_params st,char* a);
 extern char* find_param2_with_index(list_params st,int index);
 extern int complete_find(char* a,int h,int n,int o);
-extern void constructSymbolTable(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nesting,int offset);
+extern void constructSymbolTable(TREE_NODE_PTR root,int hash_value,int nesting,int offset);
 extern VAR return_var(char* a,int hash,int nesting,int offset);
 extern VAR get_symbol_table_var_entry(TREE_NODE_PTR ptr);
 #endif

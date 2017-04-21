@@ -65,7 +65,7 @@ int traverseST(AST_NODE* root)
 	int loop_count = root->count;
 	for (int i = 0; i < loop_count; i++)
 	{
-		printf("Printing nptr array entry %d of %s\n",i,root->name);
+		// printf("Printing nptr array entry %d of %s\n",i,root->name);
 		fflush(stdout);
 		if(traverseST(root->array[i]))
 			break;
@@ -74,22 +74,15 @@ int traverseST(AST_NODE* root)
 	return 0;
 }
 
-void bss(){
+void bss(AST_NODE* root){
 
 	fprintf(ASM,"section .bss\n");
-	
-	
-	int i=0;
-	
-	for(i=0;i<10;i++){
-		fprintf(ASM,"	buffer%d:	resb	8\n",i);
-		}
+	traverseST(root);
 }
 
 //Initiates the data section
 void data(AST_NODE* root){
 	fprintf(ASM,"\nsection .data\n");
-	traverseST(root);
 	fprintf(ASM,"	scanint:	dw \"%cd\", 0\n",37);
 	fprintf(ASM,"	putint:	db \"%cd\", 10, 0\n",37);	
 }
@@ -114,7 +107,7 @@ void output(AST_NODE* root){
 	else {
 		fprintf(ASM,"	push rax\n\n");
 		fprintf(ASM,"	mov rax,[%s]\n",whichid->name);
-		fprintf(ASM,"	shl rax, 3\n");
+		fprintf(ASM,"	shl rax, 1\n");
 		fprintf(ASM,"	add rax,%s\n",id->name);
 		fprintf(ASM,"	mov rsi,[rax]\n\n");
 		fprintf(ASM,"	pop rax\n\n");
@@ -129,7 +122,7 @@ void while_gen(AST_NODE* root)
 	fprintf(ASM, "loop%d:\n", cond);
 	boolean_gen(root->array[0]);
 	root=root->array[1];
-	printf("ISSUE:%s\n",root->array[1]->name );
+	// printf("ISSUE:%s\n",root->array[1]->name );
 	if(root==NULL) return;
 	while(root!=NULL)
 	{
@@ -148,10 +141,9 @@ void for_gen(AST_NODE* root)
 	int init=root->array[1]->array[0]->value;
 	int end=root->array[1]->array[1]->value;
 	fprintf(ASM,"\tmov 	rdi, %d\n",init);
-	fprintf(ASM,"loop%d:\t",cond);
+	fprintf(ASM,"loop%d:\n",cond);
 	fprintf(ASM, "\tpush	rdi\n");
-	if(root->array[2]==NULL)
-		printf("FUCKkkk\n");
+	
 	AST_NODE* stmts = root->array[2];
 	while(stmts!=NULL)
 	{
@@ -168,7 +160,7 @@ void for_gen(AST_NODE* root)
 
 void operate(AST_NODE* op){
 	char op_symbol = op->name[0];
-	printf("%c\n",op_symbol );
+	// printf("%c\n",op_symbol );
 	fprintf(ASM, "\t%s\n","pop rbx");
 	fprintf(ASM, "\t%s\n","pop rax");
 	switch(op_symbol){
@@ -194,13 +186,13 @@ void operate(AST_NODE* op){
 
 int N4(AST_NODE* n4)
 {
-	printf("N4 called\n");
+	// printf("N4 called\n");
 	if (n4 == NULL){
-		printf("N4 null\n");
+		// printf("N4 null\n");
 		return 0;
 	}
-	printf("N4 not null\n");
-	printf("Here\n");
+	// printf("N4 not null\n");
+	// printf("Here\n");
 
 	// if (n4->array[2] != NULL)
 	// {
@@ -213,8 +205,8 @@ int N4(AST_NODE* n4)
 	// 	term(n4->array[1]);
 	if(flag )
 	{
-		printf("Why\n");
-		printf("Operator %s\n",n4->array[2]->array[0]->name);
+		// printf("Why\n");
+		// printf("Operator %s\n",n4->array[2]->array[0]->name);
 		operate(n4->array[2]->array[0]);
 	}
 	return 1;
@@ -222,19 +214,19 @@ int N4(AST_NODE* n4)
 
 int N5(AST_NODE* n5)
 {
-	printf("N5 called\n");
+	// printf("N5 called\n");
 	if (n5 == NULL){
-		printf("N5 null\n");
+		// printf("N5 null\n");
 		return 0;
 	}
-	printf("N5 not null\n");
-	printf("Here\n");
+	// printf("N5 not null\n");
+	// printf("Here\n");
 	factor(n5->array[1]);
 	int flag=N5(n5->array[2]);
 	if (flag )
 	{
-		printf("Why\n");
-		printf("Operator %s\n",n5->array[2]->array[0]->name);
+		// printf("Why\n");
+		// printf("Operator %s\n",n5->array[2]->array[0]->name);
 		operate(n5->array[2]->array[0]);
 	}	
 	return 1;
@@ -259,7 +251,7 @@ void AE(AST_NODE* ae,int flg)
 
 void term(AST_NODE* term)
 {
-	printf("Term ka naam %s\n",term->name);
+	// printf("Term ka naam %s\n",term->name);
 	factor(term->array[0]);
 	int flag = N5(term->array[1]);
 	if (flag)
@@ -300,12 +292,12 @@ void assignment_gen(AST_NODE* expr)
 	}
 	else {
 		int flag;
-		printf("Rule no %d\n",expr->ptNode->parent->rule_no);
+		// printf("Rule no %d\n",expr->ptNode->parent->rule_no);
 		if(expr->ptNode->parent->rule_no==61)
 			flag=1;
 		else
 			flag=0;
-		printf("Flag is %d\n",flag);
+		// printf("Flag is %d\n",flag);
 		AE(expr->array[1],flag);
 		if(!flag)
 		{
@@ -359,7 +351,7 @@ void boolean_gen(AST_NODE* expr)
 			else{
 				int flag;
 				// printf("%s\n",negpae->name );
-				printf("Rule no %d\n",negpae->array[1]->ptNode->parent->rule_no);
+				// printf("Rule no %d\n",negpae->array[1]->ptNode->parent->rule_no);
 				if(expr->ptNode->parent->rule_no==61)
 					flag=1;
 				else
@@ -373,12 +365,12 @@ void boolean_gen(AST_NODE* expr)
 				}
 			}
 		}
-		else printf("CUlprit%s\n",anyterm->array[1]->name);
+		// else printf("CUlprit%s\n",anyterm->array[1]->name);
 		fprintf(ASM,"	pop rbx\n");
 		fprintf(ASM,"	pop rax\n");
 		fprintf(ASM,"	cmp rax,rbx\n");
 		char* relop=anyterm->array[1]->array[0]->ptNode->NodeSymbol;
-		printf("%s\n",relop );
+		// printf("%s\n",relop );
 		if(strcmp(relop,"LT")==0){
 			fprintf(ASM, "	jge endloop%d\n",cond);
 		}else if(strcmp(relop,"LE")==0){
@@ -400,18 +392,18 @@ void process(AST_NODE* root)
 	// printf("%s\n",root->name );
 	if(strcmp(root->name,"<statements>")!=0)
 		return;
-	printf("%s\n",root->name );
-	printf("ptNode:%s\n",root->array[0]->ptNode->NodeSymbol );
+	// printf("%s\n",root->name );
+	// printf("ptNode:%s\n",root->array[0]->ptNode->NodeSymbol );
 	
 	if(strcmp("<assignmentStmt>",root->array[0]->ptNode->NodeSymbol)==0)
 	{
-		printf("%s\n","Doing this" );
+		// printf("%s\n","Doing this" );
 		fprintf(ASM,"	push rax\n\n");
 		AST_NODE* assignmentStmt=root->array[0];
 		char LHS[100];
-		printf("%s\n",assignmentStmt->array[1]->name );
+		// printf("%s\n",assignmentStmt->array[1]->name );
 		fflush(stdout);
-		printf("ARRAY LHS= %s\n",assignmentStmt->array[0]->name );
+		// printf("ARRAY LHS= %s\n",assignmentStmt->array[0]->name );
 		if(strcmp(assignmentStmt->array[1]->name,"<lvalueARRStmt>" )==0)
 		{
 			
@@ -425,7 +417,7 @@ void process(AST_NODE* root)
 				{ 
 					assignment_gen(assignmentStmt->array[1]->array[1]);
 					fprintf(ASM,"	mov rax,[%s]\n",assignmentStmt->array[1]->array[0]->name);
-					fprintf(ASM,"	shl rax, 3\n");
+					fprintf(ASM,"	shl rax, 1\n");
 					fprintf(ASM,"	add rax,%s\n",assignmentStmt->array[0]->name);
 					fprintf(ASM,"	pop [rax]\n\n");
 					fprintf(ASM,"	pop rax\n\n");
@@ -445,7 +437,7 @@ void process(AST_NODE* root)
 	}
 	else if(strcmp("<conditionalStmt>",root->array[0]->ptNode->NodeSymbol)==0)
 	{
-		printf("YOLO%s\n",root->name );
+		// printf("YOLO%s\n",root->name );
 		switch_gen(root->array[0]);
 		return;
 	}
@@ -461,18 +453,18 @@ void process(AST_NODE* root)
 	}
 	else if(strcmp("<ioStmt>",root->array[0]->ptNode->NodeSymbol)==0)
 	{
-		printf("I am IO not google just IO\n");
+		// printf("I am IO not google just IO\n");
 		AST_NODE* io=root->array[0]->array[0];
-		printf("%s\n", io->ptNode->NodeSymbol);
+		// printf("%s\n", io->ptNode->NodeSymbol);
 		if(strcmp("ID",io->ptNode->NodeSymbol)==0)
 		{
-			printf("In ID\n");
+			// printf("In ID\n");
 			input(io);
 			return;
 		}
 		if(strcmp("<var>",io->ptNode->NodeSymbol)==0)
 		{
-			printf("In var\n");
+			// printf("In var\n");
 			output(io);
 			return;
 		}
@@ -494,8 +486,8 @@ void traverseAST(AST_NODE* root)
 	{
 		AST_NODE* stmts = root->array[2];
 		while(stmts != NULL){
-			printf("Calling process on %s\n",stmts->array[0]->name);
-			printf("%s\n",stmts->name );
+			// printf("Calling process on %s\n",stmts->array[0]->name);
+			// printf("%s\n",stmts->name );
 			process(stmts);
 			// printf("%s\n",stmts->name );
 			stmts=stmts->array[1];
@@ -504,13 +496,13 @@ void traverseAST(AST_NODE* root)
 }
 void generate_code(AST_NODE* root)
 {
-	ASM=fopen("asm.txt","w");
+	ASM=fopen("assembly.asm","w");
 	cond=0;
 	fprintf(ASM,"extern printf\n");
 	fprintf(ASM,"extern scanf\n\n");
 	
 	// treeNode *AST=PT->root; 
-	// bss();
+	bss(root);
 	data(root);
 	fprintf(ASM,"\nsection .text\n\n");
 	fprintf(ASM,"global main\n");

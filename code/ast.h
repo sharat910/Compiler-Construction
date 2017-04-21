@@ -18,4 +18,10 @@ extern void recursive_function(TREE_NODE_PTR node);
 extern void constructAST(TREE_NODE_PTR root);
 extern void printAST(AST_NODE* root);
 extern int printSymbolTable(AST_NODE* root,int num);
+extern int non_term_to_remove(char *non_terminal);
+extern int to_eps(char *non_terminal);
+extern int term_to_remove(char *terminal);
+extern void create2AST(TREE_NODE_PTR parent, TREE_NODE_PTR child);
+extern void construct2AST(TREE_NODE_PTR PT);
+extern void print2AST(TREE_NODE_PTR root);
 #endif
