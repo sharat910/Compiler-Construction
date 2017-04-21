@@ -2,13 +2,14 @@
 //Typecheck function
 void type_check(TREE_NODE_PTR node){
 	int rule_no = node->rule_no;
-	printf("%d\n",rule_no);
+	printf("Type chck called with %d\n and NodeSymbol %s",rule_no,node->NodeSymbol);
+	fflush(stdout);
 	// printf("type_check called on node %s with rule no %d\n",node->NodeSymbol,rule_no);
 	// fflush(stdout);
 	
 	//<arithmeticExpr> → <term> <N4> 
 	//<term> → <factor> <N5>
-	if (rule_no == 77 || rule_no == 80 || rule_no==65)
+	if (rule_no == 76 || rule_no == 79 || rule_no==65)
 	{
 		TREE_NODE_PTR factor1 = node->child;
 		TREE_NODE_PTR n5 = factor1->sibling;
@@ -133,7 +134,6 @@ void type_check(TREE_NODE_PTR node){
 		if (withlogop->nptr != NULL)
 			if (strcmp(anyterm->type,"BOOLEAN") != 0)
 				printf("Line %d | Type Error: BOOLEAN type expression expected.\n",node->lineno);
-		break;
 	}
 
 	//<WithLogOp> → <logicalOp> <AnyTerm2> <WithLogOp>

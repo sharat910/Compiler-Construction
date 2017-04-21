@@ -365,12 +365,12 @@ void boolean_gen(AST_NODE* expr)
 				}
 			}
 		}
-		else printf("CUlprit%s\n",anyterm->array[1]->name);
+		// else printf("CUlprit%s\n",anyterm->array[1]->name);
 		fprintf(ASM,"	pop rbx\n");
 		fprintf(ASM,"	pop rax\n");
 		fprintf(ASM,"	cmp rax,rbx\n");
 		char* relop=anyterm->array[1]->array[0]->ptNode->NodeSymbol;
-		printf("%s\n",relop );
+		// printf("%s\n",relop );
 		if(strcmp(relop,"LT")==0){
 			fprintf(ASM, "	jge endloop%d\n",cond);
 		}else if(strcmp(relop,"LE")==0){

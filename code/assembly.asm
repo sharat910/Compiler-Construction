@@ -14,8 +14,8 @@ section .data
 
 section .text
 
-global _start
-_start:
+global main
+main:
 
 
 	push rbp

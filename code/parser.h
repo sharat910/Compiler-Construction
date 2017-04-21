@@ -22,8 +22,8 @@ void createParseTable(grammar G,FirstAndFollow  F, table T);
 parseTree  parseInputSourceCode(char *testcaseFile, table T,grammar G,FirstAndFollow  F);
 void printParseTree(parseTree  PT, char *outfile);
 void LexerOutput(char *testcaseFile);
-void parseTreePrint(TREE_NODE_PTR root,TREE_NODE_PTR parent,FILE* out_fp);
-void ASTPrint(TREE_NODE_PTR root,FILE* out_fp);
-void assignParents(TREE_NODE_PTR root,TREE_NODE_PTR parent,FILE* out_fp);
+void parseTreePrint(TREE_NODE_PTR root,TREE_NODE_PTR parent);
+void ASTPrint(TREE_NODE_PTR root);
+void assignParents(TREE_NODE_PTR root,TREE_NODE_PTR parent);
 
 #endif
