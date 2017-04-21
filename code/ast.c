@@ -91,8 +91,10 @@ void print_ast_leaf(AST_NODE* leaf){
 
 TREE_NODE_PTR find_first_nt(TREE_NODE_PTR node){
 	TREE_NODE_PTR temp = node->child;
-	while(temp!=NULL && is_terminal(temp))
+	while(temp!=NULL && is_terminal(temp)){
+		// printf("%s\n", );
 		temp=temp->sibling;
+	}
 	return temp;
 }
 

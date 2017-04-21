@@ -54,7 +54,7 @@ void semantic_check(AST_NODE* root){
 
 	}
 
-	if (strcmp(root->ptNode->NodeSymbol,"<condionalStmt>")==0)
+	if (strcmp(root->ptNode->NodeSymbol,"<conditionalStmt>")==0)
 	{
 		AST_NODE* id = root->array[0];
 

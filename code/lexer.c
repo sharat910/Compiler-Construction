@@ -230,7 +230,7 @@ void init_map_nt()
 	map_nt[31].index=31;
 	sprintf(map_nt[32].incoming,"<WithRelOp>");
 	map_nt[32].index=32;
-	sprintf(map_nt[33].incoming,"<condionalStmt>");
+	sprintf(map_nt[33].incoming,"<conditionalStmt>");
 	map_nt[33].index=33;
 	sprintf(map_nt[34].incoming,"<optional>");
 	map_nt[34].index=34;

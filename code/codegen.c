@@ -1,11 +1,84 @@
 #include "codegen.h"
 int cond;
 FILE* ASM;
+
+int traverseST(AST_NODE* root)
+{
+	fflush(stdout);
+	if(root == NULL){
+		// printf("nptr is NULL\n");
+		fflush(stdout);
+		return 0;
+	}
+	if (root->ptNode != NULL)
+	{
+		// printf("NS: %s\n",root->ptNode->lexemeCurrentNode );
+	}else
+		// printf("Root ka ptNode null h\n");
+	fflush(stdout);
+	if(root->is_leaf && root->type==1 && strcmp(root->ptNode->parentNodeSymbol,"<idList>")==0 &&
+	strcmp(root->ptNode->parent->parentNodeSymbol,"<moduleReuseStmt>")==0 )
+		return 1;
+
+	// printf("HERRERERE\n");
+	fflush(stdout);
+
+	// printf("IS LEAF %d\n",root->is_leaf);
+
+	if (root->is_leaf)
+	{
+
+		VAR v=root->st_ptr;
+
+		if(v!=NULL)
+		{
+			if((strcmp(root->ptNode->parentNodeSymbol,"<output_plist>")==0 ||
+			strcmp(root->ptNode->parentNodeSymbol,"<output_plist_ex>")==0 ||
+			strcmp(root->ptNode->parentNodeSymbol,"<input_plist>")==0 ||
+			strcmp(root->ptNode->parentNodeSymbol,"<input_plist_ex>")==0 ||
+			strcmp(root->ptNode->parentNodeSymbol,"<idList>")==0 ||
+			strcmp(root->ptNode->parentNodeSymbol,"<idList_ex>")==0 ||
+			strcmp(root->ptNode->parent->parentNodeSymbol,"<declareStmt>")==0) &&
+			strcmp(root->ptNode->parent->parentNodeSymbol,"<optional>")!=0 &&
+			strcmp(root->ptNode->parent->parentNodeSymbol,"<moduleReuseStmt>")!=0	)
+			{
+				// ne++;
+				// int start=symbol_table[v->h].scope.func_table[v->n][v->o].start;
+				// int end=symbol_table[v->h].scope.func_table[v->n][v->o].end;
+				fprintf(ASM,"	%s:	resb %3d\n",v->var_name,v->size);
+
+				fflush(ASM);
+				// printf("%d\t%8s\t",num,v->var_name );
+				// if(v->is_array)
+				// 	printf("%5s(%d,%s)\t%5d to %d\t%7d\t%5d\t%d\n","array",v->e_range-v->s_range+1,v->type, start,end,v->n,v->size,v->m);
+				// else printf("%10s\t%10d to %d\t%2d\t%5d\t%d\n",v->type, start,end,v->n,v->size,v->m);
+
+			}
+		}
+		fflush(ASM);
+		return 0;
+	}
+	
+	// printf("HERRERERE2\n");
+	fflush(stdout);
+
+	int loop_count = root->count;
+	for (int i = 0; i < loop_count; i++)
+	{
+		printf("Printing nptr array entry %d of %s\n",i,root->name);
+		fflush(stdout);
+		if(traverseST(root->array[i]))
+			break;
+	}
+	fflush(stdout);
+	return 0;
+}
+
 void bss(){
 
 	fprintf(ASM,"section .bss\n");
 	
-	// traverseST(symbol_table);
+	
 	int i=0;
 	
 	for(i=0;i<10;i++){
@@ -14,8 +87,9 @@ void bss(){
 }
 
 //Initiates the data section
-void data(){
+void data(AST_NODE* root){
 	fprintf(ASM,"\nsection .data\n");
+	traverseST(root);
 	fprintf(ASM,"	scanint:	dw \"%cd\", 0\n",37);
 	fprintf(ASM,"	putint:	db \"%cd\", 10, 0\n",37);	
 }
@@ -73,8 +147,9 @@ void for_gen(AST_NODE* root)
 {
 	int init=root->array[1]->array[0]->value;
 	int end=root->array[1]->array[1]->value;
-	fprintf(ASM,"mov 	rdi, %d*8\n",init);
+	fprintf(ASM,"\tmov 	rdi, %d\n",init);
 	fprintf(ASM,"loop%d:\t",cond);
+	fprintf(ASM, "\tpush	rdi\n");
 	if(root->array[2]==NULL)
 		printf("FUCKkkk\n");
 	AST_NODE* stmts = root->array[2];
@@ -83,8 +158,10 @@ void for_gen(AST_NODE* root)
 		process(stmts);
 		stmts=stmts->array[1];
 	}
-	fprintf(ASM, "cmp	rdi, 8*%d\n",end);
-	fprintf(ASM, "jne	loop%d\n",cond );
+	fprintf(ASM, "\tpop	rdi\n");
+	fprintf(ASM, "\tadd	rdi, 1\n");
+	fprintf(ASM, "\tcmp	rdi, %d\n",end);
+	fprintf(ASM, "\tjne	loop%d\n",cond );
     fflush(ASM);
 	cond++;
 }
@@ -134,11 +211,11 @@ int N4(AST_NODE* n4)
 	// }
 	// else
 	// 	term(n4->array[1]);
-	if(flag)
+	if(flag )
 	{
 		printf("Why\n");
-		printf("Operator %s\n",n4->array[0]->name);
-		operate(n4->array[0]);
+		printf("Operator %s\n",n4->array[2]->array[0]->name);
+		operate(n4->array[2]->array[0]);
 	}
 	return 1;
 }
@@ -157,8 +234,8 @@ int N5(AST_NODE* n5)
 	if (flag )
 	{
 		printf("Why\n");
-		printf("Operator %s\n",n5->array[0]->name);
-		operate(n5->array[0]);
+		printf("Operator %s\n",n5->array[2]->array[0]->name);
+		operate(n5->array[2]->array[0]);
 	}	
 	return 1;
 }
@@ -241,7 +318,32 @@ void assignment_gen(AST_NODE* expr)
 }
 void switch_gen(AST_NODE* root)
 {
-	
+	if(root==NULL)
+		return;
+	fprintf(ASM, "\t%s\n","push rax");
+	fprintf(ASM, "\tmov rax,%s\n",root->array[0]->name);
+	AST_NODE* cases=root->array[1];
+	int lol=cond;
+	while(cases!=NULL)
+	{
+		fprintf(ASM, "loop%d:\n", cond);
+		fprintf(ASM, "\tmov rbx,%s\n",cases->array[0]->name);
+		fprintf(ASM,"	cmp rax,rbx\n");
+		cond++;
+		fprintf(ASM, "\tjne loop%d\n",cond);
+		AST_NODE* stmts=cases->array[1];
+		while(stmts!=NULL)
+		{
+			process(stmts);
+			stmts=stmts->array[1];
+		}
+		cases=cases->array[2];
+		fprintf(ASM, "\tjmp endloop%d\n",lol);
+	}
+	fprintf(ASM,"endloop%d:\n", lol);
+	fprintf(ASM, "\t%s\n","pop rax");
+	cond++;
+	fflush(ASM);
 }
 void boolean_gen(AST_NODE* expr)
 {
@@ -316,7 +418,7 @@ void process(AST_NODE* root)
 			if(assignmentStmt->array[1]->array[0]->type==2)
 			{
 				
-				sprintf(LHS,"%s+%d*8",assignmentStmt->array[0]->name,assignmentStmt->array[1]->array[0]->value);
+				sprintf(LHS,"%s+%d*2",assignmentStmt->array[0]->name,assignmentStmt->array[1]->array[0]->value);
 				assignment_gen(assignmentStmt->array[1]->array[1]);
 			}
 			else
@@ -343,8 +445,8 @@ void process(AST_NODE* root)
 	}
 	else if(strcmp("<conditionalStmt>",root->array[0]->ptNode->NodeSymbol)==0)
 	{
-		root=root->array[0];
-		switch_gen(root);
+		printf("YOLO%s\n",root->name );
+		switch_gen(root->array[0]);
 		return;
 	}
 	else if(strcmp("<iterativeStmt>",root->array[0]->ptNode->NodeSymbol)==0)
@@ -375,7 +477,7 @@ void process(AST_NODE* root)
 			return;
 		}
 	}
-	printf("GONE\n");
+	// printf("GONE\n");
 	fflush(stdout);
 	return;
 }
@@ -408,8 +510,8 @@ void generate_code(AST_NODE* root)
 	fprintf(ASM,"extern scanf\n\n");
 	
 	// treeNode *AST=PT->root; 
-	bss();
-	data();
+	// bss();
+	data(root);
 	fprintf(ASM,"\nsection .text\n\n");
 	fprintf(ASM,"global main\n");
 	fprintf(ASM,"main:\n\n");

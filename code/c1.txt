@@ -7,7 +7,7 @@ start
 	get_value(y);
 	declare sum, value:integer;
 	z:= 19;
-	sum:= x*20-y*4+17-z;
+	sum:= x*20*y/4;
 	value:= sum + z*2 - x*y;
 	while(z>2)
 	start

@@ -166,7 +166,7 @@ e
 30
 <statement>
 1
-<condionalStmt>
+<conditionalStmt>
 31
 <statement>
 1
@@ -490,7 +490,7 @@ COLON
 <dataType>
 SEMICOL
 96
-<condionalStmt>
+<conditionalStmt>
 8
 SWITCH
 BO

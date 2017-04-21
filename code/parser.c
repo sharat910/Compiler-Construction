@@ -59,7 +59,7 @@ void fill_lhs(rule array[57])
 	sprintf(array[30].lhs,"<input_plist_ex>");
 	sprintf(array[31].lhs,"<ret>");
 	sprintf(array[32].lhs,"<WithRelOp>");
-	sprintf(array[33].lhs,"<condionalStmt>");
+	sprintf(array[33].lhs,"<conditionalStmt>");
 	sprintf(array[34].lhs,"<optional>");
 	sprintf(array[35].lhs,"<op1>");
 	sprintf(array[36].lhs,"<range>");

@@ -197,7 +197,7 @@ void type_check(TREE_NODE_PTR node){
 			printf("Type Error in line %d: BOOLEAN type var invalid here\n",node->lineno);
 	}
 
-	//<condionalStmt> → SWITCH BO ID BC START <caseStmts> <default> END
+	//<conditionalStmt> → SWITCH BO ID BC START <caseStmts> <default> END
 	else if (rule_no == 96)
 	{
 		TREE_NODE_PTR id = node->child->sibling->sibling;
@@ -215,7 +215,7 @@ void type_check(TREE_NODE_PTR node){
 	{
 
 		TREE_NODE_PTR value = find_first_nt(node);
-		TREE_NODE_PTR multicase = value->sibling->sibling->sibling->sibling->sibling;
+		TREE_NODE_PTR multicase = value->sibling->sibling->sibling;
 		if (multicase->nptr != NULL)
 			if (strcmp(value->type,multicase->type) != 0)
 				printf("Type Error in line %d: Case value type mismatch\n",node->lineno);

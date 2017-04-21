@@ -166,7 +166,7 @@ e
 30
 <statement>
 1
-<condionalStmt>
+<conditionalStmt>
 31
 <statement>
 1
@@ -483,7 +483,7 @@ COLON
 <idList>
 DECLARE
 96
-<condionalStmt>
+<conditionalStmt>
 8
 END
 <default>

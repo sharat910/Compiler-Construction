@@ -373,7 +373,7 @@ void constructSymbolTable(TREE_NODE_PTR root,FILE* out_fp,int hash_value,int nes
 				}	
 			else if(strcmp(root->parentNodeSymbol,"<assignmentStmt>")==0 || 
 				strcmp(root->parentNodeSymbol,"<iterativeStmt>")==0 ||
-				strcmp(root->parentNodeSymbol,"<condionalStmt>")==0 ||
+				strcmp(root->parentNodeSymbol,"<conditionalStmt>")==0 ||
 				strcmp(root->parentNodeSymbol,"<whichId>")==0 ||
 				strcmp(root->parentNodeSymbol,"<var>")==0 ||
 				strcmp(root->parentNodeSymbol,"<index>")==0 ||
