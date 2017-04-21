@@ -22,8 +22,10 @@ void type_check(TREE_NODE_PTR node){
 		VAR a = node->child->nptr->st_ptr;
 		if ( a != NULL)
 		{
-			if (a->is_array && node->child->sibling == NULL)
-				printf("Line %d | Type Error: Array type variable %s needs to be indexed\n",node->lineno,a->var_name);
+			if (a->is_array && node->nptr->array[1] == NULL)
+				printf("Type Error in line %d: Array %s not indexed\n",node->lineno,a->var_name);
+			if (!(a->is_array) && node->nptr->array[1] != NULL)
+				printf("Type Error in line %d: Cannot index %s. It's not an array\n",node->lineno,a->var_name);
 		}
 	}
 
@@ -159,29 +161,29 @@ void type_check(TREE_NODE_PTR node){
 	}
 
 	//<AOBE>​1​ → BO <AOBE>​2​ BC <alpha>
-	else if (rule_no == 70){
-		TREE_NODE_PTR aobe = find_first_nt(node);
-		TREE_NODE_PTR alpha = aobe->sibling->sibling;
-		if (alpha->nptr != NULL)
-		{
-			TREE_NODE_PTR all_ops = aobe->sibling->sibling->child;
-			if (strcmp(all_ops->child->NodeSymbol,"<logicalOp>")==0){
-				// printf("IF Debug2\n");
-				// fflush(stdout);
-				if (strcmp(aobe->type,"BOOLEAN") != 0)
-					printf("Line %d | Type Error: Expecting BOOLEAN type expression here\n",node->lineno);
-			}
-			else{
-				// printf("ELSE Debug2\n");
-				// fflush(stdout);			
-				if (strcmp(aobe->type,"BOOLEAN") == 0)
-					printf("Line %d | Type Error:  BOOLEAN type expression invalid here\n",node->lineno);
-			}
-		}
-	}
+	// else if (rule_no == 70){
+	// 	TREE_NODE_PTR aobe = find_first_nt(node);
+	// 	TREE_NODE_PTR alpha = aobe->sibling->sibling;
+	// 	if (alpha->nptr != NULL)
+	// 	{
+	// 		TREE_NODE_PTR all_ops = aobe->sibling->sibling->child;
+	// 		if (strcmp(all_ops->child->NodeSymbol,"<logicalOp>")==0){
+	// 			// printf("IF Debug2\n");
+	// 			// fflush(stdout);
+	// 			if (strcmp(aobe->type,"BOOLEAN") != 0)
+	// 				printf("Type Error in line %d: Expecting BOOLEAN type expression here\n",node->lineno);
+	// 		}
+	// 		else{
+	// 			// printf("ELSE Debug2\n");
+	// 			// fflush(stdout);			
+	// 			if (strcmp(aobe->type,"BOOLEAN") == 0)
+	// 				printf("Type Error in line %d:  BOOLEAN type expression invalid here\n",node->lineno);
+	// 		}
+	// 	}
+	// }
 
 	//<alpha> → <all_ops> <AOBE> 
-	else if (rule_no == 71){
+	else if (rule_no == 70){
 		TREE_NODE_PTR all_ops = node->child;
 		TREE_NODE_PTR aobe = all_ops->sibling;
 		if (strcmp(all_ops->child->NodeSymbol,"<logicalOp>")==0){
@@ -197,7 +199,7 @@ void type_check(TREE_NODE_PTR node){
 
 	//<N4>1 → <op1> <term> 
 	//<N5>1 → <op2> <factor> <N5>2
-	else if (rule_no == 78 || rule_no == 81)
+	else if (rule_no == 77 || rule_no == 80)
 	{
 		TREE_NODE_PTR factor1 = node->child->sibling;
 		// printf("here %s\n",factor1->type);
@@ -206,8 +208,8 @@ void type_check(TREE_NODE_PTR node){
 			printf("Line %d | Type Error: BOOLEAN type var invalid here\n",node->lineno);
 	}
 
-	//<condionalStmt> → SWITCH BO ID BC START <caseStmts> <default> END
-	else if (rule_no == 97)
+	//<conditionalStmt> → SWITCH BO ID BC START <caseStmts> <default> END
+	else if (rule_no == 96)
 	{
 		TREE_NODE_PTR id = node->child->sibling->sibling;
 		TREE_NODE_PTR casestmts = id->sibling->sibling->sibling;
@@ -220,11 +222,11 @@ void type_check(TREE_NODE_PTR node){
 
 	//<caseStmts> → CASE <value> COLON <statements> BREAK SEMICOL <MultiCase>
 	//<MultiCase>1 → CASE <value> COLON <statements> BREAK SEMICOL <MultiCase>2
-	else if (rule_no == 98 || rule_no == 99)
+	else if (rule_no == 97 || rule_no == 98)
 	{
 
 		TREE_NODE_PTR value = find_first_nt(node);
-		TREE_NODE_PTR multicase = value->sibling->sibling->sibling->sibling->sibling;
+		TREE_NODE_PTR multicase = value->sibling->sibling->sibling;
 		if (multicase->nptr != NULL)
 			if (strcmp(value->type,multicase->type) != 0)
 				printf("Line %d | Type Error: Type mismatch between case values\n",node->lineno);
@@ -232,7 +234,7 @@ void type_check(TREE_NODE_PTR node){
 	}
 
 	//<iterativeStmt> → WHILE BO <AOBE> BC START <statements> END	
-	else if (rule_no == 107)
+	else if (rule_no == 106)
 	{
 		if(strcmp(node->child->sibling->sibling->type,"BOOLEAN")!=0)
 			printf("Line %d | Type Error: While condition not of BOOLEAN type\n",node->lineno);

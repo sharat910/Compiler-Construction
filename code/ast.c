@@ -52,7 +52,6 @@ AST_NODE* make_ast_node(TREE_NODE_PTR node){
 	AST_NODE* ast_node = (AST_NODE*)malloc(sizeof(AST_NODE));
 	sprintf(ast_node->name,"%s",node->NodeSymbol);
 	ast_node->is_leaf = 0;
-	ast_node->ptNode = node;
 	TREE_NODE_PTR temp = node->child;
 	int i=0;
 	while(temp!=NULL){
@@ -65,6 +64,7 @@ AST_NODE* make_ast_node(TREE_NODE_PTR node){
 	}
 
 	ast_node->count = i;
+	ast_node->ptNode = node;
 	// printf("Creating ast node for %s with count %d\n",node->NodeSymbol,ast_node->count);
 	return ast_node;
 }
@@ -91,8 +91,10 @@ void print_ast_leaf(AST_NODE* leaf){
 
 TREE_NODE_PTR find_first_nt(TREE_NODE_PTR node){
 	TREE_NODE_PTR temp = node->child;
-	while(temp!=NULL && is_terminal(temp))
+	while(temp!=NULL && is_terminal(temp)){
+		// printf("%s\n", );
 		temp=temp->sibling;
+	}
 	return temp;
 }
 
@@ -127,15 +129,14 @@ AST_NODE* get_nptr_range(TREE_NODE_PTR node){
 void magic_function(TREE_NODE_PTR node)
 {
 	int rule_no = node->rule_no;
-	// printf("%d\n",rule_no);
-	// printf("Line no. %d ",node->lineno );
+	printf("Rule %d\n",rule_no);
+	printf("Line no. %d ",node->lineno );
 	if (is_non_terminal(node))
 		switch(rule_no){
 			// Just make a new node
 			case 1:
 			case 2:
 			case 5:
-			case 7:
 			case 8:
 			case 9:
 			case 11:
@@ -143,15 +144,17 @@ void magic_function(TREE_NODE_PTR node)
 			case 14:
 			case 15:
 			case 25:
+			case 32:
+			case 33:
 			case 53:
 			case 54:
-			case 106:
+			case 105:
 			node->nptr = make_ast_node(node);
 			break;
 
 
-			case 77:
-			case 80:			
+			case 76:
+			case 79:			
 			//Typecheck
 			type_check(node);			
 			node->nptr = make_ast_node(node);
@@ -162,13 +165,13 @@ void magic_function(TREE_NODE_PTR node)
 			case 50:
 			case 63:
 			case 68:
-			case 71:
-			case 78:
-			case 81:
+			case 70:
+			case 77:
+			case 80:
+			case 96:
 			case 97:
 			case 98:
-			case 99:
-			case 107:
+			case 106:
 			type_check(node);
 			node->nptr = make_ast_node(node);
 			break;
@@ -186,8 +189,8 @@ void magic_function(TREE_NODE_PTR node)
 
 			// <var> → ID <whichId>
 			case 34:
-			type_check(node);
 			node->nptr = make_ast_node(node);
+			type_check(node);
 			node->type = node->child->type;
 			break;
 			
@@ -204,10 +207,10 @@ void magic_function(TREE_NODE_PTR node)
 			case 59:
 			case 61:
 			case 67:
-			case 83:
+			case 82:
+			case 100:
 			case 101:
 			case 102:
-			case 103:
 			node->nptr = node->child->nptr;
 			node->type = node->child->type;
 			break;
@@ -220,10 +223,22 @@ void magic_function(TREE_NODE_PTR node)
 			break;
 
 			case 57:
-			case 58:
-			case 109:
+			case 108:
 			type_check(node);
 			node->nptr = find_first_nt(node)->nptr;
+			node->type = find_first_nt(node)->type;
+			break;
+
+			// <negOrPosAE> → MINUS <BorNBAE>
+			case 58:
+			type_check(node);
+			;AST_NODE* ast_node = (AST_NODE*)malloc(sizeof(AST_NODE));
+			sprintf(ast_node->name,"%s",node->NodeSymbol);
+			ast_node->is_leaf = 0;
+			ast_node->ptNode = node;
+			ast_node->array[0] = make_ast_leaf(node->child,OP_TYPE,0);
+			ast_node->array[1] = find_first_nt(node)->nptr;
+			ast_node->count = 2;
 			node->type = find_first_nt(node)->type;
 			break;
 
@@ -241,9 +256,8 @@ void magic_function(TREE_NODE_PTR node)
 
 			// One non-terminal in child
 			case 24:
-			case 33:
 			case 51:
-
+			case 7:
 
 			// Only one child which is non_terminal
 			case 27:
@@ -253,11 +267,11 @@ void magic_function(TREE_NODE_PTR node)
 			case 31:
 			case 41:
 			case 42:
+			case 72:
 			case 73:
 			case 74:
-			case 75:
-			case 76:
-			case 104:
+			case 75:			
+			case 103:
 			node->nptr = find_first_nt(node)->nptr;
 			break;
 
@@ -274,22 +288,22 @@ void magic_function(TREE_NODE_PTR node)
 			break;
 
 			
-			case 70:
-			//Typecheck
-			type_check(node);
-			node->nptr = make_ast_node(node);
-			TREE_NODE_PTR alpha = node->child->sibling->sibling->sibling;
-			if (alpha->nptr != NULL)
-				if (strcmp(alpha->child->child->NodeSymbol,"<relationalOp>")==0)
-					node->type = "BOOLEAN";
-				else
-					node->type = node->child->sibling->type;
-			else					
-				node->type = node->child->sibling->type;
-			break;
+			// case 70:
+			// //Typecheck
+			// type_check(node);
+			// node->nptr = make_ast_node(node);
+			// TREE_NODE_PTR alpha = node->child->sibling->sibling->sibling;
+			// if (alpha->nptr != NULL)
+			// 	if (strcmp(alpha->child->child->NodeSymbol,"<relationalOp>")==0)
+			// 		node->type = "BOOLEAN";
+			// 	else
+			// 		node->type = node->child->sibling->type;
+			// else					
+			// 	node->type = node->child->sibling->type;
+			// break;
 
 			// <declareStmt> → DECLARE <idList> COLON <dataType> SEMICOL
-			case 96:
+			case 95:
 			node->nptr = make_ast_node(node);
 			TREE_NODE_PTR idList = node->child->sibling;
 			TREE_NODE_PTR dataType = idList->sibling->sibling;
@@ -297,11 +311,12 @@ void magic_function(TREE_NODE_PTR node)
 			break;
 
 			//<range> → NUM​1​ RANGEOP NUM​2
-			case 108:
+			case 107:
 			node->nptr = get_nptr_range(node);
             break;
 
 			//All Op cases
+			case 83:
 			case 84:
 			case 85:
 			case 86:
@@ -313,7 +328,6 @@ void magic_function(TREE_NODE_PTR node)
 			case 92:
 			case 93:
 			case 94:
-			case 95:
 			node->nptr = make_ast_leaf(node->child,OP_TYPE,0);
 			break;
 
@@ -329,16 +343,15 @@ void magic_function(TREE_NODE_PTR node)
 			case 55:
 			case 64:
 			case 69:
-			case 72:
-			case 79:
-			case 82:
-			case 100:
-			case 105:
+			case 71:
+			case 78:
+			case 81:
+			case 99:
+			case 104:
 			node->nptr = NULL;
 			break;
 
 			case 4:
-			case 32:
 			case 39:
 			node->nptr = find_id_ka_nptr(node);
 			break;
@@ -384,6 +397,7 @@ void magic_function(TREE_NODE_PTR node)
 
 	}
 	else{
+		// node->nptr->ptNode = node;
 	}
 }
 

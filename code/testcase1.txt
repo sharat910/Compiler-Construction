@@ -1,12 +1,11 @@
 <<<driver program>>>
 start
 	declare k:integer;
-	k := 2+3*4;
-end
-<<module empty>>
-takes input[a:boolean];
-returns  [sum:real];
-start
-	declare b:integer;
-	[b] := use module empty with parameters a;
+	declare p,q,r: array[1..12] of integer;
+	declare t:boolean;
+	get_value(k);
+	k :=10;
+	print(k[k]);
+	r[k] := k*3+5/10+4/6;
+	t:=(p+q)/r<=q;
 end
