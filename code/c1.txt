@@ -3,17 +3,12 @@
 <<<driver program>>>
 start
 	declare x,y, z:integer; 
+	declare t:boolean; 
 	get_value(x);
 	get_value(y);
 	declare sum, value:integer;
-	z:= 19;
-	sum:= (x*20)*y/4;
-	value:= sum + z*2 - x*y;
-	while(z>2)
-	start
-		print(sum);
-		z:=z-1;
-	end
-	print(value);					    
+	z:= (19+(x+y)/y*2)/10+34;
+
+	print(z);					    
 end
 

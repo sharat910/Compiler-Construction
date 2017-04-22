@@ -1,3 +1,7 @@
+// Group 56
+// Rishabh Garg (2014A7PS065P)
+// M Sharat Chandra (2014A7PS108P)
+
 #include "codegen.h"
 int cond;
 FILE* ASM;
@@ -45,7 +49,7 @@ int traverseST(AST_NODE* root)
 				// ne++;
 				// int start=symbol_table[v->h].scope.func_table[v->n][v->o].start;
 				// int end=symbol_table[v->h].scope.func_table[v->n][v->o].end;
-				fprintf(ASM,"	%s:	resb %3d\n",v->var_name,v->size);
+				fprintf(ASM,"	%s:	resb %3d\n",v->var_name,v->size*4);
 
 				fflush(ASM);
 				// printf("%d\t%8s\t",num,v->var_name );
@@ -107,13 +111,15 @@ void output(AST_NODE* root){
 	else {
 		fprintf(ASM,"	push rax\n\n");
 		fprintf(ASM,"	mov rax,[%s]\n",whichid->name);
-		fprintf(ASM,"	shl rax, 1\n");
+		fprintf(ASM,"	shl rax, 3\n");
 		fprintf(ASM,"	add rax,%s\n",id->name);
 		fprintf(ASM,"	mov rsi,[rax]\n\n");
 		fprintf(ASM,"	pop rax\n\n");
 	}
+	fprintf(ASM,"	push rdi\n\n");
 	fprintf(ASM,"	mov	rdi,putint\n");
-	fprintf(ASM,"	call printf\n\n");	
+	fprintf(ASM,"	call printf\n\n");
+	fprintf(ASM,"	pop rdi\n\n");	
 	fflush(ASM);	
 }
 
@@ -142,7 +148,8 @@ void for_gen(AST_NODE* root)
 	int end=root->array[1]->array[1]->value;
 	fprintf(ASM,"\tmov 	rdi, %d\n",init);
 	fprintf(ASM,"loop%d:\n",cond);
-	fprintf(ASM, "\tpush	rdi\n");
+	fprintf(ASM,"\tmov 	[%s],rdi\n",root->array[0]->name);
+	fprintf(ASM, "\tpush rdi\n");
 	
 	AST_NODE* stmts = root->array[2];
 	while(stmts!=NULL)
@@ -153,7 +160,8 @@ void for_gen(AST_NODE* root)
 	fprintf(ASM, "\tpop	rdi\n");
 	fprintf(ASM, "\tadd	rdi, 1\n");
 	fprintf(ASM, "\tcmp	rdi, %d\n",end);
-	fprintf(ASM, "\tjne	loop%d\n",cond );
+	fprintf(ASM, "\tjle	loop%d\n",cond );
+	fprintf(ASM, "\tpush rdi\n");
     fflush(ASM);
 	cond++;
 }
@@ -177,10 +185,11 @@ void operate(AST_NODE* op){
 		break;
 
 		case '/':
+		fprintf(ASM, "\t%s\n","mov rdx,0");
 		fprintf(ASM, "\t%s\n","div rbx");
 		break;
 	}
-	fprintf(ASM, "\t%s\n","push rax");
+	fprintf(ASM, "\t%s\n","push rax\n");
 	return;
 }
 
@@ -236,7 +245,7 @@ void negate_top(){
 	fprintf(ASM, "\t%s\n","pop rax");
 	fprintf(ASM, "\tmov rbx,-1\n");
 	fprintf(ASM, "\t%s\n","mul rbx");
-	fprintf(ASM, "\t%s\n","push rax");
+	fprintf(ASM, "\t%s\n","push rax\n");
 }	
 
 void AE(AST_NODE* ae,int flg)
@@ -260,24 +269,34 @@ void term(AST_NODE* term)
 
 void factor(AST_NODE* factor)
 {	
-
-	if (!factor->is_leaf && factor->array[0]->type == 1){
-		fprintf(ASM, "\tmov rax,[%s]\n",factor->array[0]->name);
-		fprintf(ASM, "\tpush rax\n");
-		return;
-	}
+	// printf("%s\n",factor->name);
 	//ID NUM case
 	if (factor->is_leaf)
 	{
+		// printf("Here1\n");
 		//NUM
 		if (factor->type == 2)
 		{
 			fprintf(ASM, "\tmov rax,%d\n",factor->value);
-			fprintf(ASM, "\tpush rax\n");
+			fprintf(ASM, "\tpush rax\n\n");
 		}
 	}
-	else
-		AE(factor,0);
+	else if(strcmp(factor->name,"<AOBE>")==0){
+		// printf("Here2\n");
+		AE(factor->array[0]->array[0],0);
+	}
+
+	else if (!factor->is_leaf && factor->array[0]->type == 1){
+		// printf("Here3\n");
+		fprintf(ASM, "\tmov rax,[%s]\n",factor->array[0]->name);
+		fprintf(ASM, "\tpush rax\n\n");
+		return;
+	}else
+	{
+		// printf("Should'nt go here\n");
+		return;
+	}
+	
 }
 
 
@@ -304,7 +323,7 @@ void assignment_gen(AST_NODE* expr)
 			fprintf(ASM, "\t%s\n","pop rax");
 			fprintf(ASM, "\tmov rbx,-1\n");
 			fprintf(ASM, "\t%s\n","mul rbx");
-			fprintf(ASM, "\t%s\n","push rax");
+			fprintf(ASM, "\t%s\n","push rax\n");
 		}
 	}
 }
@@ -312,7 +331,7 @@ void switch_gen(AST_NODE* root)
 {
 	if(root==NULL)
 		return;
-	fprintf(ASM, "\t%s\n","push rax");
+	fprintf(ASM, "\t%s\n\n","push rax");
 	fprintf(ASM, "\tmov rax,%s\n",root->array[0]->name);
 	AST_NODE* cases=root->array[1];
 	int lol=cond;
@@ -417,9 +436,9 @@ void process(AST_NODE* root)
 				{ 
 					assignment_gen(assignmentStmt->array[1]->array[1]);
 					fprintf(ASM,"	mov rax,[%s]\n",assignmentStmt->array[1]->array[0]->name);
-					fprintf(ASM,"	shl rax, 1\n");
+					fprintf(ASM,"	shl rax, 3\n");
 					fprintf(ASM,"	add rax,%s\n",assignmentStmt->array[0]->name);
-					fprintf(ASM,"	pop [rax]\n\n");
+					fprintf(ASM,"	pop qword[rax]\n\n");
 					fprintf(ASM,"	pop rax\n\n");
 					fflush(ASM);
 					return ;
@@ -431,6 +450,7 @@ void process(AST_NODE* root)
 			assignment_gen(assignmentStmt->array[1]);
 		}
 		fprintf(ASM,"	mov [%s],rax\n",LHS);
+		fprintf(ASM,"	pop rax\n\n");
 		fprintf(ASM,"	pop rax\n\n");
 		fflush(ASM);
 		return;

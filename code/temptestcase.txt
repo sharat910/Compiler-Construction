@@ -1,5 +1,0 @@
-<<module empty>>
-takes input[a:boolean];
-start
-	declare b:integer;
-end

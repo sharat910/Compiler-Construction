@@ -1,4 +1,10 @@
+// Group 56
+// Rishabh Garg (2014A7PS065P)
+// M Sharat Chandra (2014A7PS108P)
+
+
 #include "semantic_checker.h"
+int semantic_error_cnt;
 
 void semantic_check(AST_NODE* root){
 	if(root == NULL)

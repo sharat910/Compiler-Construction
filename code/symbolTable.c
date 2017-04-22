@@ -442,7 +442,7 @@ void constructSymbolTable(TREE_NODE_PTR root,int hash_value,int nesting,int offs
 					v->line_no=root->lineno;
 					
 					if(declare_find_var(root->lexemeCurrentNode,h,n,o)){
-						printf("Line %d identifier %s not declared.\n",root->lineno,root->lexemeCurrentNode );
+						printf("Line %d identifier %s redeclared.\n",root->lineno,root->lexemeCurrentNode );
 					}
 					else{
 						root->hash_value=h;
@@ -496,7 +496,7 @@ void constructSymbolTable(TREE_NODE_PTR root,int hash_value,int nesting,int offs
 						}
 						
 						if(complete_find(v->var_name,h,n,o)){
-							printf("Line %d identifier %s not declared.\n",a->lineno,a->lexemeCurrentNode );
+							printf("Line %d identifier %s redeclared.\n",a->lineno,a->lexemeCurrentNode );
 						}
 						else{
 							v->m=m;

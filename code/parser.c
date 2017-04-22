@@ -5,7 +5,7 @@
 #include "parser.h"
 #include "astDef.h"
 #include "symbolTable.h"
-int cnt;
+int parse_error_cnt;
 int offset_arr[100];
 int isTerminal(NODE top)
 {
@@ -256,7 +256,7 @@ TREE_NODE_PTR fillnode(TREE_NODE_PTR* parent_curr,ptr ts,tokenInfo curr,char* a)
 
 parseTree parseInputSourceCode(char *testcaseFile, table T,grammar G,FirstAndFollow F)
 {	
-	cnt=0;
+	parse_error_cnt=0;
 	parseTree programNode=*((parseTree* )malloc(sizeof(parseTree)));
 	char str_top[25];
 	removeComments(testcaseFile,"clean_code.txt");
@@ -289,7 +289,7 @@ parseTree parseInputSourceCode(char *testcaseFile, table T,grammar G,FirstAndFol
 		if (strcmp(str_top,"<driverModule>")==0 && terminated)
 		{
 			printf("Syntax Error: Driver module not found\n");
-			cnt++;
+			parse_error_cnt++;
 			break;
 		}
 		if(isTerminal(top))
@@ -331,7 +331,7 @@ parseTree parseInputSourceCode(char *testcaseFile, table T,grammar G,FirstAndFol
 						break;
 				printf("The token %s for lexeme %s does not match at line %d. ",curr.token,curr.lexeme,curr.line);
 				printf("The expected token here is %s.\n\n",str_top );
-				cnt++;
+				parse_error_cnt++;
 				read=1;
 				
 				continue;
@@ -367,7 +367,7 @@ parseTree parseInputSourceCode(char *testcaseFile, table T,grammar G,FirstAndFol
 				}
 				else{
 					printf("Syntactic structure incorrect in line no. %d: rule not for Non-terminal: %s and Terminal: %s\n",curr.line,str_top,curr.token);
-					cnt++;
+					parse_error_cnt++;
 					read=1;
 					if(strcmp(curr.token,"$")==0)
 						break;
@@ -400,14 +400,17 @@ parseTree parseInputSourceCode(char *testcaseFile, table T,grammar G,FirstAndFol
 		}
 
 	}
-	if(cnt>0){
+	if(parse_error_cnt>0){
+		// printf("%s\n","Correct Syntax. Parsing Successful.");
 		printf("\n\nIncorrect Syntax.\n\n\n");
 		return programNode;
 	}
-	if(s.top!=NULL)
+	if(s.top!=NULL){
+		parse_error_cnt = 1;
 		printf("\n\nIncorrect Syntax.\n\n\n");
+	}
 	if(s.top==NULL)
-		printf("\n\nCorrect Syntax.\n\n\n");
+		printf("\n\nCorrect Syntax. Parsing Successful.\n\n\n");
 	return programNode;
 }
 void LexerOutput(char *testcaseFile)
